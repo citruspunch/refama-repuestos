@@ -1,0 +1,7 @@
+codigo_producto,scenario,candidate_change_month,max_split_statistic,block_bootstrap_p,before_mean_units,after_mean_units,interpretation,change_q_bh
+48815-14050,combined,2025-10-01,1.8215276283643598,0.45454545454545453,137.17948717948718,69.83333333333333,"exploratory residual level shift, not a verified business event",0.9038961038961039
+48815-14050,other,2025-10-01,1.8669968742148224,0.3826173826173826,89.2051282051282,29.166666666666668,"exploratory residual level shift, not a verified business event",0.9038961038961039
+48815-14050,refama,2024-07-01,1.0918488259098864,0.7532467532467533,45.875,46.592592592592595,"exploratory residual level shift, not a verified business event",0.9038961038961039
+UAH-90385-18025,combined,2025-09-01,1.2625111245214455,0.6343656343656343,1558.3947368421052,393.25,"exploratory residual level shift, not a verified business event",0.9038961038961039
+UAH-90385-18025,other,2025-09-01,1.2900076538525482,0.6323676323676324,1487.8157894736842,331.5,"exploratory residual level shift, not a verified business event",0.9038961038961039
+UAH-90385-18025,refama,2023-08-01,0.7858819332033093,0.968031968031968,67.3076923076923,68.86486486486487,"exploratory residual level shift, not a verified business event",0.968031968031968

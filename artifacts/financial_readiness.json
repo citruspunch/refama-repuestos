@@ -1,0 +1,24 @@
+{
+  "cost_evaluation": {
+    "status": "blocked_missing_cost_inputs",
+    "missing_inputs": [
+      "unit_cost",
+      "carrying_cost_per_unit_month",
+      "ordering_cost",
+      "lost_sale_cost_per_unit",
+      "currency"
+    ],
+    "actual_savings": null
+  },
+  "policy_replay_readiness": {
+    "ready_for_actual_policy_comparison": false,
+    "missing": [
+      "opening_inventory",
+      "actual_lead_times_available",
+      "pending_orders_available",
+      "actual_order_decisions_available",
+      "demand_censoring_resolved"
+    ]
+  },
+  "actual_savings": null
+}

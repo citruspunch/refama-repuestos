@@ -1,0 +1,32 @@
+[
+  {
+    "file": "kardex_csv/kardex_48815-14050.csv",
+    "rows": 479,
+    "columns": 15,
+    "sha256": "f4c15d04cea89e484bfa34e9b70ee8f3d20cfe436f0a8c24dcd5ce8ab6633bc4"
+  },
+  {
+    "file": "kardex_csv/kardex_90385-18025.csv",
+    "rows": 583,
+    "columns": 15,
+    "sha256": "2c60f959dfd3bb40439e1de4614d7cfb28e5eedc028b532454e20feae8c7e598"
+  },
+  {
+    "file": "kardex_csv/kardex_consolidado.csv",
+    "rows": 1062,
+    "columns": 15,
+    "sha256": "fcc020acfadaefb904360403bc2d79076d70e9dacaf58a73387092f8520abc87"
+  },
+  {
+    "file": "kardex_csv/revision_calidad.csv",
+    "rows": 35,
+    "columns": 6,
+    "sha256": "231686865ab0f8b59dd27b7fca6eb68e2c19f59e1bac33e95c2f87e5b66b8401"
+  },
+  {
+    "file": "kardex_csv/ventas_mensuales_preliminares.csv",
+    "rows": 105,
+    "columns": 6,
+    "sha256": "9c44eabf063f7f0ad5e2d4b725f7b7574d6a7688fccc7a2434ffef432f1a11a4"
+  }
+]

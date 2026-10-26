@@ -1,0 +1,13 @@
+codigo_producto,condition,start,end,days,observed_movements,sales_recorded_units,interpretation
+48815-14050,eod_zero,2025-02-11,2025-02-18,8,10,112.0,recorded EOD balance / carry-forward; not confirmed lost sales
+48815-14050,eod_low_stock,2025-01-21,2025-01-23,3,1,30.0,recorded EOD balance / carry-forward; not confirmed lost sales
+48815-14050,eod_low_stock,2025-01-29,2025-03-04,35,14,138.0,recorded EOD balance / carry-forward; not confirmed lost sales
+48815-14050,eod_low_stock,2025-04-02,2025-04-04,3,4,35.0,recorded EOD balance / carry-forward; not confirmed lost sales
+48815-14050,eod_low_stock,2025-12-30,2026-01-07,9,3,31.0,recorded EOD balance / carry-forward; not confirmed lost sales
+48815-14050,eod_low_stock,2026-10-01,2026-10-15,15,1,20.0,recorded EOD balance / carry-forward; not confirmed lost sales
+UAH-90385-18025,eod_zero,2022-06-29,2022-07-01,3,4,200.0,recorded EOD balance / carry-forward; not confirmed lost sales
+UAH-90385-18025,eod_zero,2022-08-02,2022-08-15,14,6,105.0,recorded EOD balance / carry-forward; not confirmed lost sales
+UAH-90385-18025,eod_negative,2022-06-28,2022-06-28,1,1,300.0,recorded EOD balance / carry-forward; not confirmed lost sales
+UAH-90385-18025,eod_negative,2022-07-30,2022-08-01,3,1,1000.0,recorded EOD balance / carry-forward; not confirmed lost sales
+UAH-90385-18025,eod_low_stock,2022-06-29,2022-07-01,3,4,200.0,recorded EOD balance / carry-forward; not confirmed lost sales
+UAH-90385-18025,eod_low_stock,2022-08-02,2022-08-15,14,6,105.0,recorded EOD balance / carry-forward; not confirmed lost sales

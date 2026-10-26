@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools>=75"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "kardex-demand"
+version = "0.1.0"
+description = "Auditable Kardex analysis, temporal forecasting, and hypothetical inventory policies"
+requires-python = ">=3.12"
+dependencies = [
+  "pandas>=2.2,<3", "numpy>=2.0,<3", "scipy>=1.14,<2",
+  "matplotlib>=3.9,<4", "seaborn>=0.13,<0.14", "scikit-learn>=1.6,<2",
+  "statsmodels>=0.14.4,<0.15", "nbformat>=5.10,<6", "nbclient>=0.10,<0.11",
+  "ipykernel>=6.29,<8", "tabulate>=0.9,<1"
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8,<10"]
+
+[project.scripts]
+kardex-demand = "inventory_demand.pipeline:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]

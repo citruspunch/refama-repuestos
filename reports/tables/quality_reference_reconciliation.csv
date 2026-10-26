@@ -1,0 +1,36 @@
+codigo_producto,fecha,numero_documento,tipo_alerta,pagina_pdf,matched_movements,independently_negative,extraction_flag,reference_matched
+UAH-90385-18025,2022-06-28,10262,Saldo negativo,1,1,True,False,True
+UAH-90385-18025,2022-07-30,10541,Saldo negativo,2,1,True,False,True
+UAH-90385-18025,2022-10-28,B-39147,Nombre largo recuperado,3,1,False,True,True
+UAH-90385-18025,2023-02-23,B-39492,Nombre largo recuperado,4,1,False,True,True
+UAH-90385-18025,2023-05-24,12231,Nombre largo recuperado,4,1,False,True,True
+UAH-90385-18025,2023-06-29,12372,Nombre largo recuperado,5,1,False,True,True
+UAH-90385-18025,2023-07-05,B-39872,Nombre largo recuperado,5,1,False,True,True
+UAH-90385-18025,2023-07-28,12498,Nombre largo recuperado,5,1,False,True,True
+UAH-90385-18025,2023-08-05,12537,Nombre largo recuperado,5,1,False,True,True
+UAH-90385-18025,2023-08-28,B-40059,Nombre largo recuperado,5,1,False,True,True
+UAH-90385-18025,2023-12-07,B-40303,Nombre largo recuperado,6,1,False,True,True
+UAH-90385-18025,2024-03-14,13469,Nombre largo recuperado,7,1,False,True,True
+UAH-90385-18025,2024-04-17,B-40585,Nombre largo recuperado,7,1,False,True,True
+UAH-90385-18025,2024-10-01,B-40834,Nombre largo recuperado,8,1,False,True,True
+UAH-90385-18025,2024-10-04,14323,Nombre largo recuperado,8,1,False,True,True
+UAH-90385-18025,2024-11-20,14489,Nombre largo recuperado,9,1,False,True,True
+UAH-90385-18025,2025-02-18,14888,Nombre largo recuperado,10,1,False,True,True
+UAH-90385-18025,2025-02-28,B-40999,Nombre largo recuperado,10,1,False,True,True
+UAH-90385-18025,2025-05-03,15210,Nombre largo recuperado,10,1,False,True,True
+48815-14050,2022-06-08,,Documento sin número,1,1,False,True,True
+48815-14050,2023-02-04,11739,Nombre largo recuperado,3,1,False,True,True
+48815-14050,2023-02-23,B-39495,Nombre largo recuperado,3,1,False,True,True
+48815-14050,2023-06-28,12369,Nombre largo recuperado,4,1,False,True,True
+48815-14050,2023-08-14,12551,Nombre largo recuperado,4,1,False,True,True
+48815-14050,2023-12-07,B-40303,Nombre largo recuperado,5,1,False,True,True
+48815-14050,2024-03-02,B-40500,Nombre largo recuperado,6,1,False,True,True
+48815-14050,2024-04-03,13535,Nombre largo recuperado,6,1,False,True,True
+48815-14050,2024-05-08,13699,Nombre largo recuperado,6,1,False,True,True
+48815-14050,2024-07-12,13968,Nombre largo recuperado,7,1,False,True,True
+48815-14050,2024-11-12,B-40881,Nombre largo recuperado,7,1,False,True,True
+48815-14050,2024-12-16,B-40917,Nombre largo recuperado,7,1,False,True,True
+48815-14050,2025-09-17,15741,Nombre largo recuperado,9,1,False,True,True
+48815-14050,2025-09-26,B-41221,Nombre largo recuperado,9,1,False,True,True
+48815-14050,2026-05-14,16299,Nombre largo recuperado,10,1,False,True,True
+48815-14050,2026-07-31,16651,Nombre largo recuperado,10,1,False,True,True

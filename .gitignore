@@ -1,0 +1,11 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ipynb_checkpoints/
+*.egg-info/
+.DS_Store
+kernel-ipc-*
+# Source files and private transaction exports contain customer identities.
+kardex_csv/
+data/private/

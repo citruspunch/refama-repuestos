@@ -1,0 +1,3 @@
+codigo_producto,combined,other,refama,sum_segment_forecasts,combined_minus_sum_segments,warning
+48815-14050,96.33333333333333,30.0,36.249952692626906,66.2499526926269,30.083380640706423,independent scenario models need not add up; no accounting constraint was imposed
+UAH-90385-18025,0.0,0.0,68.46,68.46,-68.46,independent scenario models need not add up; no accounting constraint was imposed

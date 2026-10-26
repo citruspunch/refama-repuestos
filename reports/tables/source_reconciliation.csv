@@ -1,0 +1,3 @@
+file,source_rows,consolidated_rows,multiset_equal,only_individual,only_consolidated,same_product_order
+kardex_90385-18025.csv,583,583,True,0,0,True
+kardex_48815-14050.csv,479,479,True,0,0,True

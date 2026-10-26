@@ -1,0 +1,76 @@
+codigo_producto,movement_id,date,type,classification,quantity_in,quantity_out,balance,detail
+48815-14050,K00007,2022-06-08,document_or_repetition,potential_data_quality_problem,0.0,24,165.0,Investigate source; no movements deleted
+48815-14050,K00008,2022-06-08,document_or_repetition,potential_data_quality_problem,0.0,24,141.0,Investigate source; no movements deleted
+48815-14050,K00021,2022-06-17,document_or_repetition,potential_data_quality_problem,0.0,20,864.0,Investigate source; no movements deleted
+48815-14050,K00022,2022-06-17,document_or_repetition,potential_data_quality_problem,0.0,20,844.0,Investigate source; no movements deleted
+48815-14050,K00028,2022-06-24,large_adjustment,context_required,0.0,250,576.0,Absolute adjustment >= median interior monthly sales (105)
+48815-14050,K00130,2022-09-14,large_adjustment,context_required,191.0,0,358.0,Absolute adjustment >= median interior monthly sales (105)
+48815-14050,K00329,2023-05-22,document_or_repetition,potential_data_quality_problem,0.0,2,349.0,Investigate source; no movements deleted
+48815-14050,K00330,2023-05-22,document_or_repetition,potential_data_quality_problem,0.0,2,347.0,Investigate source; no movements deleted
+48815-14050,K00563,2024-04-02,large_sale,legitimate_but_unusual_or_context_needed,0.0,100,392.0,Above Q3+3*IQR=56; retained
+48815-14050,K00747,2025-01-16,document_or_repetition,potential_data_quality_problem,0.0,10,41.0,Investigate source; no movements deleted
+48815-14050,K00748,2025-01-16,document_or_repetition,potential_data_quality_problem,0.0,10,31.0,Investigate source; no movements deleted
+UAH-90385-18025,K00031,2022-06-28,negative_balance,potential_data_or_timing_problem,0.0,300,-81.0,"Arithmetically possible ledger, physically ambiguous"
+UAH-90385-18025,K00038,2022-07-02,large_adjustment,context_required,1400.0,0,1400.0,Absolute adjustment >= median interior monthly sales (949.5)
+UAH-90385-18025,K00047,2022-07-08,large_adjustment,context_required,2924.0,0,3800.0,Absolute adjustment >= median interior monthly sales (949.5)
+UAH-90385-18025,K00057,2022-07-15,large_sale,legitimate_but_unusual_or_context_needed,0.0,1000,3616.0,Above Q3+3*IQR=325; retained
+UAH-90385-18025,K00069,2022-07-23,large_sale,legitimate_but_unusual_or_context_needed,0.0,500,2819.0,Above Q3+3*IQR=325; retained
+UAH-90385-18025,K00073,2022-07-27,large_sale,legitimate_but_unusual_or_context_needed,0.0,500,2319.0,Above Q3+3*IQR=325; retained
+UAH-90385-18025,K00077,2022-07-29,large_sale,legitimate_but_unusual_or_context_needed,0.0,1000,1294.0,Above Q3+3*IQR=325; retained
+UAH-90385-18025,K00078,2022-07-29,large_sale,legitimate_but_unusual_or_context_needed,0.0,500,794.0,Above Q3+3*IQR=325; retained
+UAH-90385-18025,K00080,2022-07-30,large_sale,legitimate_but_unusual_or_context_needed,0.0,1000,-206.0,Above Q3+3*IQR=325; retained
+UAH-90385-18025,K00080,2022-07-30,negative_balance,potential_data_or_timing_problem,0.0,1000,-206.0,"Arithmetically possible ledger, physically ambiguous"
+UAH-90385-18025,K00097,2022-08-16,large_sale,legitimate_but_unusual_or_context_needed,0.0,600,335.0,Above Q3+3*IQR=325; retained
+UAH-90385-18025,K00101,2022-08-18,large_sale,legitimate_but_unusual_or_context_needed,0.0,500,478.0,Above Q3+3*IQR=325; retained
+UAH-90385-18025,K00121,2022-09-07,large_sale,legitimate_but_unusual_or_context_needed,0.0,500,8666.0,Above Q3+3*IQR=325; retained
+UAH-90385-18025,K00125,2022-09-10,large_sale,legitimate_but_unusual_or_context_needed,0.0,800,7466.0,Above Q3+3*IQR=325; retained
+UAH-90385-18025,K00131,2022-09-14,large_sale,legitimate_but_unusual_or_context_needed,0.0,500,12441.0,Above Q3+3*IQR=325; retained
+UAH-90385-18025,K00205,2022-12-22,large_sale,legitimate_but_unusual_or_context_needed,0.0,500,12366.0,Above Q3+3*IQR=325; retained
+UAH-90385-18025,K00213,2023-01-11,large_sale,legitimate_but_unusual_or_context_needed,0.0,2000,9911.0,Above Q3+3*IQR=325; retained
+UAH-90385-18025,K00218,2023-01-17,large_sale,legitimate_but_unusual_or_context_needed,0.0,1000,8867.0,Above Q3+3*IQR=325; retained
+UAH-90385-18025,K00234,2023-02-08,large_sale,legitimate_but_unusual_or_context_needed,0.0,1000,7631.0,Above Q3+3*IQR=325; retained
+UAH-90385-18025,K00238,2023-02-10,large_sale,legitimate_but_unusual_or_context_needed,0.0,1000,6386.0,Above Q3+3*IQR=325; retained
+UAH-90385-18025,K00242,2023-02-17,large_sale,legitimate_but_unusual_or_context_needed,0.0,400,5730.0,Above Q3+3*IQR=325; retained
+UAH-90385-18025,K00250,2023-02-24,large_sale,legitimate_but_unusual_or_context_needed,0.0,500,5130.0,Above Q3+3*IQR=325; retained
+UAH-90385-18025,K00256,2023-03-03,large_sale,legitimate_but_unusual_or_context_needed,0.0,500,4230.0,Above Q3+3*IQR=325; retained
+UAH-90385-18025,K00283,2023-03-27,large_sale,legitimate_but_unusual_or_context_needed,0.0,1000,9646.0,Above Q3+3*IQR=325; retained
+UAH-90385-18025,K00284,2023-03-27,large_sale,legitimate_but_unusual_or_context_needed,0.0,1000,8646.0,Above Q3+3*IQR=325; retained
+UAH-90385-18025,K00289,2023-03-31,large_sale,legitimate_but_unusual_or_context_needed,0.0,600,8031.0,Above Q3+3*IQR=325; retained
+UAH-90385-18025,K00317,2023-05-10,large_sale,legitimate_but_unusual_or_context_needed,0.0,1000,6733.0,Above Q3+3*IQR=325; retained
+UAH-90385-18025,K00318,2023-05-10,large_sale,legitimate_but_unusual_or_context_needed,0.0,500,6233.0,Above Q3+3*IQR=325; retained
+UAH-90385-18025,K00353,2023-06-19,large_sale,legitimate_but_unusual_or_context_needed,0.0,400,12494.0,Above Q3+3*IQR=325; retained
+UAH-90385-18025,K00379,2023-08-04,large_sale,legitimate_but_unusual_or_context_needed,0.0,500,10919.0,Above Q3+3*IQR=325; retained
+UAH-90385-18025,K00380,2023-08-04,large_sale,legitimate_but_unusual_or_context_needed,0.0,500,10419.0,Above Q3+3*IQR=325; retained
+UAH-90385-18025,K00414,2023-09-21,large_sale,legitimate_but_unusual_or_context_needed,0.0,500,10143.0,Above Q3+3*IQR=325; retained
+UAH-90385-18025,K00434,2023-10-31,large_sale,legitimate_but_unusual_or_context_needed,0.0,671,9601.0,Above Q3+3*IQR=325; retained
+UAH-90385-18025,K00450,2023-11-24,large_sale,legitimate_but_unusual_or_context_needed,0.0,700,8071.0,Above Q3+3*IQR=325; retained
+UAH-90385-18025,K00453,2023-11-28,large_sale,legitimate_but_unusual_or_context_needed,0.0,500,7571.0,Above Q3+3*IQR=325; retained
+UAH-90385-18025,K00460,2023-12-06,document_or_repetition,potential_data_quality_problem,0.0,50,7418.0,Investigate source; no movements deleted
+UAH-90385-18025,K00461,2023-12-06,document_or_repetition,potential_data_quality_problem,0.0,50,7368.0,Investigate source; no movements deleted
+UAH-90385-18025,K00483,2024-01-11,large_adjustment,context_required,0.0,5582,2170.0,Absolute adjustment >= median interior monthly sales (949.5)
+UAH-90385-18025,K00504,2024-01-31,large_sale,legitimate_but_unusual_or_context_needed,0.0,400,3082.0,Above Q3+3*IQR=325; retained
+UAH-90385-18025,K00521,2024-02-19,large_sale,legitimate_but_unusual_or_context_needed,0.0,1000,1586.0,Above Q3+3*IQR=325; retained
+UAH-90385-18025,K00525,2024-02-20,large_sale,legitimate_but_unusual_or_context_needed,0.0,500,1086.0,Above Q3+3*IQR=325; retained
+UAH-90385-18025,K00551,2024-03-13,document_or_repetition,potential_data_quality_problem,900.0,0,5056.0,Investigate source; no movements deleted
+UAH-90385-18025,K00552,2024-03-13,document_or_repetition,potential_data_quality_problem,900.0,0,5956.0,Investigate source; no movements deleted
+UAH-90385-18025,K00571,2024-04-05,large_sale,legitimate_but_unusual_or_context_needed,0.0,1000,8731.0,Above Q3+3*IQR=325; retained
+UAH-90385-18025,K00585,2024-04-25,large_sale,legitimate_but_unusual_or_context_needed,0.0,500,7742.0,Above Q3+3*IQR=325; retained
+UAH-90385-18025,K00593,2024-05-09,large_sale,legitimate_but_unusual_or_context_needed,0.0,500,6972.0,Above Q3+3*IQR=325; retained
+UAH-90385-18025,K00611,2024-05-31,large_sale,legitimate_but_unusual_or_context_needed,0.0,500,5888.0,Above Q3+3*IQR=325; retained
+UAH-90385-18025,K00618,2024-06-07,large_sale,legitimate_but_unusual_or_context_needed,0.0,364,5369.0,Above Q3+3*IQR=325; retained
+UAH-90385-18025,K00651,2024-08-02,large_sale,legitimate_but_unusual_or_context_needed,0.0,1000,3673.0,Above Q3+3*IQR=325; retained
+UAH-90385-18025,K00686,2024-10-09,large_sale,legitimate_but_unusual_or_context_needed,0.0,500,2416.0,Above Q3+3*IQR=325; retained
+UAH-90385-18025,K00693,2024-10-22,large_sale,legitimate_but_unusual_or_context_needed,0.0,500,1816.0,Above Q3+3*IQR=325; retained
+UAH-90385-18025,K00750,2025-01-17,large_sale,legitimate_but_unusual_or_context_needed,0.0,1000,5074.0,Above Q3+3*IQR=325; retained
+UAH-90385-18025,K00766,2025-02-05,large_sale,legitimate_but_unusual_or_context_needed,0.0,500,4224.0,Above Q3+3*IQR=325; retained
+UAH-90385-18025,K00773,2025-02-13,large_sale,legitimate_but_unusual_or_context_needed,0.0,500,3524.0,Above Q3+3*IQR=325; retained
+UAH-90385-18025,K00902,2025-06-21,large_sale,legitimate_but_unusual_or_context_needed,0.0,500,1414.0,Above Q3+3*IQR=325; retained
+UAH-90385-18025,K00974,2025-11-24,large_sale,legitimate_but_unusual_or_context_needed,0.0,500,9638.0,Above Q3+3*IQR=325; retained
+UAH-90385-18025,K01004,2026-02-27,large_sale,legitimate_but_unusual_or_context_needed,0.0,1000,7760.0,Above Q3+3*IQR=325; retained
+UAH-90385-18025,K01016,2026-04-22,large_sale,legitimate_but_unusual_or_context_needed,0.0,500,6867.0,Above Q3+3*IQR=325; retained
+UAH-90385-18025,,2022-08-01,abrupt_monthly_change_combined,context_required,,1720,,Monthly difference robust z>3.5; not evidence of a transcription error
+UAH-90385-18025,,2022-10-01,abrupt_monthly_change_combined,context_required,,496,,Monthly difference robust z>3.5; not evidence of a transcription error
+UAH-90385-18025,,2023-04-01,abrupt_monthly_change_combined,context_required,,298,,Monthly difference robust z>3.5; not evidence of a transcription error
+UAH-90385-18025,,2022-08-01,abrupt_monthly_change_other,context_required,,1705,,Monthly difference robust z>3.5; not evidence of a transcription error
+UAH-90385-18025,,2022-10-01,abrupt_monthly_change_other,context_required,,496,,Monthly difference robust z>3.5; not evidence of a transcription error
+UAH-90385-18025,,2023-04-01,abrupt_monthly_change_other,context_required,,278,,Monthly difference robust z>3.5; not evidence of a transcription error

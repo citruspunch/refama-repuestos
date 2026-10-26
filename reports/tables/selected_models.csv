@@ -1,0 +1,7 @@
+codigo_producto,scenario,model,best_raw_mae_model,selected_validation_mae,best_validation_mae,selection_rule,validation_start,validation_end,holdout_start,holdout_end,n_validation,n_holdout
+48815-14050,combined,moving_average_3,ets_damped,34.95238095238095,34.01864635793046,simplest within 5% of lowest validation MAE; final holdout never selects,2024-07-01,2026-03-01,2026-04-01,2026-09-01,21,6
+48815-14050,other,naive,moving_average_3,37.714285714285715,36.666666666666664,simplest within 5% of lowest validation MAE; final holdout never selects,2024-07-01,2026-03-01,2026-04-01,2026-09-01,21,6
+48815-14050,refama,ets_seasonal_add,ets_seasonal_add,19.404788278340604,19.404788278340604,simplest within 5% of lowest validation MAE; final holdout never selects,2024-07-01,2026-03-01,2026-04-01,2026-09-01,21,6
+UAH-90385-18025,combined,ridge,linear_regression,380.64893205138605,371.26564359689013,simplest within 5% of lowest validation MAE; final holdout never selects,2024-07-01,2026-02-01,2026-03-01,2026-08-01,20,6
+UAH-90385-18025,other,ridge,ridge,370.3086186505172,370.3086186505172,simplest within 5% of lowest validation MAE; final holdout never selects,2024-07-01,2026-02-01,2026-03-01,2026-08-01,20,6
+UAH-90385-18025,refama,historical_average,ridge,60.206323033190856,57.44697580624536,simplest within 5% of lowest validation MAE; final holdout never selects,2024-07-01,2026-02-01,2026-03-01,2026-08-01,20,6

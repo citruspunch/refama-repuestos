@@ -1,0 +1,30 @@
+check,flagged_rows,action
+invalid_date,0,retain and investigate; no automatic deletion
+pdf_date_mismatch,0,retain and investigate; no automatic deletion
+future_date,0,retain and investigate; no automatic deletion
+invalid_numeric,0,retain and investigate; no automatic deletion
+invalid_pdf_sequence,0,retain and investigate; no automatic deletion
+fractional_quantity,0,retain and investigate; no automatic deletion
+negative_quantity,0,retain and investigate; no automatic deletion
+both_in_and_out,0,retain and investigate; no automatic deletion
+unknown_type,0,retain and investigate; no automatic deletion
+unknown_product,0,retain and investigate; no automatic deletion
+invalid_refama_flag,0,retain and investigate; no automatic deletion
+sale_direction_issue,0,retain and investigate; no automatic deletion
+refama_flag_on_non_sale,0,retain and investigate; no automatic deletion
+missing_document,1,retain and investigate; no automatic deletion
+extraction_flag,33,retain and investigate; no automatic deletion
+source_balance_flag,0,retain and investigate; no automatic deletion
+text_encoding_issue,47,retain and investigate; no automatic deletion
+exact_duplicate_candidate,0,retain and investigate; no automatic deletion
+repeated_business_candidate,12,retain and investigate; no automatic deletion
+repeated_document_candidate,0,retain and investigate; no automatic deletion
+sequence_collision,0,retain and investigate; no automatic deletion
+source_date_reversal,0,retain and investigate; no automatic deletion
+source_order_reversal,0,retain and investigate; no automatic deletion
+source_sequence_gap,0,retain and investigate; no automatic deletion
+balance_discrepancy,0,retain and investigate; no automatic deletion
+negative_balance,2,retain and investigate; no automatic deletion
+zero_balance,10,retain and investigate; no automatic deletion
+adjustment_requires_context,23,retain and investigate; no automatic deletion
+excluded_from_analysis,0,preserved in validated transactions
