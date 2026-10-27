@@ -2,7 +2,7 @@ import test from "node:test"
 import assert from "node:assert/strict"
 import { readFileSync } from "node:fs"
 import { loadEvidence } from "../evidence-loader.js"
-import { BUSINESS } from "../src/business.js"
+import { BUSINESS, number } from "../src/business.js"
 import { CHART_COLORS, PRODUCT_STROKES, contrast, heatmapColor } from "../src/chart-colors.js"
 
 const evidence = loadEvidence()
@@ -148,18 +148,11 @@ test("los trazos de producto tienen contraste mínimo de 3 sin contorno", () => 
   }
 })
 
-test("los 52 MAE de consulta del guion coinciden con las tablas a dos decimales", () => {
+test("los MAE conservados en las notas coinciden con las tablas fuente", () => {
   const text = readFileSync(new URL("../GUION.md", import.meta.url), "utf8")
-  const start = text.indexOf("| Método | A, MAE validación |")
-  assert.ok(start > 0)
-  const rows = text.slice(start).split("\n").filter((line) => line.startsWith("|")).slice(2, 15)
-  const models = ["naive", "moving_average_3", "moving_average_6", "historical_average", "seasonal_naive", "ets_level", "ets_damped", "ets_seasonal_add", "ridge", "linear_regression", "sarima", "random_forest", "gradient_boosting"]
-  assert.equal(rows.length, models.length)
-  rows.forEach((line, index) => {
-    const values = line.split("|").slice(2, 6).map((value) => Number(value.trim().replaceAll(",", "")))
-    const expected = ["A", "B"].flatMap((id) => ["validation", "holdout"].map((phase) => Number(
-      evidence.products[id].comparison.find((row) => row.model === models[index] && row.phase === phase).mae.toFixed(2),
-    )))
-    assert.deepEqual(values, expected)
-  })
+  const results = text.split("## 18.")[1].split("## 19.")[0]
+  for (const p of Object.values(evidence.products)) for (const model of [p.selection.model, "naive"]) {
+    const score = p.comparison.find((row) => row.phase === "holdout" && row.model === model)
+    assert.ok(results.includes(number(score.mae, 2)))
+  }
 })

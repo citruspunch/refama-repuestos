@@ -31,6 +31,13 @@ Read these references as needed:
 | [Design system](references/design-system.md) | Stage, typography, composition, controls, accessibility |
 | [Architecture and schemas](references/architecture.md) | Storyboard, slide registry, cue values, URL state, playback |
 | [Charts and evidence](references/chart-patterns.md) | Scientific accuracy, data contracts, Recharts, live SVG |
+| [Optional number ticker](references/number-ticker.md) | Count-up animation requested for a few headline metrics; selection rules, copyable component, playback and accessibility checks |
+| [Optional highlighter](references/highlighter.md) | Underline, circle, or highlight a short phrase at its explanatory cue |
+| [Optional animated beam](references/animated-beam.md) | Explain direction or sequence between diagram nodes with a finite connection animation |
+| [Optional lens](references/lens.md) | Magnify a meaningful detail in an image or document; scripted in Present, interactive in Explore |
+| [Optional code comparison](references/code-comparison.md) | Explain an actual before/after code change with readable, accessible differences |
+| [Optional blur fade](references/blur-fade.md) | Introduce a selected visual block without duplicating existing entrance effects |
+| [Optional animated list](references/animated-list.md) | Reveal narrative list items with the clicker in reading order; optional short cascade for one selected group |
 | [Validation and delivery](references/validation.md) | Unit/browser checks, offline verification, build workflow |
 | [Optional presenter remote](references/presenter-remote.md) | Private notes, local server, phone controls, connection safety |
 
@@ -106,6 +113,8 @@ Use the fixed **1600×900** stage and scale by `min(viewportWidth/1600, viewport
 - Prefer `.split`, `.stack`, open `.bignums`, icon-led `.facts`, and meaningful diagrams. Use `.panel`, `.scene`, `.chart-card`, small readouts, segmented controls, and status chips **when they group actual information or interaction**. They are not universally prohibited.
 - Content slides should not accumulate decorative eyebrow pills or redundant subtitles. A quiet chapter HUD, a cover kicker/summary, panel labels, legends, and technical annotations are purposeful and allowed.
 - No unrelated logos, watermarks, dashboard-like stat grids, invented metrics, or icons added just to fill space. Do not require headline numbers on every slide or on a cover without relevant evidence.
+- Count-up is optional, never a default for every number. When requested or justified by a headline metric, read the number-ticker reference above; keep tables, chart labels, and supporting figures static.
+- The optional visual references above are alternatives, not a checklist. Read only those relevant to the requested explanation. Keep them out of the default starter, reuse the installed stack, and adapt upstream examples to cue-driven playback, reduced motion, accessibility, and offline delivery before shipping.
 - Avoid repetitive `.src` footers by default. Preserve traceability in data/model files, notes, or an appendix; follow the target's citation conventions and show on-slide attribution when requested or required.
 
 ## 6. Protect content and evidence

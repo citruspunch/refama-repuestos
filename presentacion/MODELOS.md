@@ -1,40 +1,32 @@
 # Notas de la introducción visual de modelos
 
-Complemento del guion archivado, sin modificar `GUION.md`. Corresponde a las diapositivas 17 a 19 del HTML actual. Tiempo previsto de 1:30 por diapositiva, 4:30 en total.
+Apoyo para las diapositivas 13 y 14. Las notas completas están en [GUION.md](GUION.md). Tiempo orientativo de 7 minutos entre ambas.
 
-En Presentar, cada flecha avanza un paso. Las animaciones terminan sin avanzar la exposición. G permite comparar métodos en Explorar; R repite la entrada y P pausa o reanuda.
+Cada flecha avanza un paso. Las animaciones terminan sin avanzar la exposición. R repite la entrada visual.
 
-## 17. Copiar o promediar
+## 13. Dos formas sencillas de pronosticar
 
 Las barras son ventas reales registradas de B. El color destaca los meses que aportan al cálculo; la barra separada representa el mes siguiente al corte histórico.
 
 | Paso | Explicación breve |
 | --- | --- |
-| Naive | Copia agosto de 2026, 114 unidades. Es una referencia sencilla para comparar los demás métodos. |
-| Media de 3 | Junio, julio y agosto aportan por igual. Su promedio es 79 unidades. |
+| Último mes | Copia agosto de 2026, 114 unidades. Es una referencia sencilla para comparar los demás métodos. |
+| Promedio de 3 meses | Junio, julio y agosto aportan por igual. Su promedio es 79 unidades. |
 | Avanzar la ventana | Septiembre entra con 75 y junio sale. Julio, agosto y septiembre dan 96.3 unidades. Es un mes ya archivado, no una venta simulada. |
-| Media de 6 | La ventana se amplía de abril a septiembre. Da 61.8 unidades y reacciona menos a un solo mes. Más historia no garantiza menor error. |
 
-Estos cálculos enseñan el funcionamiento. No son previsiones vigentes ni una nueva evaluación de precisión.
+Estos cálculos enseñan el funcionamiento. La precisión se evalúa después con ventas posteriores.
 
-## 18. Regresión y Ridge
-
-| Paso | Explicación breve |
-| --- | --- |
-| Regresión lineal | Aprende cómo combinar señales del pasado para estimar la venta siguiente. La recta resume la relación de una sola señal en nueve puntos didácticos. |
-| Ridge | Añade una penalización a los pesos grandes. En este ejemplo baja la pendiente y se acorta el indicador de influencia. No garantiza acertar ni evita previsiones negativas. |
-
-Los modelos reales usan siete entradas. Son tres ventas previas, su promedio, el paso del tiempo y dos variables de calendario. La recta no representa sus pesos ni su ajuste real.
-
-## 19. Random forest
+## 14. Regresión lineal y Ridge
 
 | Paso | Explicación breve |
 | --- | --- |
-| Un árbol | Hace preguntas sobre las entradas y sigue una ruta hasta una estimación. Las preguntas dibujadas son ilustrativas, no las del bosque entrenado. No se evaluó un árbol aislado como candidato. |
-| El bosque | Combina árboles entrenados con muestras y selección de variables distintas. Las estimaciones didácticas de 60, 90 y 75 dan un promedio de 75 unidades. El proyecto usó 80 árboles, no tres. |
+| Regresión lineal | Aprende cómo combinar variables del pasado para estimar la venta siguiente. La recta ilustra una relación con una sola entrada. |
+| Ridge | Penaliza los pesos grandes para reducir el sobreajuste. El cambio de pendiente enseña la idea, no demuestra una mejora de precisión. |
+
+Los modelos del proyecto usan las tres ventas previas, su promedio, el paso del tiempo y el calendario. La recta es didáctica y no representa el ajuste real de RUJAF.
 
 ## Transición a la evaluación
 
-Estos seis métodos tienen resultados ejecutados en el proyecto. La introducción omite SARIMA, ETS y los demás métodos técnicos; la tabla completa de resultados se conserva. La diapositiva siguiente explica cómo se probó el mes siguiente sin usar sus ventas para entrenar.
+Se mencionan brevemente otros métodos de pronóstico, sin dedicarles una explicación individual. La diapositiva siguiente muestra cómo se entrenó con el pasado y se probó con un mes posterior.
 
-Los modelos fijados son Ridge para A y D, media de 3 meses para B y C, y cero para E. La selección real y la precisión se presentan después; los dibujos no justifican elegir un modelo.
+Los métodos elegidos son Ridge para A y D, promedio de tres meses para B y C, y referencia cero para E. Su selección y precisión se presentan después. Los dibujos no justifican elegir un modelo.

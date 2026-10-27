@@ -17,7 +17,9 @@ All skill resources resolve relative to the directory containing `SKILL.md`. The
 
 - **Reusable defaults:** the visual system, scaled stage, React/Vite starter, slide/cue contracts, Present/Explore interactions, accessibility, testing, and HTML delivery.
 - **Discovered or supplied for each task:** topic, audience, language, branding, destination, source documents, data, citations, domain conventions, and delivery constraints.
-- **Optional:** charts, math, numerical models, speaker notes, and phone controls. Do not add these when the subject does not need them.
+- **Optional:** charts, math, numerical models, speaker notes, phone controls, and [selective count-up for headline metrics](references/number-ticker.md). Do not add these when the subject does not need them.
+
+Other optional visual recipes are [highlighter](references/highlighter.md), [animated beam](references/animated-beam.md), [lens](references/lens.md), [code comparison](references/code-comparison.md), [blur fade](references/blur-fade.md), and [cue-driven animated list](references/animated-list.md). Each is linked directly from `SKILL.md` and loaded only for a relevant task. They are not enabled in the starter and require no installation until selected for a destination deck.
 
 For an existing presentation, preserve its architecture and design. For a new one, adapt the [bundled starter](references/starter/README.md), replace its removable analytical example, and keep only needed capabilities. The skill does not force a technical subject or a specific narrative.
 

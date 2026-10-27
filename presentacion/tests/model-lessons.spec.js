@@ -82,34 +82,24 @@ test("las flechas recorren la explicación y vuelven al bloque de validación", 
   expect(page.url()).toBe(location)
 })
 
-test("Explorar cambia el método, repetir lo conserva y Presentar recupera el paso", async ({ page }) => {
+test("el método sigue el guion y repetir conserva el paso", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce" })
   await page.goto(`/${hashFor("modelos-referencias", 1)}`)
   await expect(page.locator(".lesson-body")).toHaveAttribute("data-model", "moving_average_3")
-  await page.keyboard.press("g")
-  await page.getByRole("button", { name: "Media de 6", exact: true }).click()
-  await expect(page.locator(".lesson-body")).toHaveAttribute("data-model", "moving_average_6")
   await page.keyboard.press("r")
-  await expect(page.locator(".lesson-body")).toHaveAttribute("data-model", "moving_average_6")
-  await page.keyboard.press("g")
   await expect(page.locator(".lesson-body")).toHaveAttribute("data-model", "moving_average_3")
-  await expect(page.getByRole("button", { name: "Media de 6", exact: true })).toBeDisabled()
+  await expect(page.getByRole("button", { name: "Promedio de 3 meses", exact: true })).toBeDisabled()
+  await page.keyboard.press("PageUp")
+  await expect(page.locator(".lesson-body")).toHaveAttribute("data-model", "naive")
 })
 
-test("las animaciones de modelos se pausan, reanudan y respetan movimiento reducido", async ({ page }) => {
+test("las animaciones de modelos terminan y respetan movimiento reducido", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "no-preference" })
   await page.goto(`/${hashFor("modelos-referencias", 1)}`)
   await page.keyboard.press("r")
   const state = () => page.locator(".lesson-body").evaluate((root) => root.getAnimations({ subtree: true }).map((animation) => ({ name: animation.animationName, time: animation.currentTime, state: animation.playState, iterations: animation.effect.getTiming().iterations })))
   await expect.poll(async () => (await state()).some((animation) => animation.time > 150 && animation.state === "running")).toBe(true)
-  await page.keyboard.press("p")
-  await page.locator(".lesson-body").evaluate(async (root) => { await Promise.all(root.getAnimations({ subtree: true }).map((animation) => animation.ready)) })
-  const frozen = await state()
-  expect(frozen.length).toBeGreaterThan(0)
-  expect(frozen.every((animation) => animation.state === "paused" && animation.iterations === 1)).toBe(true)
-  await page.waitForTimeout(120)
-  expect(await state()).toEqual(frozen)
-  await page.keyboard.press("p")
+  expect((await state()).every((animation) => animation.iterations === 1)).toBe(true)
   await expect.poll(async () => (await state()).every((animation) => animation.state === "finished")).toBe(true)
   await page.keyboard.press("r")
   await expect.poll(async () => (await state()).some((animation) => animation.state === "running")).toBe(true)
@@ -118,7 +108,7 @@ test("las animaciones de modelos se pausan, reanudan y respetan movimiento reduc
   await expect(page.locator(".lesson-trace")).toHaveCSS("clip-path", "none")
 })
 
-test("los ocho pasos visuales funcionan en el HTML sin red", async ({ page, context }) => {
+test("los cinco pasos de modelos funcionan en el HTML sin red", async ({ page, context }) => {
   const requests = []
   page.on("request", (request) => { if (/^https?:/.test(request.url())) requests.push(request.url()) })
   await context.setOffline(true)

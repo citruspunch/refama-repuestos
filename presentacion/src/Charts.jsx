@@ -1,10 +1,10 @@
 import React from "react"
 import { Bar, BarChart, CartesianGrid, Cell, LabelList, Line, LineChart, ReferenceArea, ReferenceLine, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts"
 import evidence from "virtual:rujaf-evidence"
-import { BUSINESS, MODEL_NAMES, month, number, percent } from "./business.js"
+import { BUSINESS, MODEL_NAMES, month, number } from "./business.js"
 import { ProductLabel } from "./ui.jsx"
 import { CHART_COLORS, PRODUCT_STROKES, heatmapColor } from "./chart-colors.js"
-import { comparablePeriod, forecastSeries, salesSeries } from "./analysis.js"
+import { forecastSeries, salesSeries } from "./analysis.js"
 
 export const product = (id) => evidence.products[id]
 export const portfolio = evidence
@@ -54,7 +54,6 @@ export const SalesChart = React.memo(function SalesChart({ id, domain, color }) 
 export const PortfolioSales = React.memo(function PortfolioSales() {
   const { series, domain } = salesSeries(evidence.products)
   return <figure className="portfolio-sales" aria-label="Evolución de las ventas de los cinco productos">
-    <figcaption className="chart-intro">Ventas mensuales, u. Escala vertical propia. Cambio de 2026 frente al mismo período de 2025.</figcaption>
     <div className="product-chart-grid sales-grid">{series.map(({ id }) => <TrendPanel id={id} domain={domain} key={id} />)}</div>
   </figure>
 })
@@ -81,13 +80,10 @@ export const BaselineComparison = React.memo(function BaselineComparison() {
 })
 
 export function TrendPanel({ id, domain }) {
-  const latest = product(id).ytd.at(-1)
   return <figure className="chart-panel" data-product={id}>
     <ProductLabel id={id}>{BUSINESS[id].shortName}</ProductLabel>
     <SalesChart id={id} domain={domain} />
-    <figcaption className="grid-ytd"><strong>{percent(latest.yoy_growth)}</strong>
-      <span>{comparablePeriod(product(id))} · 2026/2025</span>
-    </figcaption>
+    <figcaption className="grid-ytd"><span>Unidades por mes · Escala propia</span></figcaption>
   </figure>
 }
 

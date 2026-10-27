@@ -37,7 +37,7 @@
 .lesson-readout > strong { font-size: 80px; line-height: 1; letter-spacing: -.04em; font-weight: 650; }
 .lesson-readout > strong small { display: block; font-size: 23px; line-height: 1.4; letter-spacing: 0; font-weight: 400; margin-top: 7px; }
 .lesson-detail { border-top: 1px solid var(--line); padding-top: 15px; font-size: 21px; line-height: 1.35; color: var(--text-2); }
-.lesson-footer { font-size: 19px; line-height: 1.4; color: var(--text-2); border-top: 1px solid var(--line); padding-top: 15px; }
+.lesson-footer { font-size: 19px; line-height: 1.4; color: var(--text-2); }
 .lesson-inputs { display: flex; align-items: center; justify-content: space-between; gap: 24px; font-size: 20px; color: var(--text-2); }
 .lesson-inputs > span { display: flex; gap: 14px; align-items: center; }
 .lesson-inputs b { display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; background: var(--paper-2); font-size: 20px; font-weight: 500; }

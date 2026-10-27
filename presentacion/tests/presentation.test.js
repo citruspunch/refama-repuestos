@@ -8,16 +8,19 @@ const scenario = STORY.findIndex((scene) => scene.id === "escenario-b")
 const route = STORY.slice(0, end + 1).flatMap((scene, slide) => scene.cues.map((_, step) => ({ slide, step })))
 const definitions = () => STORY.map((scene) => ({ id: scene.id, C: () => null, ch: "Capítulo de prueba" }))
 
-test("el registro tiene 33 diapositivas, introducción visual de modelos y cierre de resultados", () => {
+test("el registro tiene 26 diapositivas, explicación de ML y cierre de resultados", () => {
   const source = readFileSync(new URL("../src/slides.jsx", import.meta.url), "utf8")
   const ids = [...source.matchAll(/\{ id: "([^"]+)", C:/g)].map((match) => match[1])
   assert.deepEqual(ids, STORY.map((scene) => scene.id))
   assert.equal(validateStory(), STORY)
-  assert.equal(assembleSlides(definitions()).length, 33)
-  assert.equal(end, 32)
+  assert.equal(assembleSlides(definitions()).length, 26)
+  assert.equal(end, 25)
   assert.equal(STORY[end].id, "conclusiones")
   assert.ok(!STORY.some((scene) => ["piloto", "cierre"].includes(scene.id)))
-  assert.equal(STORY.reduce((sum, scene) => sum + scene.seconds, 0), 3270)
+  assert.equal(STORY.reduce((sum, scene) => sum + scene.seconds, 0), 3450)
+  assert.equal(route.length, 32)
+  for (const id of ["variables", "regresion", "validacion", "precision", "resultado-a", "escenario-a"]) assert.ok(STORY.some((scene) => scene.id === id))
+  assert.ok(!STORY.some((scene) => ["origen", "calidad", "canales", "estacionalidad", "modelos-arboles", "controles", "respaldo-modelos", "respaldo-supuestos"].includes(scene.id)))
 })
 
 test("el esquema rechaza identificadores repetidos, valores no finitos y entradas incompletas", () => {
@@ -75,15 +78,13 @@ test("el progreso mide los pasos principales sin aumentar por los anexos", () =>
   assert.equal(presentationProgress({ slide: end + 1 }), 1)
 })
 
-test("el guion archivado conserva sus secciones y duraciones sin exigir actualizar sus títulos", () => {
+test("las notas coinciden con todos los títulos y tiempos de la presentación", () => {
   const text = readFileSync(new URL("../GUION.md", import.meta.url), "utf8")
   const headings = [...text.matchAll(/^## \d{2}\. (.+)$/gm)].map((match) => match[1])
   const times = [...text.matchAll(/^Tiempo: (\d+):(\d{2})\./gm)].map((match) => Number(match[1]) * 60 + Number(match[2]))
-  // El guion queda fuera de esta revisión por indicación del usuario.
-  assert.equal(headings.length, 32)
-  assert.equal(times.reduce((sum, seconds) => sum + seconds, 0), 3180)
-  assert.equal((text.match(/^### En pantalla$/gm) || []).length, 32)
-  assert.equal((text.match(/^### Visual$/gm) || []).length, 32)
-  assert.equal((text.match(/^### Notas del presentador$/gm) || []).length, 32)
+  assert.deepEqual(headings, STORY.map((scene) => scene.title))
+  assert.deepEqual(times, STORY.map((scene) => scene.seconds))
+  assert.equal((text.match(/^### Notas del presentador$/gm) || []).length, STORY.length)
+  assert.doesNotMatch(text, /SHA-256|FDR|q armónico|48 escenarios|16 métodos|pruebas automatizadas|80 árboles|\.py\b/)
   assert.doesNotMatch(text, /piloto|próximos pasos|siguientes pasos|solicitamos/i)
 })

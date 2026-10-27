@@ -4,29 +4,20 @@ const cue = (label, values) => ({ label, values })
 
 export const MODEL_LESSONS = [
   {
-    id: "modelos-referencias", title: "Primero: copiar o promediar", seconds: 90,
-    models: ["naive", "moving_average_3", "moving_average_6"],
+    id: "modelos-referencias", title: "Dos formas sencillas de pronosticar", seconds: 180,
+    models: ["naive", "moving_average_3"],
     cues: [
-      cue("Naive repite el último mes observado", { method: "naive", monthsBack: 1 }),
+      cue("Repetir las ventas del último mes", { method: "naive", monthsBack: 1 }),
       cue("El promedio móvil toma los últimos tres meses", { method: "moving_average_3", monthsBack: 1 }),
       cue("Al llegar un mes, sale el más antiguo de la ventana", { method: "moving_average_3", monthsBack: 0 }),
-      cue("Una ventana de seis meses incorpora más historia", { method: "moving_average_6", monthsBack: 0 }),
     ],
   },
   {
-    id: "regresion", title: "Regresión y Ridge: aprender una relación", seconds: 90,
+    id: "regresion", title: "Regresión lineal y Ridge", seconds: 240,
     models: ["linear_regression", "ridge"],
     cues: [
       cue("La regresión aprende pesos para combinar las variables", { method: "linear_regression" }),
       cue("Ridge añade un freno a los pesos grandes", { method: "ridge" }),
-    ],
-  },
-  {
-    id: "modelos-arboles", title: "Random forest: muchas preguntas, una previsión", seconds: 90,
-    models: ["random_forest"],
-    cues: [
-      cue("Un árbol del conjunto separa meses con preguntas", { view: "tree" }),
-      cue("Random forest promedia árboles diferentes", { view: "forest" }),
     ],
   },
 ]
@@ -34,8 +25,8 @@ export const MODEL_LESSONS = [
 export const LESSON_STORY = MODEL_LESSONS.map(({ id, title, seconds, cues }) => ({ id, title, seconds, cues }))
 
 export const BASELINE_LABELS = {
-  naive: { tab: "Naive", title: "Repetir", text: "El último mes se convierte en la siguiente previsión." },
-  moving_average_3: { tab: "Media de 3", title: "Promediar 3", text: "Tres meses comparten el peso. La ventana se mueve cada mes." },
+  naive: { tab: "Último mes", title: "Repetir el último mes", text: "Suponer que el mes siguiente venderá lo mismo." },
+  moving_average_3: { tab: "Promedio de 3 meses", title: "Promediar tres meses", text: "Suaviza los cambios de un solo mes. Se actualiza con cada venta mensual." },
   moving_average_6: { tab: "Media de 6", title: "Promediar 6", text: "Más historia: menos reacción a un solo salto." },
 }
 

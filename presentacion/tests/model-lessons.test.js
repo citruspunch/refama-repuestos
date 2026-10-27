@@ -9,7 +9,7 @@ const close = (a, b) => assert.ok(Math.abs(a - b) < 1e-10, `${a} no coincide con
 
 test("la introducción explica solo métodos básicos que sí tienen resultados ejecutados", () => {
   const models = MODEL_LESSONS.flatMap((entry) => entry.models)
-  assert.deepEqual(models, ["naive", "moving_average_3", "moving_average_6", "linear_regression", "ridge", "random_forest"])
+  assert.deepEqual(models, ["naive", "moving_average_3", "linear_regression", "ridge"])
   for (const model of models) assert.ok(Object.values(evidence.products).some((p) =>
     p.comparison.some((row) => row.model === model && row.phase === "holdout" && row.origins === 6 && Number.isFinite(row.mae))), model)
   assert.ok(!models.some((model) => model === "sarima" || model.startsWith("ets_") || model === "croston_sba" || model === "tsb"))

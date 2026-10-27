@@ -23,6 +23,19 @@ function inside(base, path) {
 
 const sourceFiles = filesUnder(root)
 
+test("optional visual guides are directly discoverable from a compact entrypoint", () => {
+  const entry = readFileSync(join(root, "SKILL.md"), "utf8")
+  assert.ok(entry.split("\n").length < 500, "Keep detailed recipes out of SKILL.md")
+  const links = new Set([...entry.matchAll(/\[[^\]]*\]\(([^)]+)\)/g)].map((match) => match[1]))
+  for (const name of ["number-ticker", "highlighter", "animated-beam", "lens", "code-comparison", "blur-fade", "animated-list"]) {
+    const path = `references/${name}.md`
+    assert.ok(links.has(path), `${path}: must be linked directly, not through another guide`)
+    const guide = readFileSync(join(root, path), "utf8")
+    assert.ok(guide.trim().length > 0, `${path}: empty guide`)
+    assert.ok(guide.split("\n").length < 200, `${path}: keep optional guides focused`)
+  }
+})
+
 test("all local Markdown references resolve inside the skill package", () => {
   let links = 0
   for (const file of sourceFiles.filter((path) => extname(path) === ".md")) {

@@ -5,16 +5,16 @@ Presentación completa en español sobre el proyecto universitario de pronóstic
 ## Abrir la entrega
 
 - **[Presentación lista para proyectar](dist/index.html)**. Abrir el archivo en un navegador. No necesita servidor ni internet después de compilarse.
-- [Guion archivado](GUION.md). Conserva sus 32 entradas sin cambios en esta revisión; sus títulos y visuales pueden diferir de la presentación actual.
-- [Notas de la introducción visual de modelos](MODELOS.md). Ocho pasos para las diapositivas 17 a 19.
+- [Guion y notas del presentador](GUION.md). Incluye las 26 diapositivas, con títulos y tiempos sincronizados.
+- [Apoyo para explicar los modelos](MODELOS.md). Cinco pasos en las diapositivas 13 y 14.
 - [Fuentes y límites de la evidencia](EVIDENCIA.md).
 - [Comprobaciones y limitaciones de entrega](VALIDACION.md).
 
-Son 33 diapositivas integradas y 46 pasos, con las consultas técnicas antes de las conclusiones. La duración prevista suma 54:30. No es un tiempo medido en ensayo.
+Son 26 diapositivas y 32 pasos. La duración orientativa suma 57:30 y puede acortarse hacia 45 minutos al abreviar los ejemplos. No es un tiempo medido en ensayo.
 
-El contenido usa los resultados ejecutados de `five_products_v1`. Los cinco productos tienen el mismo detalle en catálogo, ventas, canales, estacionalidad, inventario, variables, validación, errores y producción. La compilación no entrena modelos ni modifica las métricas, artefactos, pruebas o el cuaderno históricos.
+La narrativa sigue el problema de la empresa, la preparación de los datos, los modelos, sus resultados y la simulación de inventarios. Conserva las comparaciones de los cinco productos y utiliza A y B para explicar las variables y los métodos con ejemplos concretos.
 
-C conserva su procedencia documental REFAMA dentro del conjunto de análisis RUJAF. Los cinco montos son precios de venta netos tras descuentos (precio_venta_neto_tras_descuento): A Q2.50, B Q12.00, C Q15.00, D Q2.50, E Q100.00; no son costos, márgenes ni ahorros. Los ritmos siguen siendo aproximaciones reportadas y E conserva 30 a 35 unidades por día productivo.
+El contenido usa los resultados ejecutados de `five_products_v1`, sin reentrenar modelos ni cambiar las métricas. Los detalles de procedencia, controles y métodos secundarios permanecen en la documentación técnica, fuera de las diapositivas y las notas de exposición.
 
 ## Presentar
 
@@ -27,13 +27,13 @@ C conserva su procedencia documental REFAMA dentro del conjunto de análisis RUJ
 | R | Repetir las entradas visuales |
 | ? o H | Abrir ayuda |
 
-No hay avance automático. La posición queda en `#diapositiva/paso`, con índices desde cero. `?mode=explore` conserva el modo Explorar y no elimina otros parámetros de la URL.
+No hay avance automático. La posición queda en `#diapositiva/paso`, con índices desde cero. El visor sigue el guion y conserva otros parámetros de la URL.
 
-Las diapositivas 17 a 19 introducen naive, promedios móviles de 3 y 6 meses, regresión lineal, Ridge y Random forest. Ocho pasos muestran qué meses aportan, cómo avanza la ventana, el freno de Ridge y el promedio de varios árboles. No incluyen SARIMA ni ETS. Todos los métodos explicados tienen resultados ejecutados; la tabla completa de modelos se conserva. Las referencias usan ventas reales de B; las rectas y los árboles son ejemplos didácticos, identificados como tales.
+Las diapositivas 13 y 14 explican repetir el último mes, promediar tres meses, regresión lineal y Ridge. Las referencias usan ventas reales de B. La recta es un ejemplo didáctico identificado como tal. Después se explican entrenamiento, validación temporal y MAE antes de mostrar la selección y la prueba final.
 
-En la diapositiva 28, Presentar compara cero y un mes de seguridad para los cinco productos. Explorar cambia las variantes archivadas de seguridad y días asignados de todos a la vez. No calcula un plan nuevo ni se conecta con la empresa. C muestra explícitamente cuándo el día asignado limita el lote. El cero de producción de A usa una previsión positiva, distinta del fallo de extrapolación de Ridge.
+La diapositiva 23 compara producir con cero o un mes de reserva. Se mantienen los saldos históricos y la restricción de producción de C. El cero de producción de A usa una previsión positiva, distinta del fallo de Ridge explicado antes.
 
-Los cinco permanecen visibles al comparar productos. Las diapositivas 22 y 23 presentan el MAE frente al último mes en los cinco y el caso intermitente de E. La 24 muestra cinco curvas de prueba final; la 29 compara los retiros registrados no servidos en la simulación.
+Los resultados presentan el MAE frente a repetir el último mes, las curvas de prueba final y el caso de E, donde predecir cero deja sin anticipar ventas. La simulación compara unidades que el inventario supuesto no pudo atender. No se presentan como ventas perdidas ni ahorros reales.
 
 Las notas están separadas del HTML de audiencia. Tener `GUION.md` y `MODELOS.md` en otro dispositivo o una copia impresa si se necesitan durante la exposición. No se añadió un control remoto ni un servidor de notas.
 
@@ -62,8 +62,8 @@ pnpm test:e2e
 
 | Archivo | Función |
 | --- | --- |
-| `GUION.md` | Guion archivado de 32 entradas, conservado sin actualizar |
-| `MODELOS.md` | Notas breves de los ocho pasos nuevos |
+| `GUION.md` | Notas y tiempos de las 26 diapositivas |
+| `MODELOS.md` | Apoyo breve para explicar los métodos principales |
 | `src/presentation.js` | Títulos, tiempos, pasos y navegación pura |
 | `src/slides.jsx` | Composición de diapositivas y registro ordenado |
 | `src/model-lessons.js` | Selección de modelos, pasos y cálculos de los ejemplos |
@@ -75,17 +75,17 @@ pnpm test:e2e
 | `src/App.jsx`, `src/App.css` | Controles, escenario fijo y estilo |
 | `evidence-loader.js` | Lectura de tablas públicas en compilación y huellas de procedencia |
 
-Los gráficos y lecturas numéricas importan las tablas del proyecto durante la compilación. No hay solicitudes a datos durante la exposición. Las pruebas validan el registro, la navegación, los datos y los escenarios. Por indicación del usuario, `GUION.md` se conserva sin actualizar en esta revisión y puede diferir de los títulos y visuales actuales.
+Los gráficos y lecturas numéricas importan las tablas del proyecto durante la compilación. No hay solicitudes a datos durante la exposición. Las pruebas validan el registro, la navegación, la coincidencia de las notas, los datos y los escenarios.
 
 ## Diseño y portabilidad
 
 Escenario fijo de 1600×900 que mantiene proporciones en pantallas 16:9 y proyectores 4:3. TikTok Sans y Montserrat se incluyen dentro del HTML, con sus licencias SIL OFL 1.1 en metadatos legibles. Montserrat se usa exclusivamente en peso Thin (100) y mayúsculas. No hay enlaces a fuentes remotas. Los íconos SVG están empaquetados.
 
-Se conserva papel frío y tinta ciruela. La paleta indicada para A a E es `#ffd22b`, `#feb204`, `#ff8503`, `#d53600` y `#700e01`. Los distintivos de A, B y C usan letras oscuras; D y E, blancas. Rellenos y etiquetas mantienen esos colores. Las líneas de A, B y C usan tonos más profundos para tener contraste sin contorno oscuro. Los trazos tienen remates redondeados y las barras no llevan borde. La barra de navegación sigue redondeada y los selectores aparecen solo en Explorar.
+Se conserva papel frío y tinta ciruela. La paleta indicada para A a E es `#ffd22b`, `#feb204`, `#ff8503`, `#d53600` y `#700e01`. Los distintivos de A, B y C usan letras oscuras; D y E, blancas. Rellenos y etiquetas mantienen esos colores. Las líneas de A, B y C usan tonos más profundos para tener contraste sin contorno oscuro. Los trazos tienen remates redondeados. La barra de navegación sigue redondeada.
 
-La portada identifica los cinco productos por nombre, código y color, sin minigráficas comprimidas. Las gráficas de ventas y de prueba final se distribuyen en dos filas: A y B arriba; C, D y E abajo. Las ventas históricas comparten eje temporal y conservan escalas verticales propias. Los errores finales mantienen las fechas específicas de cada producto.
+La portada identifica los productos por nombre y color. La tabla de productos conserva sus fotos, sin precios ni especificaciones secundarias. Las gráficas de ventas y prueba final mantienen dos filas, con A y B arriba y C, D y E abajo. Las ventas históricas comparten eje temporal y conservan escalas verticales propias. La prueba final mantiene las fechas de cada producto.
 
-Las filas entran con un desfase de 45 ms. Los conectores se dibujan una vez; trazos y barras se revelan sin alterar sus datos. Un resaltado breve acompaña el cambio de seguridad. Son animaciones CSS finitas, sin dependencias nuevas ni avance automático. Se pueden pausar y repetir; movimiento reducido muestra toda la información sin animación. Repetir en Explorar conserva los controles seleccionados.
+Las entradas visuales son finitas y se pueden repetir. Movimiento reducido muestra toda la información sin animación. No se añadieron dependencias ni controles interactivos nuevos.
 
 La identidad visual es editorial para este borrador, no una marca oficial de RUJAF. No se inventaron logotipos, autores, carreras o autoridades institucionales.
 
