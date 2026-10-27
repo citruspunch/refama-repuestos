@@ -1,0 +1,26 @@
+{
+  "description": "Historical sensitivity analysis only. Every planning setting below is assumed, not a confirmed RUJAF constraint. Days are allocated per SKU, not a shared feasible factory schedule.",
+  "days_per_month": 30,
+  "review_period_days": 30,
+  "production_lead_time_days": 7,
+  "available_production_days": [1, 5],
+  "safety_stock_months": [0, 1],
+  "batch_size_units": 1,
+  "minimum_batch_units": 0,
+  "maximum_production_units": null,
+  "maximum_inventory_units": null,
+  "reserved_stock_units": 0,
+  "restricted_stock_units": 0,
+  "backorders_units": 0,
+  "open_production_orders": [],
+  "products": {
+    "UAH-90385-18025": {
+      "units_per_production_day": 800,
+      "unclassified_net_unit_value": 2.5
+    },
+    "48815-14050": {
+      "units_per_production_day": 210,
+      "unclassified_net_unit_value": 12.0
+    }
+  }
+}

@@ -20,7 +20,7 @@ One row per original consolidated movement. No deletion, deduplication, or sales
 | `fecha`, `fecha_pdf`, `raw_fecha` | Parsed date, original PDF-formatted date, original ISO date text |
 | `tipo_movimiento` | VENTA / COMPRA / PRODUCCION / AJUSTE / DEVOLUCION C, never pooled as sales |
 | `entrada`, `salida`, `saldo`, `raw_*` | Parsed quantities/balance and preserved source text |
-| `venta_a_refama` | Original SI/NO grouping flag, not proof of retail demand |
+| `venta_a_refama` | Original SI/NO flag: RUJAF shipments to the Refama retail business, not consumer demand |
 | `pagina_pdf`, `orden_movimiento_pdf`, `source_row` | PDF provenance and original stable ordering |
 | `movement_id` | `K` plus original source line number; use for source investigations |
 | `is_sale`, `is_refama_sale` | Explicit sales/channel indicators |
@@ -48,7 +48,9 @@ Daily calendar rows between each product's first and last valid movement.
 ## `monthly_demand.csv`
 
 Unique key: `codigo_producto`, `scenario`, `month` (calendar month start).
-Scenarios: `combined`, `refama`, `other`. Combined actuals equal segment actuals exactly.
+Scenarios: `refama` = RUJAF shipments to Refama; `other` = RUJAF sales to other customers;
+`combined` = total recorded RUJAF outgoing sales. Combined actuals equal segment actuals exactly.
+Do not sum all three targets or add downstream POS sales for the same units.
 
 - `sales_units`, `sales_transactions`, `units_per_transaction`: recorded VENTA metrics.
 - `complete_for_modeling`: true only for provisional interior months.
@@ -91,3 +93,29 @@ partial-boundary context, warning flags, and explicit false live-availability fl
 `next_history_baseline_forecasts.csv`: simple reference forecasts, **not** revised test-selected winners.
 `inventory_scenarios.csv`: aligned recorded inventory and estimated demand plus explicitly named
 assumed lead time, service level, review coverage, pending orders/backorders; no actual optimization claim.
+
+## Additive RUJAF outputs (original files above are not replaced)
+
+- `reported_product_inputs.csv`: Q2.50/Q12.00 in `net_unit_value`, classification **unconfirmed**;
+  800/210 `units_per_production_day` as reported operating rates, **not verified capacity**.
+- `rujaf_demand_streams.csv`: historical metrics joined to explicit wholesale-stream definitions;
+  no new sales observations or modified totals.
+- `forecast_safeguard_predictions.csv`: original locked model/point, validity reasons, effective method/point,
+  fallback flag, cutoff/length and actual/error at the original expanding origins. `evaluation_status` is
+  post-hoc diagnostic, never independent new test evidence. Actuals do not enter safeguard decisions.
+- `forecast_safeguard_comparison.csv`: unchanged metric definitions for locked, guarded, naive and MA3 strategies
+  in each original phase; `successful_origins` and `fallback_origins` identify incomplete/replaced predictions.
+- `forecast_validity.csv`: effective last-history-month scenario forecast, source model/checks, heuristic guarded
+  validation residual standard deviation and 80% bands. `live_recommendation_allowed` is always false.
+- `production_scenarios.csv`: explicit historical balance cutoff, effective demand and uncertainty; assumed
+  good-unit rate, production days, lead/review days and safety stock; available stock, coverage, trigger, target,
+  due-dated pipeline, shortage/surplus, batch/capacity-constrained units and estimated runtime. Undefined zero-
+  demand coverage is blank, not infinite guaranteed coverage. `scenario_inputs_json` contains exact inputs;
+  all quantities are units or stated calendar/production days. Rows are alternatives, **not quantities to sum**.
+- `unclassified_value_scenarios.csv`: aligned historical stock × unclassified scenario reference value in GTQ,
+  labeled `unclassified_reference_only`. Original reported values, scenario overrides and override flags remain
+  distinct; manufacturing inventory value and actual savings remain unavailable.
+
+`artifacts/rujaf_planning_readiness.json` records scenario configuration, validity rules, missing manufacturing
+cost inputs and false live-approval status. `artifacts/historical_results_manifest.json` hashes retained
+pre-update files; original report prose is archived in `reports/history/pre_rujaf_update/`.

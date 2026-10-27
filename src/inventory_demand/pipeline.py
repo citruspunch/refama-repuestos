@@ -11,6 +11,7 @@ import pandas as pd
 
 from .cleaning import (anonymize_transactions, clean_transactions, match_quality_reference,
                        monthly_datasets, reconcile_monthly, reconstruct_daily)
+from .business_update import preserve_historical_results, update_existing_results, write_planning_outputs
 from .config import Config
 from .data import load_sources
 from .eda import run_eda
@@ -18,7 +19,7 @@ from .evaluation import run_backtests, scenario_coherence
 from .features import build_features
 from .financial import CostInputs, ReplayInputs, evaluate_costs
 from .inventory import inventory_scenarios
-from .reporting import write_findings, write_quality_report
+from .reporting import write_business_summary, write_findings, write_quality_report
 from .visualization import plot_eda, plot_models
 
 
@@ -49,7 +50,9 @@ def execute_notebook(config: Config):
     nbformat.write(nb, notebook_path)
 
 
-def run(config: Config, eda_only: bool = False, figures: bool = True) -> dict:
+def run(config: Config, eda_only: bool = False, figures: bool = True, scenario_path: Path | None = None) -> dict:
+    if (config.tables / "model_comparison.csv").exists():
+        preserve_historical_results(config)
     config.prepare()
     sources, source_checks = load_sources(config)
     transactions, checks = clean_transactions(sources["kardex_consolidado.csv"], config)
@@ -89,9 +92,11 @@ def run(config: Config, eda_only: bool = False, figures: bool = True) -> dict:
         tables["scenario_forecast_coherence"] = scenario_coherence(tables["next_history_month_forecasts"])
         tables["inventory_scenarios"] = inventory_scenarios(monthly, tables["next_history_month_forecasts"], tables["backtest_predictions"])
         save_tables(tables, config)
+        write_planning_outputs(monthly, tables, config, scenario_path or config.root / "scenarios" / "rujaf_planning.json")
         if figures:
             plot_models(monthly, tables, config)
         write_findings(tables, config)
+        write_business_summary(tables, config)
         financial_status = {"cost_evaluation": evaluate_costs(pd.DataFrame(), CostInputs()),
                             "policy_replay_readiness": ReplayInputs().readiness(), "actual_savings": None}
         (config.root / "artifacts" / "financial_readiness.json").write_text(json.dumps(financial_status, indent=2), encoding="utf-8")
@@ -114,10 +119,21 @@ def main():
     parser.add_argument("--skip-figures", action="store_true")
     parser.add_argument("--execute-notebook", action="store_true")
     parser.add_argument("--notebook-only", action="store_true")
+    parser.add_argument("--business-update-only", action="store_true", help="Use archived evaluation; do not retrain or rewrite historical numerical outputs")
+    parser.add_argument("--planning-scenarios", type=Path, help="Explicit production scenario JSON; default scenarios/rujaf_planning.json")
     args = parser.parse_args()
     config = Config(root=args.root.resolve(), as_of=args.as_of)
+    if args.business_update_only:
+        if args.eda_only or args.notebook_only or args.execute_notebook:
+            parser.error("--business-update-only cannot run EDA or execute the preserved notebook")
+        metadata = json.loads((config.root / "artifacts" / "run_metadata.json").read_text(encoding="utf-8"))
+        if args.as_of != metadata["config"]["as_of"]:
+            parser.error("Archived evaluation date cannot change in a business-only update; use a separate confirmed extract")
+        update_existing_results(config, args.planning_scenarios or config.root / "scenarios" / "rujaf_planning.json")
+        print("RUJAF interpretation, diagnostic safeguards, and scenario-only production planning updated; historical metrics unchanged.", flush=True)
+        return
     if not args.notebook_only:
-        run(config, eda_only=args.eda_only, figures=not args.skip_figures)
+        run(config, eda_only=args.eda_only, figures=not args.skip_figures, scenario_path=args.planning_scenarios)
     if args.execute_notebook or args.notebook_only:
         execute_notebook(config)
         print("Exploratory notebook executed successfully.", flush=True)

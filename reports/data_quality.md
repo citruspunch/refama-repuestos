@@ -79,7 +79,9 @@ Yearly/quarterly growth is computed only for full comparable calendar periods.
   observed quantities. Customer concentration uses raw labels; spelling variants/branches may split one entity.
 - Adjustment magnitudes at or above median interior monthly sales are contextual anomalies. Receipts or
   adjustments that restore a depleted ledger are not evidence of supplier lead time or unrecorded retail demand.
-- RUJAF/Refama relationship is unresolved. `venta_a_refama` defines a scenario, not proof of retail sell-through.
+- RUJAF is the manufacturer/wholesaler; Refama operates retail stores. `venta_a_refama` identifies RUJAF
+  shipments to that retail business, not consumer sell-through. Non-fiscal dispatch documents are reported
+  but their legal/accounting treatment and completeness are unverified; no tax treatment is endorsed.
 - Anomaly flags and STL are retrospective EDA only. They never modify targets or train preprocessing.
 
 Detailed evidence: `tables/anomalies.csv`, `tables/recorded_low_stock_periods.csv`,

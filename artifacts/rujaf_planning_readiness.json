@@ -1,0 +1,58 @@
+{
+  "scope": "RUJAF manufacturing and wholesale finished goods; not Refama consumer demand",
+  "analysis_as_of": "2026-10-26",
+  "scenario_inputs": {
+    "description": "Historical sensitivity analysis only. Every planning setting below is assumed, not a confirmed RUJAF constraint. Days are allocated per SKU, not a shared feasible factory schedule.",
+    "days_per_month": 30,
+    "review_period_days": 30,
+    "production_lead_time_days": 7,
+    "available_production_days": [
+      1,
+      5
+    ],
+    "safety_stock_months": [
+      0,
+      1
+    ],
+    "batch_size_units": 1,
+    "minimum_batch_units": 0,
+    "maximum_production_units": null,
+    "maximum_inventory_units": null,
+    "reserved_stock_units": 0,
+    "restricted_stock_units": 0,
+    "backorders_units": 0,
+    "open_production_orders": [],
+    "products": {
+      "UAH-90385-18025": {
+        "units_per_production_day": 800,
+        "unclassified_net_unit_value": 2.5
+      },
+      "48815-14050": {
+        "units_per_production_day": 210,
+        "unclassified_net_unit_value": 12.0
+      }
+    }
+  },
+  "forecast_validity_rules": {
+    "recent_months": 3,
+    "minimum_recent_mean_ratio": 0.1,
+    "maximum_recent_mean_ratio": 3.0
+  },
+  "fallback_status": "fixed_MA3_provisional_post_hoc_diagnostic_not_newly_selected_model",
+  "manufacturing_cost_evaluation": {
+    "status": "blocked_missing_manufacturing_cost_inputs",
+    "missing_inputs": [
+      "manufacturing_cost_per_unit",
+      "holding_cost_per_unit_month",
+      "setup_cost_per_batch",
+      "unmet_demand_cost_per_unit",
+      "terminal_inventory_value_per_unit",
+      "currency",
+      "confirmed_manufacturing_cost_or_explicit_hypothetical_costs"
+    ],
+    "actual_savings": null
+  },
+  "live_recommendation_allowed": false,
+  "actual_savings": null,
+  "non_fiscal_dispatch_documents": "reported; legal/accounting treatment unverified; tax avoidance is not an objective"
+}

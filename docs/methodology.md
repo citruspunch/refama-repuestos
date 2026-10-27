@@ -1,5 +1,15 @@
 # Analytical and validation methods
 
+## Business interpretation update
+
+RUJAF manufactures/wholesales; Refama operates retail stores. The Kardex concerns RUJAF.
+Refama shipments, other-customer sales and their once-counted total are the three outgoing-demand streams.
+The combined recorded-sales target remains provisionally appropriate for RUJAF finished-goods planning,
+not retail consumer demand or unconstrained orders. Never add future retail sell-through to the same shipments.
+Non-fiscal dispatch documents require physical/document reconciliation and qualified legal/accounting review;
+their tax treatment is not assumed correct and tax avoidance is not an optimization objective.
+See the [fact/assumption register](business_assumptions.md).
+
 ## Boundaries, provenance, and uncertainty
 
 The reporting endpoint is not supplied. The conservative primary sample excludes both first and last
@@ -77,6 +87,12 @@ the locked next-history-month ridge forecast becomes zero, contradicted by alrea
 sales. This triggers a clear analytical warning, not target rewriting or a hidden test-based switch.
 It demonstrates why lowest average backtest error is insufficient for unreviewed live deployment.
 
+The additive update implements configurable checks for raw/clipped/nonfinite outputs, failures and recent-
+history plausibility. Only invalid outputs activate a fixed provisional MA3 fallback; it must also pass.
+Original selections and metrics are untouched. [Forecasting documentation](demand_forecasting.md) specifies
+the limits and separate replay on the same expanding origins. Because this rule is post-hoc, these diagnostic
+scores cannot establish improved accuracy. Obtain new complete months for genuine prospective evaluation.
+
 80%/95% bands use a finite-sample validation absolute-error order statistic,
 rank=ceil((n+1)×coverage). Insufficient calibration samples yield undefined bounds rather than false precision.
 These errors also selected the model; nonstationarity and selection make the bands heuristic, not guaranteed
@@ -84,7 +100,7 @@ conformal coverage. Observed holdout coverage is reported in `prediction_interva
 Neither a wide interval nor MASE<1 guarantees useful inventory decisions. Segment models are independent;
 the gap between combined forecast and sum of segments is exported, not hidden.
 
-## Preliminary policy and financial interfaces
+## Legacy purchasing policy and financial interfaces (preserved)
 
 Typed policy inputs distinguish required observed stock/pipeline data, forecast/error estimates, and named
 assumptions. Lead times are in **months**, not days inferred from receipt gaps. The (s,S) calculation uses
@@ -97,6 +113,26 @@ No actual financial simulation is justified without dated costs and operational/
 and a supplied replay ledger support purchasing/holding/ordering/shortage accounting. `ReplayInputs`
 documents readiness for same-demand historical comparisons; it does not pretend censored recorded sales are
 unconstrained demand. Synthetic unit tests validate cost arithmetic but are not empirical savings.
+
+## Production-aware extension
+
+`ProductionInputs`/`ProductionConstraints` add good-unit rate, actual/allocated production days, total elapsed
+production lead time, review days, explicit safety stock, batches, due-dated remaining open-order units,
+non-overlapping reservations/restrictions/backlog, and optional production/storage limits. Missing required
+inputs block calculation; reported rates and unverified stocks require named scenario assumptions.
+`plan_production` never authorizes live use. [Interface details](production_planning.md) define the arithmetic
+and limitations, including pre-receipt shortages and inability to establish a joint factory schedule.
+
+Reported Q2.50/Q12.00 stay unclassified reference values, not manufacturing cost, sale price or margin.
+`ManufacturingCostInputs` gates real cost accounting, with separately marked hypothetical fixtures allowed.
+Reconciled schedule ledgers support manufacturing inventory value, holding/setup/unmet-demand costs and
+terminal-adjusted comparisons. Reduced production/spend is not savings: account for unmet demand, eventual
+sales, ending inventory, opening pipeline and avoidable versus fixed costs. No verified RUJAF benefit is reported.
+
+Use `--business-update-only` for the additive layer without cleaning/refitting or rewriting historical numerical
+outputs. It preserves original report prose in `reports/history/pre_rujaf_update/` and records SHA-256 hashes
+of historical datasets, evaluation, artifacts and original tests. New assumptions and checks are exported in
+`artifacts/rujaf_planning_readiness.json`. See the [missing-data checklist](missing_data_checklist.md).
 
 ## Documentation references
 

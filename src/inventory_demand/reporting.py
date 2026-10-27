@@ -80,7 +80,9 @@ Yearly/quarterly growth is computed only for full comparable calendar periods.
   observed quantities. Customer concentration uses raw labels; spelling variants/branches may split one entity.
 - Adjustment magnitudes at or above median interior monthly sales are contextual anomalies. Receipts or
   adjustments that restore a depleted ledger are not evidence of supplier lead time or unrecorded retail demand.
-- RUJAF/Refama relationship is unresolved. `venta_a_refama` defines a scenario, not proof of retail sell-through.
+- RUJAF is the manufacturer/wholesaler; Refama operates retail stores. `venta_a_refama` identifies RUJAF
+  shipments to that retail business, not consumer sell-through. Non-fiscal dispatch documents are reported
+  but their legal/accounting treatment and completeness are unverified; no tax treatment is endorsed.
 - Anomaly flags and STL are retrospective EDA only. They never modify targets or train preprocessing.
 
 Detailed evidence: `tables/anomalies.csv`, `tables/recorded_low_stock_periods.csv`,
@@ -118,16 +120,30 @@ before deployment."""
         clipping_warning = "No selected next-history-month forecast required nonnegative clipping; this alone does not establish deployment readiness."
     best_holdout = comparison[comparison.scenario.eq("combined") & comparison.phase.eq("holdout")
                               & comparison.all_origins_successful].sort_values("mae").groupby("codigo_producto").first().reset_index()
-    lines = [f"""# Inventory demand analysis and preliminary forecasting
+    lines = [f"""# RUJAF manufacturing, finished-goods inventory and wholesale forecasting
 
-Reproducible analysis as of **{config.as_of}**. All quantities are units, not currency.
+Reproducible historical analysis as of **{config.as_of}**, with a business-context update.
+Historical quantities and errors remain in units; the explicitly unclassified reference amounts in section 13 are GTQ.
 
 ## Scope and evidence
 
-The Kardex describes RUJAF-headed records with sales **to** Refama; the relationship is unconfirmed.
-These are **recorded gross outgoing sales**, not established Refama retail demand, and not all outflows.
-The three scenarios (`combined`, `refama`, `other`) are evaluated separately for both products.
-No actual cost savings, verified lost sales, real supplier lead times, or business-optimal policy is estimated.
+**RUJAF manufactures and wholesales automotive components; Refama operates retail stores.** The Kardex
+belongs to RUJAF. Sales to Refama are RUJAF shipments supplying the retail business, not consumer sell-through.
+The three streams remain `refama` (shipments to Refama), `other` (sales to other customers), and `combined`
+(total recorded RUJAF outgoing VENTA). Combined actuals equal the two disjoint streams, counted once.
+
+The combined target remains a useful provisional RUJAF finished-goods planning target because both channels
+draw from its stock. It measures recorded wholesale fulfillment, not unconstrained orders, all inventory outflows,
+or retail consumption. Maintain channel diagnostics; independent forecasts do not automatically reconcile.
+Future Refama POS sales should inform retail replenishment via branch stock/transfer reconciliation, **not be
+added to RUJAF shipments** for the same units. Returns and non-sale movements stay separate.
+
+Non-fiscal dispatch documents are reported. Their legal/accounting treatment is unverified; reconcile their
+physical movements to the Kardex using unique documents without duplication. This analysis neither endorses
+their tax treatment nor includes tax avoidance as an optimization objective.
+No actual savings, verified lost sales, confirmed manufacturing capacity/lead times, or optimal policy is estimated.
+Original report prose is preserved in `history/pre_rujaf_update/`; original numerical tables, models, figures,
+executed notebook, raw datasets and tests remain intact. Section 13 adds a separately labeled provisional layer.
 
 There are {int(inventory.movements.sum()):,} preserved movements, independently reconciled to the two product CSVs.
 All reconstructed product-month totals match the preliminary reference, which is not used as the modeling source.
@@ -338,14 +354,16 @@ they are **heuristic**, selection-dependent, and not guaranteed calibrated under
   bookkeeping availability as physical stock. Separate the Refama channel from other outgoing sales.
 - Forecasting must adapt to changing recorded sales rather than extrapolate a global mean without validation.
 - A reproducible policy interface can already calculate inventory position, reorder point, and order-up-to
-  targets once missing inputs are supplied. Missing lead time or pending orders blocks an unlabeled recommendation.
+  targets once missing inputs are supplied. The new manufacturing interface (section 13) adds production
+  quantities, good-unit rates, available days, due-dated open orders, restrictions, batches and storage caps.
 
 Retrospective **hypothetical** (s,S) examples use aligned recorded balances, forecast estimates,
 lead times 0.5/1/2 months, service level 95%, review coverage 1 month, and assumed zero on-order/backorders.
 Uncertainty is estimated from earlier validation errors; independent Gaussian monthly increments and
 square-root-time scaling are unverified. This is not a validated achieved-service or optimal policy.
 Product A's selected zero forecast has failed the above sanity check; its scenario arithmetic is retained
-only as an interface demonstration and must not drive purchasing. All scenarios are blocked from live use.
+only as a preserved legacy purchasing-interface demonstration and must not drive production or purchasing.
+It is not the new RUJAF production plan. All scenarios are blocked from live use.
 
 {table(tables['inventory_scenarios'], ['codigo_producto','forecast_target_month','observed_bookkeeping_balance','estimated_forecast_units','assumed_lead_time_months','reorder_point_units','order_up_to_units','suggested_order_units','status'])}
 
@@ -364,14 +382,16 @@ reliable long-range seasonality; expected deployment accuracy; achieved service 
 Falling recorded sales can combine market changes, customer ordering changes, supply constraints, or reporting
 changes. The data cannot identify which explanation is correct.
 
-Financial evaluation currently returns `blocked_missing_cost_inputs`. A cost-accounting interface accepts
-a future policy replay ledger; it refuses absent real costs rather than supplying fake business values.
-Tests verify the arithmetic with explicitly synthetic fixtures, not claimed business savings.
+The legacy purchasing financial interface still returns `blocked_missing_cost_inputs`. The manufacturing
+interface separately returns `blocked_missing_manufacturing_cost_inputs`. Reported Q2.50/Q12.00 values
+are unclassified and do not clear either gate. Synthetic tests verify arithmetic, not business savings.
 
 ## 12. Additional data and next steps (in priority order)
 
-1. **Provenance and operating entity:** RUJAF–Refama relationship, ownership of stock, transfer/wholesale/retail
-   definitions, SKU/unit-of-measure crosswalk, and whether the records cover all branches/channels.
+1. **Remaining provenance:** the RUJAF manufacturing / Refama retail relationship is confirmed. Still confirm
+   stock ownership/location, transfer versus invoiced-sale definitions, SKU/unit-of-measure crosswalk,
+   all branches/channels, and dispatch-to-Kardex reconciliation. Obtain qualified legal/accounting review
+   of non-fiscal documents; do not assume their tax treatment is correct.
 2. **Coverage confirmation:** PDF report start/end/as-of dates, full pages, all movements, corrected source
    records, current through-October ledgers, closure calendars, canceled/voided documents, and explanations
    for negative balances/large adjustments/encoding and missing-document flags.
@@ -381,17 +401,169 @@ Tests verify the arithmetic with explicitly synthetic fixtures, not claimed busi
    demand is the desired target.
 4. **Replenishment operations:** purchase/production order placement dates, promised dates, actual receipt
    dates **linked by order**, partial receipts, supplier/item-specific lead-time distributions, open pipeline,
-   production capacity/yield/setup times, minimum quantities, packs, and purchase calendars. Receipt dates
-   alone cannot identify lead time.
+   actual production days and calendars, sustainable/shared production capacity, materials/yield/setup times,
+   minimum batches and packs. Reported 800/210 units per production day are operating-rate scenario inputs,
+   not observed daily production or established capacity. Receipt dates alone cannot identify lead time.
 5. **Policy and constraints:** current decision rules and order history, physical on-hand at a common cutoff,
    reserved stock/backorders, desired cycle-service or fill-rate definition, budget/storage constraints, and
    promotions/customer contracts or exceptional bulk orders known at forecast issuance.
-6. **Costs and financial comparison:** dated unit purchase/manufacturing and landed costs in GTQ (or specified
+6. **Costs and financial comparison:** first classify the reported net unit values; obtain dated actual
+   manufacturing (including avoidable versus fixed components), purchase and landed costs in GTQ (or specified
    currency), storage/capital/insurance/obsolescence costs with time units, ordering/setup costs, defensible
    shortage/lost-margin costs, and terminal stock values. Compare policies on identical horizons, initial
-   inventories/pipelines, service assumptions, and demand paths; procurement timing is not automatically savings.
+   inventories/pipelines, service assumptions, and demand paths. Reduced production is not savings without
+   accounting for unmet demand, eventual sales and ending inventory; timing/spend differences are not verified benefits.
 7. After corrections, rerun the unchanged temporal split, audit segment/combined coherence, gather new months
    for genuine prospective evaluation, calibrate uncertainty, and only then test cost-aware policies against
    the documented current policy. Do not retune repeatedly on this final holdout and still call it untouched.
 """)
+    if "production_scenarios" in tables:
+        lines.append(production_update_section(tables))
     (config.root / "reports" / "final_report.md").write_text("\n".join(lines), encoding="utf-8")
+
+
+def production_update_section(tables: dict) -> str:
+    validity = tables["forecast_validity"]
+    comparison = tables["forecast_safeguard_comparison"]
+    notes, stream_notes = [], []
+    for code, label in PRODUCTS.items():
+        streams = tables["rujaf_demand_streams"][tables["rujaf_demand_streams"].codigo_producto.eq(code)].set_index("scenario")
+        stream_notes.append(f"- **{label}:** last-12 versus first-12 mean shipments change "
+                            f"{streams.loc['refama', 'last_12_vs_first_12']:+.1%} to Refama, "
+                            f"{streams.loc['other', 'last_12_vs_first_12']:+.1%} to other customers, "
+                            f"{streams.loc['combined', 'last_12_vs_first_12']:+.1%} overall.")
+        holdout = comparison[comparison.codigo_producto.eq(code) & comparison.scenario.eq("combined")
+                             & comparison.phase.eq("holdout")].set_index("strategy")
+        old = holdout.loc["original_locked"]
+        guarded = holdout.loc["provisional_guarded_ma3_v1"]
+        notes.append(f"- **{label}:** combined holdout diagnostic MAE {old.mae:.2f} locked → {guarded.mae:.2f} guarded; "
+                     f"bias {old.bias:+.2f} → {guarded.bias:+.2f}; {int(guarded.fallback_origins)} fallback origin(s).")
+    diagnostic_notes = "\n".join(notes)
+    stream_interpretation = "\n".join(stream_notes)
+    return f"""
+## 13. RUJAF business update: provisional manufacturing planning
+
+### Three outgoing-demand streams and reported inputs
+
+{table(tables['rujaf_demand_streams'], ['codigo_producto','scenario','demand_stream','all_observed_sales_units','monthly_mean','last_12_mean','last_12_vs_first_12'])}
+
+{stream_interpretation}
+
+The stronger other-customer decline warrants customer/order-mix investigation, not attribution of the
+combined decline to Refama consumer consumption. Wholesale order batching and channel timing can change
+independently of retail sell-through; these comparisons do not establish causes.
+
+The same declining trajectories, uncertain seasonality, availability caveats and original validation-locked
+results remain valid. Product A's Ridge extrapolation fails; B's locked moving average loses to naive on the
+holdout. Neither fact justifies a hidden test-based model replacement or a claim of a robust ML advantage.
+
+{table(tables['reported_product_inputs'])}
+
+The values are reported, not cost/price/margin/profit. Rates are approximate **per production day**, not daily
+production, maximum sustainable capacity, or proof of a feasible joint factory schedule.
+
+### Explicit forecast safeguards and provisional fallback
+
+`forecast_validity.py` rejects nonfinite/negative raw forecasts, clipping, fit failures, and implausible collapse
+or spikes relative to the prior three-month mean. Default ratio limits 0.1–3.0 are configurable review heuristics,
+not optimized business thresholds. Positive forecasts after three zero months also require review.
+Only a failed check activates the fixed three-month moving-average fallback, which must pass the same checks.
+A fallback failure blocks production calculations. No target-month actuals enter either decision.
+Boundary actuals exceeding a forecast are shown separately as retrospective warnings, not fallback triggers.
+
+{table(validity, ['codigo_producto','scenario','locked_model','locked_forecast_valid','validity_reasons','effective_model','effective_forecast_units','fallback_used','status'])}
+
+The original models, forecasts and historical metrics are unchanged. The new rule is replayed on the **same**
+expanding one-step validation/holdout origins using the existing predictions and MAE/RMSE/WAPE/bias/MASE definitions:
+
+{table(comparison[comparison.scenario.eq('combined')], ['codigo_producto','phase','strategy','origins','successful_origins','fallback_origins','mae','rmse','wape','bias','mase'])}
+
+{diagnostic_notes}
+
+The guard can worsen error (see the B/Refama stream in the full comparison CSV); it is not an accuracy optimizer.
+In particular, a lower replay MAE can coexist with greater overforecast bias. B's locked total is not replaced
+just because naive has lower holdout MAE.
+
+This safeguard was designed after the original results were inspected. This is **post-hoc diagnostic replay,
+not new independent test evidence**. It does not establish improved accuracy; prospective evaluation on new
+complete months is required. Guarded validation residual dispersion and 80% error bands are heuristic,
+selection-dependent and nonstationary. The fallback is a scenario reference, never a production deployment approval.
+
+### Production-aware finished-goods scenarios
+
+Configuration: `scenarios/rujaf_planning.json`; all parameters and the validity rules used are recorded in
+`artifacts/rujaf_planning_readiness.json`. Each CSV row also records its exact production inputs as JSON.
+Defaults explicitly assume 30 calendar days/month, 7 elapsed days to good-unit receipt, 30 review days,
+1 or 5 production days **per SKU**, one-unit batches, zero or one forecast-month of safety stock, no open
+orders/backlog/reservations/restrictions and no additional production/storage caps. These are not confirmed
+business values. Weekly demand is monthly/30×7, not a validated weekly forecast.
+
+{table(tables['production_scenarios'], ['codigo_producto','balance_cutoff','expected_monthly_outgoing_units','coverage_days','assumed_available_production_days','safety_stock_units','production_trigger_units','surplus_above_target_units','suggested_production_units','estimated_production_days_required','projected_shortage_units','status'])}
+
+Available stock = on hand − disjoint reservations − restrictions. Inventory position adds only open production
+due by the planning horizon and subtracts non-overlapping backorders. Coverage excludes pipeline receipts.
+The periodic-review trigger/target covers mean demand through **lead + review** plus explicit safety stock.
+A separate lead-time alert uses only receipts due by lead time; later pipeline cannot hide early shortages.
+Production is rounded to batches and capped by rate×allocated production days,
+optional production limits and conservative storage headroom. Later orders cannot erase an immediate shortage;
+overdue orders require reconciliation. Outputs also expose shortage before receipt, capacity-limited shortfalls,
+and surplus above the target. Runtime = suggested units / scenario good-unit rate, **not** a verified schedule.
+Daily rates do not establish materials availability, yield, setups, shared-line feasibility or achievable service.
+Coverage is a constant-rate stock/forecast ratio, not a validated long-range demand horizon or guarantee.
+
+These balances are aligned historical bookkeeping stocks, not current physical inventory. Live requests are
+blocked, including for stale stock, failed forecasts and unconfirmed constraints; the prototype never grants live
+approval. Historical scenarios require explicitly named unverified-stock, retrospective-forecast and constraint assumptions.
+See [business assumptions](../docs/business_assumptions.md), [methods](../docs/methodology.md), and
+[missing-data checklist](../docs/missing_data_checklist.md).
+
+### Economic interface, with unclassified values kept separate
+
+{table(tables['unclassified_value_scenarios'], ['codigo_producto','balance_cutoff','units','reported_net_unit_value','scenario_net_unit_value','unclassified_reference_amount','currency','status'])}
+
+These multiplications are **not inventory cost valuations, sales values or savings**. They refer to the aligned
+historical stocks above, not current stock. Confirmed manufacturing cost inputs are still missing.
+Scenario value overrides are recorded separately and never relabeled as new reported business values.
+`ManufacturingCostInputs` and reconciled per-period production ledgers can evaluate manufacturing inventory
+value, holding/setup/unmet-demand costs and alternative schedules. Caller-supplied unnecessary-production units
+are accepted only as explicit hypothetical scenarios; unsold units are not automatically unnecessary production.
+Schedule comparisons require identical demand paths, horizons and opening inventory, and include opening/ending
+terminal valuation. Confirm opening pipeline, eventual sales and avoidable versus fixed costs before interpreting
+any potential benefit. A production-spend reduction alone is never financial savings. RUJAF's dated current
+decisions and real costs are absent, so no verified business savings or optimal production schedule is reported.
+"""
+
+
+def write_business_summary(tables: dict, config: Config):
+    text = """# RUJAF update — concise decision summary
+
+1. **What changed:** RUJAF is the manufacturer/wholesaler and the Kardex records concern its operations;
+   Refama is retail. The focus is RUJAF finished goods, production requirements and wholesale fulfillment.
+   Refama shipments, other-customer sales and their once-counted total remain separate demand streams.
+2. **Still valid:** all historical totals, trend/seasonality tests, temporal splits, selected models and
+   numerical scores are preserved. Both products decline; stable seasonality and a robust ML advantage
+   remain unproven. A's Ridge forecast fails; naive beats B's locked method on the final holdout.
+3. **Changed assumptions:** entity identity is no longer unknown. Combined sales are RUJAF's recorded
+   shipment target, not retail consumption. Q2.50/Q12.00 are unclassified net values; 800/210 units per
+   production day are reported rates, neither manufacturing costs nor confirmed factory capacity.
+   Non-fiscal dispatch legality/accounting remains unverified; tax avoidance is not an objective.
+4. **Implemented now:** configurable forecast checks, a fixed provisional MA3 fallback, and a separately
+   labeled post-hoc replay on the original validation framework; production quantity/runtime, coverage,
+   triggers, surplus/shortage, batches, due-dated orders and capacity/storage scenarios; unclassified-value
+   exposure and gated manufacturing-cost/schedule-comparison interfaces. No new accuracy claim is made.
+5. **Still blocked:** live decisions need refreshed physical stock and complete coverage, valid current
+   forecasts, actual production days/calendars, sustainable/shared capacity, lead times, batches, materials,
+   yields, restrictions and open orders. Economics need classified values, confirmed dated costs,
+   eventual-sales/terminal assumptions and RUJAF's current decisions. No actual savings are established.
+
+Details: [updated final report](final_report.md#13-rujaf-business-update-provisional-manufacturing-planning),
+[assumptions](../docs/business_assumptions.md), [missing data](../docs/missing_data_checklist.md).
+Original report prose is archived in `history/pre_rujaf_update/`; numerical files remain in place and are
+hashed in `../artifacts/historical_results_manifest.json`. Reproduce the additive update without refitting:
+
+```bash
+.venv/bin/python scripts/run_pipeline.py --business-update-only
+.venv/bin/python -m pytest -q
+```
+"""
+    (config.root / "reports" / "rujaf_update_summary.md").write_text(text, encoding="utf-8")

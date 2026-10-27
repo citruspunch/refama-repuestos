@@ -1,0 +1,7 @@
+codigo_producto,scenario,all_observed_sales_units,monthly_mean,complete_months,demand_stream,last_12_mean,last_12_vs_first_12
+48815-14050,combined,6437,121.33333333333333,51,"Total recorded RUJAF outgoing sales (refama + other, once only)",69.83333333333333,-0.5130737943056363
+48815-14050,other,4042,75.07843137254902,51,RUJAF recorded sales to other customers,29.166666666666668,-0.6891651865008881
+48815-14050,refama,2395,46.254901960784316,51,"RUJAF shipments to Refama (wholesale replenishment, not retail sell-through)",40.666666666666664,-0.17983193277310938
+UAH-90385-18025,combined,66423,1278.76,50,"Total recorded RUJAF outgoing sales (refama + other, once only)",393.25,-0.8386501179608165
+UAH-90385-18025,other,62700,1210.3,50,RUJAF recorded sales to other customers,331.5,-0.8597913435781757
+UAH-90385-18025,refama,3723,68.46,50,"RUJAF shipments to Refama (wholesale replenishment, not retail sell-through)",61.75,-0.15314285714285725
