@@ -26,7 +26,7 @@ export const LESSON_STORY = MODEL_LESSONS.map(({ id, title, seconds, cues }) => 
 
 export const BASELINE_LABELS = {
   naive: { tab: "Último mes", title: "Repetir el último mes", text: "Suponer que el mes siguiente venderá lo mismo." },
-  moving_average_3: { tab: "Promedio de 3 meses", title: "Promediar tres meses", text: "Suaviza los cambios de un solo mes. Se actualiza con cada venta mensual." },
+  moving_average_3: { tab: "Promedio de 3 meses", title: "Promediar tres meses", text: "Se actualiza con cada venta mensual." },
   moving_average_6: { tab: "Media de 6", title: "Promediar 6", text: "Más historia: menos reacción a un solo salto." },
 }
 
