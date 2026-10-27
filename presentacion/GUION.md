@@ -74,7 +74,7 @@ Tiempo: 2:00. Acumulado principal: 11:00.
 
 - Definir la salida del modelo como unidades vendidas por producto durante el mes siguiente. Es una cantidad numérica, no una clasificación de productos.
 - Sumar las ventas a ambos destinos. Excluir producción, compras, ajustes, traslados y devoluciones del objetivo de ventas.
-- Señalar que cada producto tiene su propio período. Disponemos de alrededor de cuatro años de observaciones mensuales, no de un historial extenso.
+- Disponemos de alrededor de cuatro años de observaciones mensuales por producto, no de un historial extenso.
 - Se excluyeron el primer y último mes de cada historia porque no se pudo confirmar su cobertura completa. No se trataron esos meses parciales como meses con ventas bajas.
 
 ## 08. Cómo cambiaron las ventas

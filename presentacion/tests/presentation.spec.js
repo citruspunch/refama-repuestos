@@ -76,6 +76,9 @@ test("las flechas del gráfico no avanzan la exposición ni duplican datos", asy
   await page.keyboard.press("ArrowRight")
   await at(page, "tendencia")
   await expect(page.locator(".chart-tooltip").first().locator(":scope > div")).toHaveCount(1)
+  const chart = page.locator(".recharts-surface[role='application']").first()
+  await expect(chart).toHaveAttribute("aria-label", /Ventas mensuales registradas/)
+  await expect(chart.locator("title")).toHaveText("")
 })
 
 test("Espacio no avanza dos veces y la repetición de tecla se ignora", async ({ page }) => {

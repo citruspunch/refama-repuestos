@@ -132,10 +132,7 @@ function Sample() {
       ["Qué predecimos", "Unidades vendidas por producto en el mes siguiente."],
       ["Qué sumamos", "Despachos a Refama y ventas a otros clientes."],
       ["Qué dejamos fuera", "Entradas a bodega y movimientos que no son ventas."],
-    ]} /><div className="sample-periods">{productIds.map((id) => {
-      const data = interiorMonths(product(id))
-      return <div key={id}><ProductLabel id={id}>{month(data[0].month)} a {month(data.at(-1).month)}</ProductLabel><strong>{data.length}<small> meses</small></strong></div>
-    })}</div></div>
+    ]} /><div className="sample-periods"><div><strong>Aproximadamente 4 años</strong></div><p>de historial analizado por producto.</p></div></div>
   </Slide>
 }
 
@@ -157,7 +154,7 @@ function Variability() {
 function Demand() {
   return <Slide>
     <Flow items={[
-      { title: "Pedidos de clientes", text: "Lo que los clientes quieren comprar." },
+      { title: "Pedidos de clientes", text: "Cuánto compran y cuándo lo hacen." },
       { title: "Disponibilidad", text: "Lo que la bodega puede entregar." },
       { title: "Ventas en Kardex", text: "Lo que observamos y buscamos predecir." },
     ]} />
@@ -169,7 +166,12 @@ function Features() {
   return <Slide>
     <ProductLabel id="A">Ejemplo para predecir {month(product("A").forecast.target_month, false)}</ProductLabel>
     <div className="feature-history">{recent.map((row) => <div key={row.month}><span>{month(row.month)}</span><strong>{number(row.sales_units)}</strong><small>unidades vendidas</small></div>)}<div className="feature-mean"><span>Promedio reciente</span><strong>{number(recent.reduce((sum, row) => sum + row.sales_units, 0) / 3)}</strong><small>unidades por mes</small></div></div>
-    <p className="large-caption">Ventas de los tres meses previos, su promedio, paso del tiempo y mes del año.</p>
+    <ul className="feature-points">
+      <li>Ventas de los tres meses previos</li>
+      <li>Su promedio</li>
+      <li>Paso del tiempo</li>
+      <li>Mes del año</li>
+    </ul>
   </Slide>
 }
 
