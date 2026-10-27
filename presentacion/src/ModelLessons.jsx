@@ -59,7 +59,6 @@ export function BaselineLesson() {
           {data.prediction > 0 ? <rect x="927" y={y(data.prediction)} width="30" height={286 - y(data.prediction)} rx="3" className="diagram-bar-forecast lesson-bar" /> : <circle cx="942" cy="286" r="6" className="diagram-forecast-dot" />}
         </g>
         <text x="940" y="320" textAnchor="middle" className="diagram-tick">Siguiente</text>
-        <text x="440" y="352" textAnchor="middle" className="diagram-caption">{data.used} {data.used === 1 ? "mes aporta" : "meses aportan"}</text>
       </Diagram>
       <Readout title={copy.title} value={data.prediction} unit="u./mes">{copy.text}</Readout>
     </div>
