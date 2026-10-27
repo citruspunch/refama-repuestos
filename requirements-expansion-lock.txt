@@ -1,0 +1,11 @@
+# Multi-product experiment. Historical numerical dependencies remain pinned separately.
+-r requirements-lock.txt
+adagio==0.2.6
+coreforecast==0.0.19
+fsspec==2026.9.0
+fugue==0.9.7
+pyarrow==26.0.0
+statsforecast==2.1.1
+tqdm==4.70.1
+triad==1.0.2
+utilsforecast==0.2.17

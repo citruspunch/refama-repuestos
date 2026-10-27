@@ -1,5 +1,5 @@
 {
-  "description": "Historical sensitivity analysis only. Every planning setting below is assumed, not a confirmed RUJAF constraint. Days are allocated per SKU, not a shared feasible factory schedule.",
+  "description": "Historical sensitivity analysis only. Every planning setting below is assumed, not a confirmed RUJAF constraint. Days are allocated per SKU, not a shared feasible factory schedule. Reported Q2.50/Q12.00 are confirmed net selling prices after discounts (precio_venta_neto_tras_descuento); they never feed manufacturing costs and support only estimated-revenue scenarios, not historical real revenue.",
   "days_per_month": 30,
   "review_period_days": 30,
   "production_lead_time_days": 7,

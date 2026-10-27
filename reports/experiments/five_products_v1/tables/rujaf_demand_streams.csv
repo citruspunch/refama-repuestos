@@ -1,0 +1,16 @@
+codigo_producto,scenario,all_observed_sales_units,monthly_mean,complete_months,demand_stream,last_12_mean,last_12_vs_first_12
+17881-54820,combined,166.0,3.163265306122449,49,"Total recorded RUJAF outgoing sales (refama + other, once only)",1.25,-0.765625
+17881-54820,other,87.0,1.6734693877551021,49,RUJAF recorded sales to other customers,0.08333333333333333,-0.9736842105263158
+17881-54820,refama,79.0,1.489795918367347,49,"RUJAF shipments to Refama (wholesale replenishment, not retail sell-through)",1.1666666666666667,-0.46153846153846145
+48815-14050,combined,6437.0,121.33333333333333,51,"Total recorded RUJAF outgoing sales (refama + other, once only)",69.83333333333333,-0.5130737943056363
+48815-14050,other,4042.0,75.07843137254902,51,RUJAF recorded sales to other customers,29.166666666666668,-0.6891651865008881
+48815-14050,refama,2395.0,46.254901960784316,51,"RUJAF shipments to Refama (wholesale replenishment, not retail sell-through)",40.666666666666664,-0.17983193277310938
+90385-18046,combined,5578.0,107.23529411764706,51,"Total recorded RUJAF outgoing sales (refama + other, once only)",65.41666666666667,-0.45410292072322667
+90385-18046,other,4618.0,88.90196078431373,51,RUJAF recorded sales to other customers,39.333333333333336,-0.6377590176515733
+90385-18046,refama,960.0,18.333333333333332,51,"RUJAF shipments to Refama (wholesale replenishment, not retail sell-through)",26.083333333333332,1.3185185185185184
+UAH-33505-35020,combined,16802.0,353.97872340425533,47,"Total recorded RUJAF outgoing sales (refama + other, once only)",156.75,-0.6940966010733453
+UAH-33505-35020,other,15893.0,334.63829787234044,47,RUJAF recorded sales to other customers,139.66666666666666,-0.7186975495132595
+UAH-33505-35020,refama,909.0,19.340425531914892,47,"RUJAF shipments to Refama (wholesale replenishment, not retail sell-through)",17.083333333333332,0.0732984293193717
+UAH-90385-18025,combined,66423.0,1278.76,50,"Total recorded RUJAF outgoing sales (refama + other, once only)",393.25,-0.8386501179608165
+UAH-90385-18025,other,62700.0,1210.3,50,RUJAF recorded sales to other customers,331.5,-0.8597913435781757
+UAH-90385-18025,refama,3723.0,68.46,50,"RUJAF shipments to Refama (wholesale replenishment, not retail sell-through)",61.75,-0.15314285714285725

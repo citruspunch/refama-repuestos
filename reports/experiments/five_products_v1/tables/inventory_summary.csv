@@ -1,0 +1,6 @@
+codigo_producto,first_valid_date,last_valid_date,movements,ending_recorded_balance,minimum_recorded_balance,maximum_recorded_balance,negative_movement_balances,zero_movement_balances,eod_zero_days,eod_negative_days,eod_nonpositive_days,eod_low_stock_days,covered_days,carried_forward_days,observed_zero_event_days,longest_gap_without_movement_days,adjustment_incoming,adjustment_outgoing,opening_inventory_units,non_sale_outgoing
+17881-54820,2022-06-02,2026-08-25,74,0,0,115,0,3,24,0,24,197,1546,1479,3,140,24.0,3.0,41.0,3.0
+48815-14050,2022-06-02,2026-10-23,479,44,0,1244,0,5,8,0,8,65,1605,1250,3,25,536.0,299.0,199.0,299.0
+90385-18046,2022-06-02,2026-10-16,157,50,0,1623,0,5,85,0,85,92,1598,1463,5,71,839.0,215.0,1623.0,215.0
+UAH-33505-35020,2022-10-17,2026-10-22,815,23,-11,1341,1,12,48,0,48,113,1467,956,11,27,5875.0,237.0,0.0,237.0
+UAH-90385-18025,2022-06-02,2026-09-23,583,5567,-206,14802,2,5,17,4,21,17,1575,1137,5,27,5246.0,5586.0,1879.0,5586.0

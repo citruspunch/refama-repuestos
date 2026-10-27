@@ -47,7 +47,8 @@ def sales_summary(monthly: pd.DataFrame, transactions: pd.DataFrame) -> pd.DataF
                        "monthly_mean": y.mean(), "monthly_median": y.median(),
                        "monthly_std": y.std(ddof=1), "monthly_cv": safe_ratio(y.std(ddof=1), y.mean()),
                        "monthly_min": y.min(), "monthly_max": y.max(),
-                       "min_month": c.loc[y.idxmin(), "month"], "max_month": c.loc[y.idxmax(), "month"],
+                       "min_month": c.loc[y.idxmin(), "month"] if len(c) else pd.NaT,
+                       "max_month": c.loc[y.idxmax(), "month"] if len(c) else pd.NaT,
                        "all_average_units_per_transaction": safe_ratio(total, len(sales)),
                        "complete_average_units_per_transaction": safe_ratio(y.sum(), c.sales_transactions.sum()),
                        "top_1_order_share": safe_ratio(quantities.head(1).sum(), total),
@@ -90,7 +91,7 @@ def comparable_ytd(monthly: pd.DataFrame) -> pd.DataFrame:
                 continue
             rows.append({"codigo_producto": code, "scenario": scenario, "year": year,
                          "through_month": last.month, "sales_units": gy.sales_units.sum()})
-    out = pd.DataFrame(rows)
+    out = pd.DataFrame(rows, columns=["codigo_producto", "scenario", "year", "through_month", "sales_units"])
     out["yoy_growth"] = out.groupby(["codigo_producto", "scenario"]).sales_units.pct_change(fill_method=None)
     return out
 
@@ -107,6 +108,15 @@ def season_and_trend(monthly: pd.DataFrame, config: Config) -> dict[str, pd.Data
         y = g.sales_units.to_numpy(float)
         logy = np.log1p(y)
         t = np.arange(len(y))
+        if len(y) < 25:
+            trends.append({"codigo_producto": code, "scenario": scenario, "months": len(y),
+                           "hac_slope_p": np.nan, "last_12_mean": y[-12:].mean(),
+                           "last_12_vs_first_12": np.nan, "status": "insufficient_history_for_annual_diagnostics"})
+            seasons.append({"codigo_producto": code, "scenario": scenario, "annual_harmonic_hac_p": np.nan,
+                            "status": "insufficient_history_for_annual_diagnostics"})
+            changes.append({"codigo_producto": code, "scenario": scenario, "block_bootstrap_p": np.nan,
+                            "status": "insufficient_history_for_split_search"})
+            continue
         x0 = sm.add_constant(t)
         fit = sm.OLS(logy, x0).fit(cov_type="HAC", cov_kwds={"maxlags": 3})
         ci = fit.conf_int()[1]
@@ -163,9 +173,23 @@ def season_and_trend(monthly: pd.DataFrame, config: Config) -> dict[str, pd.Data
     trend = pd.DataFrame(trends)
     season = pd.DataFrame(seasons)
     change = pd.DataFrame(changes)
-    trend["hac_slope_q_bh"] = multipletests(trend.hac_slope_p, method="fdr_bh")[1]
-    season["harmonic_q_bh"] = multipletests(season.annual_harmonic_hac_p, method="fdr_bh")[1]
-    change["change_q_bh"] = multipletests(change.block_bootstrap_p, method="fdr_bh")[1]
+    for frame in (trend, season, change):
+        for column in ("codigo_producto", "scenario"):
+            if column not in frame:
+                frame[column] = pd.Series(dtype=str)
+    for column in ("last_12_mean", "last_12_vs_first_12"):
+        if column not in trend:
+            trend[column] = pd.Series(dtype=float)
+    # Missing evidence in constant/short series must not poison every FDR result.
+    for frame, raw, adjusted in ((trend, "hac_slope_p", "hac_slope_q_bh"),
+                                 (season, "annual_harmonic_hac_p", "harmonic_q_bh"),
+                                 (change, "block_bootstrap_p", "change_q_bh")):
+        if raw not in frame:
+            frame[raw] = pd.Series(dtype=float)
+        frame[adjusted] = np.nan
+        finite = np.isfinite(frame[raw])
+        if finite.any():
+            frame.loc[finite, adjusted] = multipletests(frame.loc[finite, raw], method="fdr_bh")[1]
     season["harmonic_evidence_after_fdr"] = season.harmonic_q_bh.lt(.05)
     return {"trend": trend, "seasonality": season, "stl_components": pd.DataFrame(components),
             "autocorrelation": pd.DataFrame(correlations), "change_points": change}
@@ -233,7 +257,11 @@ def inventory_pressure(monthly: pd.DataFrame, daily: pd.DataFrame) -> pd.DataFra
                      "trailing12_sale_units": trailing.sales_units.sum(),
                      "trailing12_adjustment_outgoing": trailing.adjustment_outgoing.sum(),
                      "warning": "backward-looking stock/sales ratio, not guaranteed future coverage or physical stock"})
-    return pd.DataFrame(rows)
+    return pd.DataFrame(rows, columns=["codigo_producto", "last_interior_month", "aligned_closing_balance",
+                                       "trailing_3_mean_sales", "trailing_12_mean_sales",
+                                       "bookkeeping_units_over_trailing12_monthly_sales", "trailing12_eod_nonpositive_days",
+                                       "trailing12_eod_low_stock_days", "trailing12_incoming_units", "trailing12_sale_units",
+                                       "trailing12_adjustment_outgoing", "warning"])
 
 
 def detect_anomalies(df: pd.DataFrame, monthly: pd.DataFrame) -> pd.DataFrame:
@@ -290,3 +318,29 @@ def run_eda(df: pd.DataFrame, daily: pd.DataFrame, monthly: pd.DataFrame, config
     tables["calendar_month_profile"] = complete.groupby(["codigo_producto", "scenario", "calendar_month"]).sales_units.agg(
         mean="mean", median="median", std="std", years="size").reset_index()
     return tables
+
+
+def demand_profiles(monthly: pd.DataFrame, transactions: pd.DataFrame) -> pd.DataFrame:
+    """Observed intermittency, including long silent runs; never inferred lost demand."""
+    rows = []
+    for (code, scenario), g in monthly.groupby(["codigo_producto", "scenario"]):
+        c = g[g.complete_for_modeling].sort_values("month")
+        zero = c.sales_units.eq(0)
+        runs = zero.groupby(zero.ne(zero.shift()).cumsum()).sum()
+        sales = transactions[transactions.codigo_producto.eq(code) & transactions.is_sale]
+        if scenario != "combined":
+            sales = sales[sales.is_refama_sale.eq(scenario == "refama")]
+        positive = sales[sales.salida.gt(0)].fecha.sort_values().drop_duplicates()
+        rows.append({"codigo_producto": code, "scenario": scenario, "usable_months": len(c),
+                     **demand_classification(c.sales_units),
+                     "positive_months": int(c.sales_units.gt(0).sum()),
+                     "zero_fraction": float(zero.mean()) if len(c) else np.nan,
+                     "longest_zero_run_months": int(runs.max()) if len(runs) else 0,
+                     "positive_sale_rows": int(sales.salida.gt(0).sum()),
+                     "zero_quantity_sale_rows": int(sales.salida.eq(0).sum()),
+                     "max_gap_between_sale_dates_days": positive.diff().dt.days.max(),
+                     "months_since_last_positive_sale_at_last_usable_month":
+                         ((c.month.iloc[-1].to_period("M") - c.loc[c.sales_units.gt(0), "month"].iloc[-1].to_period("M")).n
+                          if len(c) and c.sales_units.gt(0).any() else np.nan),
+                     "interpretation": "zero recorded sales under provisional coverage; availability and final demand unverified"})
+    return pd.DataFrame(rows)

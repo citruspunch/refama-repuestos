@@ -3,7 +3,7 @@
 import numpy as np
 import pandas as pd
 
-from .config import Config, PRODUCTS, SCENARIOS
+from .config import Config, SCENARIOS
 
 
 def clean_transactions(raw: pd.DataFrame, config: Config) -> tuple[pd.DataFrame, pd.DataFrame]:
@@ -27,11 +27,13 @@ def clean_transactions(raw: pd.DataFrame, config: Config) -> tuple[pd.DataFrame,
     df["fractional_quantity"] = (df[["entrada", "salida", "saldo"]] % 1).ne(0).any(axis=1)
     df["negative_quantity"] = df[["entrada", "salida"]].lt(0).any(axis=1)
     df["both_in_and_out"] = df.entrada.gt(0) & df.salida.gt(0)
-    df["unknown_type"] = ~df.tipo_movimiento.isin(["VENTA", "COMPRA", "PRODUCCION", "AJUSTE", "DEVOLUCION C"])
-    df["unknown_product"] = ~df.codigo_producto.isin(PRODUCTS)
+    df["unknown_type"] = ~df.tipo_movimiento.isin(["VENTA", "COMPRA", "PRODUCCION", "AJUSTE", "DEVOLUCION C", "TRASLADO"])
+    # Product membership comes from the reconciled source, never a two-SKU allowlist.
+    df["unknown_product"] = df.codigo_producto.eq("")
     df["invalid_refama_flag"] = ~df.venta_a_refama.isin(["SI", "NO"])
     df["is_sale"] = df.tipo_movimiento.eq("VENTA")
-    df["sale_direction_issue"] = df.is_sale & (df.entrada.ne(0) | df.salida.le(0))
+    df["sale_direction_issue"] = df.is_sale & (df.entrada.ne(0) | df.salida.lt(0))
+    df["zero_quantity_sale"] = df.is_sale & df.salida.eq(0)
     df["is_refama_sale"] = df.is_sale & df.venta_a_refama.eq("SI")
     df["refama_flag_on_non_sale"] = ~df.is_sale & df.venta_a_refama.eq("SI")
     # Initial inventory is explicitly identified, never reinterpreted as a real supplier receipt.
@@ -134,7 +136,9 @@ def monthly_datasets(df: pd.DataFrame, daily: pd.DataFrame) -> tuple[pd.DataFram
                              "units_per_transaction": quantity / len(subset) if len(subset) else np.nan,
                              "purchase_incoming": gm.loc[gm.tipo_movimiento.eq("COMPRA") & ~gm.is_opening_inventory, "entrada"].sum(),
                              "opening_inventory_incoming": gm.loc[gm.is_opening_inventory, "entrada"].sum(),
-                             "production_incoming": gm.loc[gm.tipo_movimiento.eq("PRODUCCION"), "entrada"].sum(),
+                              "production_incoming": gm.loc[gm.tipo_movimiento.eq("PRODUCCION"), "entrada"].sum(),
+                              "transfer_incoming": gm.loc[gm.tipo_movimiento.eq("TRASLADO"), "entrada"].sum(),
+                              "transfer_outgoing": gm.loc[gm.tipo_movimiento.eq("TRASLADO"), "salida"].sum(),
                              "returns_incoming": gm.loc[gm.tipo_movimiento.eq("DEVOLUCION C"), "entrada"].sum(),
                              "returns_outgoing": gm.loc[gm.tipo_movimiento.eq("DEVOLUCION C"), "salida"].sum(),
                              "adjustment_incoming": gm.loc[gm.tipo_movimiento.eq("AJUSTE"), "entrada"].sum(),

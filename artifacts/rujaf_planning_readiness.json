@@ -2,7 +2,7 @@
   "scope": "RUJAF manufacturing and wholesale finished goods; not Refama consumer demand",
   "analysis_as_of": "2026-10-26",
   "scenario_inputs": {
-    "description": "Historical sensitivity analysis only. Every planning setting below is assumed, not a confirmed RUJAF constraint. Days are allocated per SKU, not a shared feasible factory schedule.",
+    "description": "Historical sensitivity analysis only. Every planning setting below is assumed, not a confirmed RUJAF constraint. Days are allocated per SKU, not a shared feasible factory schedule. Reported Q2.50/Q12.00 are confirmed net selling prices after discounts (precio_venta_neto_tras_descuento); they never feed manufacturing costs and support only estimated-revenue scenarios, not historical real revenue.",
     "days_per_month": 30,
     "review_period_days": 30,
     "production_lead_time_days": 7,
@@ -36,7 +36,8 @@
   "forecast_validity_rules": {
     "recent_months": 3,
     "minimum_recent_mean_ratio": 0.1,
-    "maximum_recent_mean_ratio": 3.0
+    "maximum_recent_mean_ratio": 3.0,
+    "allow_positive_after_recent_zeros": false
   },
   "fallback_status": "fixed_MA3_provisional_post_hoc_diagnostic_not_newly_selected_model",
   "manufacturing_cost_evaluation": {

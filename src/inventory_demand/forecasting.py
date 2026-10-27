@@ -31,6 +31,18 @@ CANDIDATES = {
     "gradient_boosting": 12,
 }
 ML_MODELS = {"ridge", "linear_regression", "random_forest", "gradient_boosting"}
+# Separate experiment registry. The historical 13-candidate protocol stays available.
+EXPANDED_CANDIDATES = {**CANDIDATES, "zero": -1, "croston_sba": 5.1, "tsb": 5.2}
+
+
+def candidates_for_history(history) -> dict:
+    """Screen once on the INITIAL training window, not the full EDA or holdout."""
+    y = history.sales_units.to_numpy(float)
+    positives = int((y > 0).sum())
+    candidates = {**CANDIDATES, "zero": -1}
+    if positives >= 2 and (y == 0).mean() >= .2:
+        candidates.update({name: EXPANDED_CANDIDATES[name] for name in ("croston_sba", "tsb")})
+    return candidates
 
 
 @dataclass
@@ -46,7 +58,7 @@ class FitResult:
 
 
 def fit_predict(model: str, history, seed: int = 42) -> FitResult:
-    if model not in CANDIDATES:
+    if model not in EXPANDED_CANDIDATES:
         raise ValueError(f"Unknown model: {model}")
     y = history.sales_units.to_numpy(float)
     if len(y) < 13 or not np.isfinite(y).all() or np.any(y < 0):
@@ -55,7 +67,18 @@ def fit_predict(model: str, history, seed: int = 42) -> FitResult:
                 "cutoff": history.month.max().strftime("%Y-%m-%d")}
     with warnings.catch_warnings(record=True) as caught:
         warnings.simplefilter("always")
-        if model == "naive":
+        if model == "zero":
+            pred = 0.0
+        elif model in {"croston_sba", "tsb"}:
+            from statsforecast.models import CrostonSBA, TSB
+
+            # SBA uses the library's fixed smoothing; TSB parameters are predeclared.
+            # Both see the full zero-filled pre-origin calendar, never positive rows only.
+            estimator = CrostonSBA() if model == "croston_sba" else TSB(alpha_d=.2, alpha_p=.2)
+            pred = estimator.forecast(y=y, h=1)["mean"][0]
+            artifact.update({"library": "statsforecast", "alpha_d": .2 if model == "tsb" else .1,
+                             "alpha_p": .2 if model == "tsb" else .1})
+        elif model == "naive":
             pred = y[-1]
         elif model.startswith("moving_average_"):
             pred = y[-int(model.rsplit("_", 1)[1]):].mean()

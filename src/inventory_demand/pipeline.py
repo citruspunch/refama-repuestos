@@ -121,8 +121,23 @@ def main():
     parser.add_argument("--notebook-only", action="store_true")
     parser.add_argument("--business-update-only", action="store_true", help="Use archived evaluation; do not retrain or rewrite historical numerical outputs")
     parser.add_argument("--planning-scenarios", type=Path, help="Explicit production scenario JSON; default scenarios/rujaf_planning.json")
+    parser.add_argument("--expand-products", action="store_true", help="Run an isolated, data-driven multi-product experiment; preserve historical outputs")
+    parser.add_argument("--experiment", default="five_products_v1", help="Isolated expansion output name")
+    parser.add_argument("--source-bundle", type=Path, help="Directory containing one authoritative consolidated Kardex and reference files")
+    parser.add_argument("--ledger", help="Authoritative consolidated CSV filename inside the bundle")
     args = parser.parse_args()
     config = Config(root=args.root.resolve(), as_of=args.as_of)
+    if args.expand_products:
+        from dataclasses import replace
+        from .expansion import run_expansion
+
+        if args.business_update_only or args.notebook_only or args.execute_notebook:
+            parser.error("Expansion cannot overwrite the preserved notebook or run a historical business-only update")
+        config = replace(config, experiment=args.experiment)
+        bundle = args.source_bundle or config.raw / "kardex_5_productos_RUJAF_csv"
+        run_expansion(config, bundle.resolve(), args.planning_scenarios or config.root / "scenarios" / "five_products.json",
+                      ledger_name=args.ledger, figures=not args.skip_figures, eda_only=args.eda_only)
+        return
     if args.business_update_only:
         if args.eda_only or args.notebook_only or args.execute_notebook:
             parser.error("--business-update-only cannot run EDA or execute the preserved notebook")

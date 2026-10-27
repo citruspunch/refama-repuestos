@@ -5,7 +5,8 @@ import pytest
 
 from inventory_demand.business import REPORTED_PRODUCTS
 from inventory_demand.financial import (ManufacturingCostInputs, compare_production_schedules,
-                                       evaluate_production_costs, unclassified_value_scenario)
+                                       estimated_revenue_scenario, evaluate_production_costs,
+                                       unclassified_value_scenario)
 
 
 def synthetic_costs():
@@ -20,16 +21,39 @@ def ledger(opening=10, produced=20, fulfilled=15, unmet=0, months=1):
                          "months": [months], "batches": [2]})
 
 
-@pytest.mark.parametrize("code,value,rate", [("UAH-90385-18025", 2.5, 800), ("48815-14050", 12, 210)])
+@pytest.mark.parametrize(
+    "code,value,rate",
+    [
+        ("UAH-90385-18025", 2.5, 800),
+        ("48815-14050", 12, 210),
+        ("UAH-33505-35020", 15.0, 300),
+        ("90385-18046", 2.5, 480),
+        ("17881-54820", 100.0, 30),
+    ],
+)
 def test_reported_values_remain_unclassified_not_costs(code, value, rate):
     reported = REPORTED_PRODUCTS[code]
-    assert reported.value_classification == "unconfirmed"
+    assert reported.value_classification == "precio_venta_neto_tras_descuento"
     assert reported.units_per_production_day == rate
+    assert reported.currency == "GTQ"
     result = unclassified_value_scenario(100, reported)
     assert result["unclassified_reference_amount"] == 100 * value
     assert result["manufacturing_inventory_value"] is None
     assert result["actual_savings"] is None
     assert evaluate_production_costs(pd.DataFrame(), ManufacturingCostInputs())["status"] == "blocked_missing_manufacturing_cost_inputs"
+
+
+def test_estimated_revenue_is_not_historical_real_revenue_or_cost():
+    reported = REPORTED_PRODUCTS["UAH-33505-35020"]
+    result = estimated_revenue_scenario(10, reported)
+    assert result["status"] == "estimated_revenue_only_not_historical_real_revenue"
+    assert result["estimated_revenue_gtq"] == 150.0
+    assert result["value_classification"] == "precio_venta_neto_tras_descuento"
+    assert result["manufacturing_inventory_value"] is None
+    assert result["actual_savings"] is None
+    assert "not" in result["warning"] and "historical real revenue" in result["warning"]
+    # Net prices never clear the manufacturing-cost gate.
+    assert evaluate_production_costs(pd.DataFrame(), ManufacturingCostInputs())["actual_savings"] is None
 
 
 def test_supplied_costs_need_confirmation_or_explicit_scenario():

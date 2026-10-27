@@ -1,0 +1,8 @@
+file,source_rows,consolidated_rows,multiset_equal,only_individual,only_consolidated
+kardex_17881-54820.csv,74,74,True,0,0
+kardex_3_productos_nuevos_consolidado.csv,1046,1046,True,0,0
+kardex_90385-18046.csv,157,157,True,0,0
+kardex_UAH-33505-35020.csv,815,815,True,0,0
+legacy/kardex_48815-14050.csv,479,479,True,0,0
+legacy/kardex_consolidado.csv,1062,1062,True,0,0
+legacy/kardex_90385-18025.csv,583,583,True,0,0

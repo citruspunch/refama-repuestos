@@ -123,7 +123,7 @@ before deployment."""
     lines = [f"""# RUJAF manufacturing, finished-goods inventory and wholesale forecasting
 
 Reproducible historical analysis as of **{config.as_of}**, with a business-context update.
-Historical quantities and errors remain in units; the explicitly unclassified reference amounts in section 13 are GTQ.
+Historical quantities and errors remain in units; the estimated-revenue scenario amounts in section 13 (units x precio_venta_neto_tras_descuento) are GTQ and are not historical real revenue.
 
 ## Scope and evidence
 
@@ -383,8 +383,8 @@ Falling recorded sales can combine market changes, customer ordering changes, su
 changes. The data cannot identify which explanation is correct.
 
 The legacy purchasing financial interface still returns `blocked_missing_cost_inputs`. The manufacturing
-interface separately returns `blocked_missing_manufacturing_cost_inputs`. Reported Q2.50/Q12.00 values
-are unclassified and do not clear either gate. Synthetic tests verify arithmetic, not business savings.
+interface separately returns `blocked_missing_manufacturing_cost_inputs`. Reported Q2.50/Q12.00/Q15.00/Q2.50/Q100.00 values
+are confirmed `precio_venta_neto_tras_descuento` (net selling prices after discounts) and do not clear either gate. Synthetic tests verify arithmetic, not business savings.
 
 ## 12. Additional data and next steps (in priority order)
 
@@ -407,10 +407,13 @@ are unclassified and do not clear either gate. Synthetic tests verify arithmetic
 5. **Policy and constraints:** current decision rules and order history, physical on-hand at a common cutoff,
    reserved stock/backorders, desired cycle-service or fill-rate definition, budget/storage constraints, and
    promotions/customer contracts or exceptional bulk orders known at forecast issuance.
-6. **Costs and financial comparison:** first classify the reported net unit values; obtain dated actual
-   manufacturing (including avoidable versus fixed components), purchase and landed costs in GTQ (or specified
+6. **Costs and financial comparison:** the five reported amounts are classified `precio_venta_neto_tras_descuento`
+   (A Q2.50, B Q12.00, C Q15.00, D Q2.50, E Q100.00); they are not manufacturing costs, margins or savings.
+   Obtain dated actual manufacturing (including avoidable versus fixed components), purchase and landed costs in GTQ (or specified
    currency), storage/capital/insurance/obsolescence costs with time units, ordering/setup costs, defensible
-   shortage/lost-margin costs, and terminal stock values. Compare policies on identical horizons, initial
+   shortage/lost-margin costs, and terminal stock values. A complementary estimated-revenue scenario may multiply
+   sold or forecast units by the net price, but it is not historical real revenue because price variations over
+   the whole period are unknown. Compare policies on identical horizons, initial
    inventories/pipelines, service assumptions, and demand paths. Reduced production is not savings without
    accounting for unmet demand, eventual sales and ending inventory; timing/spend differences are not verified benefits.
 7. After corrections, rerun the unchanged temporal split, audit segment/combined coherence, gather new months
@@ -459,7 +462,7 @@ holdout. Neither fact justifies a hidden test-based model replacement or a claim
 
 {table(tables['reported_product_inputs'])}
 
-The values are reported, not cost/price/margin/profit. Rates are approximate **per production day**, not daily
+The values are confirmed net selling prices after discounts (`precio_venta_neto_tras_descuento` in GTQ), not manufacturing costs, margins or profits. They support only complementary estimated-revenue scenarios (units × net price); those estimates are not historical real revenue because price variations over the whole period are unknown. Rates are approximate **per production day**, not daily
 production, maximum sustainable capacity, or proof of a feasible joint factory schedule.
 
 ### Explicit forecast safeguards and provisional fallback
@@ -521,8 +524,8 @@ See [business assumptions](../docs/business_assumptions.md), [methods](../docs/m
 
 {table(tables['unclassified_value_scenarios'], ['codigo_producto','balance_cutoff','units','reported_net_unit_value','scenario_net_unit_value','unclassified_reference_amount','currency','status'])}
 
-These multiplications are **not inventory cost valuations, sales values or savings**. They refer to the aligned
-historical stocks above, not current stock. Confirmed manufacturing cost inputs are still missing.
+These multiplications are **estimated-revenue scenarios from net selling prices, not historical real revenue, inventory cost valuations, manufacturing costs, margins or savings**. They refer to the aligned
+historical stocks above, not current stock, and price variations over the whole period are unknown. Confirmed manufacturing cost inputs are still missing.
 Scenario value overrides are recorded separately and never relabeled as new reported business values.
 `ManufacturingCostInputs` and reconciled per-period production ledgers can evaluate manufacturing inventory
 value, holding/setup/unmet-demand costs and alternative schedules. Caller-supplied unnecessary-production units
@@ -544,8 +547,9 @@ def write_business_summary(tables: dict, config: Config):
    numerical scores are preserved. Both products decline; stable seasonality and a robust ML advantage
    remain unproven. A's Ridge forecast fails; naive beats B's locked method on the final holdout.
 3. **Changed assumptions:** entity identity is no longer unknown. Combined sales are RUJAF's recorded
-   shipment target, not retail consumption. Q2.50/Q12.00 are unclassified net values; 800/210 units per
+   shipment target, not retail consumption. Q2.50/Q12.00/Q15.00/Q2.50/Q100.00 are confirmed net selling prices after discounts (`precio_venta_neto_tras_descuento`); 800/210 units per
    production day are reported rates, neither manufacturing costs nor confirmed factory capacity.
+   Estimated revenue (units × net price) remains a scenario only, not historical real revenue.
    Non-fiscal dispatch legality/accounting remains unverified; tax avoidance is not an objective.
 4. **Implemented now:** configurable forecast checks, a fixed provisional MA3 fallback, and a separately
    labeled post-hoc replay on the original validation framework; production quantity/runtime, coverage,

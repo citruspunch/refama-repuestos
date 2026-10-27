@@ -2,6 +2,7 @@
 
 from dataclasses import asdict, dataclass
 from pathlib import Path
+import re
 
 
 @dataclass(frozen=True)
@@ -14,6 +15,11 @@ class Config:
     low_stock_units: float = 10.0  # Descriptive threshold, NOT a business reorder point.
     seed: int = 42
     bootstrap_repetitions: int = 1000
+    experiment: str | None = None
+
+    def __post_init__(self):
+        if self.experiment is not None and not re.fullmatch(r"[A-Za-z0-9_-]+", self.experiment):
+            raise ValueError("Experiment names must be simple directory names")
 
     @property
     def raw(self) -> Path:
@@ -21,23 +27,39 @@ class Config:
 
     @property
     def processed(self) -> Path:
+        if self.experiment:
+            return self.root / "data" / "experiments" / self.experiment
         return self.root / "data" / "processed"
 
     @property
     def private(self) -> Path:
+        if self.experiment:
+            return self.root / "data" / "private" / self.experiment
         return self.root / "data" / "private"
 
     @property
+    def reports(self) -> Path:
+        if self.experiment:
+            return self.root / "reports" / "experiments" / self.experiment
+        return self.root / "reports"
+
+    @property
+    def artifacts(self) -> Path:
+        if self.experiment:
+            return self.root / "artifacts" / "experiments" / self.experiment
+        return self.root / "artifacts"
+
+    @property
     def tables(self) -> Path:
-        return self.root / "reports" / "tables"
+        return self.reports / "tables"
 
     @property
     def figures(self) -> Path:
-        return self.root / "reports" / "figures"
+        return self.reports / "figures"
 
     def prepare(self) -> None:
         for path in (self.processed, self.private, self.tables, self.figures,
-                     self.root / "artifacts"):
+                     self.artifacts):
             path.mkdir(parents=True, exist_ok=True)
 
     def serializable(self) -> dict:

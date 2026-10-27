@@ -1,0 +1,16 @@
+codigo_producto,scenario,model,file,training_end
+17881-54820,combined,zero,17881-54820_combined.json,2026-07-01
+17881-54820,other,zero,17881-54820_other.json,2026-07-01
+17881-54820,refama,zero,17881-54820_refama.json,2026-07-01
+48815-14050,combined,moving_average_3,48815-14050_combined.json,2026-09-01
+48815-14050,other,naive,48815-14050_other.json,2026-09-01
+48815-14050,refama,ets_seasonal_add,48815-14050_refama.pkl,2026-09-01
+90385-18046,combined,ridge,90385-18046_combined.pkl,2026-09-01
+90385-18046,other,zero,90385-18046_other.json,2026-09-01
+90385-18046,refama,zero,90385-18046_refama.json,2026-09-01
+UAH-33505-35020,combined,moving_average_3,UAH-33505-35020_combined.json,2026-09-01
+UAH-33505-35020,other,moving_average_3,UAH-33505-35020_other.json,2026-09-01
+UAH-33505-35020,refama,ets_seasonal_add,UAH-33505-35020_refama.pkl,2026-09-01
+UAH-90385-18025,combined,ridge,UAH-90385-18025_combined.pkl,2026-08-01
+UAH-90385-18025,other,ridge,UAH-90385-18025_other.pkl,2026-08-01
+UAH-90385-18025,refama,historical_average,UAH-90385-18025_refama.json,2026-08-01

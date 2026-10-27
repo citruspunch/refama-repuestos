@@ -1,0 +1,57 @@
+{
+  "experiment": "five_products_v1",
+  "config": {
+    "root": ".",
+    "as_of": "2026-10-26",
+    "initial_train_months": 24,
+    "holdout_months": 6,
+    "practical_tie_fraction": 0.05,
+    "low_stock_units": 10.0,
+    "seed": 42,
+    "bootstrap_repetitions": 1000,
+    "experiment": "five_products_v1"
+  },
+  "python": "3.12.14",
+  "packages": {
+    "pandas": "2.3.3",
+    "numpy": "2.5.4",
+    "scipy": "1.18.1",
+    "scikit-learn": "1.9.1",
+    "statsmodels": "0.14.6",
+    "statsforecast": "2.1.1"
+  },
+  "products": [
+    "UAH-90385-18025",
+    "48815-14050",
+    "UAH-33505-35020",
+    "90385-18046",
+    "17881-54820"
+  ],
+  "movements": 2108,
+  "eda_only": false,
+  "modeling_target": "gross recorded VENTA, not consumer or unconstrained demand",
+  "live_forecast_available": false,
+  "protocol": "24 initial months, at least 6 validation origins, 6 final rolling one-step origins; fixed 5% simplicity tie band",
+  "historical_partitions_changed": false,
+  "new_experiment_not_independent_A_B_test": true,
+  "code_sha256": {
+    "src/inventory_demand/__init__.py": "4a59e404fce30a07e8078f98f4863ba1d3c32918039568503ca3e003fc572dc8",
+    "src/inventory_demand/business.py": "74e786e04c521e05c85eab147a8509d446234dbee002f070e869c884219aa9ad",
+    "src/inventory_demand/business_update.py": "dcb0cfbf8d8a4518aa9c527aed2abd8437e920b043877cf750369db7ad29e575",
+    "src/inventory_demand/cleaning.py": "e4a2314e1134d5381c7065c29e1cdb523dd0cbc22b272e28ded4ac302cac0a39",
+    "src/inventory_demand/config.py": "487e054e5d67333bb8a6a7599ce525a70a5fef7542ba1c2cd9019e2a1826eac9",
+    "src/inventory_demand/data.py": "bc00f83570d4837144ce9055209535b3180a5273fed0f507cdfd691a210c7e85",
+    "src/inventory_demand/eda.py": "28796702d52d24293e932288e1783f564593a1f59999e30fdaea818bd708c463",
+    "src/inventory_demand/evaluation.py": "c300865b68ee641f038d0cff257254985d25bf457a982f3ae58a1624091c8992",
+    "src/inventory_demand/expansion.py": "cfc30277c77aae5a9687d644ba15a449cddea4a0677b336bbeb3178c55b63533",
+    "src/inventory_demand/features.py": "b997dc22c7e041a4d335c806e2f359284919afa3e36b3d59d6b14f2cdd84036a",
+    "src/inventory_demand/financial.py": "604f2f445ebf8be8f2fadbb77c54e602adb2bbfe2d671f85f92bb56e50c05201",
+    "src/inventory_demand/forecast_validity.py": "5ef39b567305db754bd2bc73b99b398d5fa117488b6f5a7fe45f683c17bb4333",
+    "src/inventory_demand/forecasting.py": "f736bdb4fc7d35eb2ebf46917a6381825fb452e499b5325a5c3efb303d05ae51",
+    "src/inventory_demand/inventory.py": "ce0fa9d4318ae205bdd0131c9b7f7cad355ce02974ff75cf4c372d9027b64b4a",
+    "src/inventory_demand/pipeline.py": "879c7f1238cd84e2c858e18bc2efe5de3c78fc2344d396711f79c92c5eae0817",
+    "src/inventory_demand/portfolio_planning.py": "2a5b50044d029fb495396c46e2892f343cac938cdfc374f216822c01bad0ad50",
+    "src/inventory_demand/reporting.py": "2c5d3634a25b5e9c733385770c04fd92dd11f01fe5b992574c48589bd3579afb",
+    "src/inventory_demand/visualization.py": "83ef1d5f2519108f5fdd22c0398ff132f9330fd64a2c1991909c7e374d07339c"
+  }
+}

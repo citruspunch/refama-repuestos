@@ -1,0 +1,18 @@
+{
+  "description": "Escenarios retrospectivos por SKU, no calendario conjunto ni optimizacion economica. Los ritmos reportados se usan solo como supuestos de unidades buenas. Los cinco montos son precios de venta netos tras descuentos (precio_venta_neto_tras_descuento): A Q2.50, B Q12.00, C Q15.00, D Q2.50, E Q100.00; no son costos, margenes ni ahorros. Ingresos estimados (unidades x precio neto) son escenarios complementarios, no ingresos historicos reales.",
+  "days_per_month": 30,
+  "review_period_days": 30,
+  "production_lead_time_days": 7,
+  "available_production_days": [1, 5],
+  "safety_stock_months": [0, 1],
+  "demand_factors": [1, 1.5],
+  "batch_size_units": 1,
+  "minimum_batch_units": 0,
+  "maximum_production_units": null,
+  "maximum_inventory_units": null,
+  "reserved_stock_units": 0,
+  "restricted_stock_units": 0,
+  "backorders_units": 0,
+  "open_production_orders": [],
+  "products": {}
+}

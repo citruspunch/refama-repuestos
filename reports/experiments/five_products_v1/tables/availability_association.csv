@@ -1,0 +1,6 @@
+codigo_producto,months_nonpositive_eod,mean_sales_exposed,mean_sales_not_exposed,warning
+17881-54820,1,9.0,3.0416666666666665,"descriptive association only; timing, reverse causality, and missing movements confound demand censoring"
+48815-14050,1,118.0,121.4,"descriptive association only; timing, reverse causality, and missing movements confound demand censoring"
+90385-18046,5,175.2,99.84782608695652,"descriptive association only; timing, reverse causality, and missing movements confound demand censoring"
+UAH-33505-35020,3,148.66666666666666,367.97727272727275,"descriptive association only; timing, reverse causality, and missing movements confound demand censoring"
+UAH-90385-18025,2,3625.0,1181.0,"descriptive association only; timing, reverse causality, and missing movements confound demand censoring"

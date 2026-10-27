@@ -67,7 +67,13 @@ class ReplayInputs:
 
 def unclassified_value_scenario(units: float, reported: ReportedProductInputs, *,
                                  scenario_unit_value: float | None = None) -> dict:
-    """A reference multiplication, NEVER inventory valuation, revenue, margin or savings."""
+    """A reference multiplication, NEVER inventory valuation, cost, margin or savings.
+
+    Reported values are confirmed as ``precio_venta_neto_tras_descuento`` (net selling
+    price after discounts in GTQ). The product is still an estimated-revenue scenario:
+    price variations over the whole period are unknown, so it is NOT historical real
+    revenue and must not feed manufacturing-cost accounting.
+    """
     value = reported.net_unit_value if scenario_unit_value is None else scenario_unit_value
     if not all(math.isfinite(v) and v >= 0 for v in (units, reported.net_unit_value, value)):
         raise ValueError("Units and reported reference values must be finite and nonnegative")
@@ -76,7 +82,26 @@ def unclassified_value_scenario(units: float, reported: ReportedProductInputs, *
             "scenario_net_unit_value": value, "reference_value_overridden": value != reported.net_unit_value,
             "unclassified_reference_amount": units * value,
             "manufacturing_inventory_value": None, "actual_savings": None,
-            "warning": "Net unit value meaning unconfirmed; this amount is not cost, sale value, contribution or profit"}
+            "warning": "precio_venta_neto_tras_descuento; estimated-revenue scenario only, not historical real revenue, cost, sale-value certification, contribution or profit"}
+
+
+def estimated_revenue_scenario(units: float, reported: ReportedProductInputs, *,
+                               scenario_unit_value: float | None = None) -> dict:
+    """Complementary estimated-revenue analysis from net selling prices.
+
+    Multiplies sold or forecast units by the corresponding ``precio_venta_neto_tras_descuento``.
+    The result is an *estimated* scenario: price variations during the whole period are
+    unknown, so it must never be presented as historical real revenue. It is NEVER a
+    manufacturing cost, inventory valuation, margin or savings.
+    """
+    base = unclassified_value_scenario(units, reported, scenario_unit_value=scenario_unit_value)
+    return {**base,
+            "status": "estimated_revenue_only_not_historical_real_revenue",
+            "estimated_revenue_gtq": base["unclassified_reference_amount"],
+            "value_classification": "precio_venta_neto_tras_descuento",
+            "warning": ("Estimated revenue from net selling price after discounts; "
+                        "price variations over the whole period are unknown, so this is not "
+                        "historical real revenue, manufacturing cost, margin or savings")}
 
 
 @dataclass(frozen=True)

@@ -18,6 +18,7 @@ class ForecastValidityRules:
     recent_months: int = 3
     minimum_recent_mean_ratio: float = .1
     maximum_recent_mean_ratio: float = 3.0
+    allow_positive_after_recent_zeros: bool = False
 
     def __post_init__(self):
         if not isinstance(self.recent_months, int) or self.recent_months < 1:
@@ -51,7 +52,7 @@ def check_forecast(history_units, prediction, raw_prediction, *, clipped=False,
             reasons.append("collapse_relative_to_recent_history")
         if ratio > rules.maximum_recent_mean_ratio:
             reasons.append("spike_relative_to_recent_history")
-    elif recent == 0 and prediction > 0:
+    elif recent == 0 and prediction > 0 and not rules.allow_positive_after_recent_zeros:
         reasons.append("positive_forecast_after_recent_zero_history")
     return {"valid_for_scenario": not reasons, "reasons": reasons,
             "recent_mean_units": recent, "rules": asdict(rules)}

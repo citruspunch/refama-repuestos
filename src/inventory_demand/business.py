@@ -15,13 +15,16 @@ class ReportedProductInputs:
     net_unit_value: float
     units_per_production_day: float
     currency: str = "GTQ"
-    value_classification: str = "unconfirmed"
+    value_classification: str = "precio_venta_neto_tras_descuento"
     rate_status: str = "reported_operating_rate_NOT_verified_capacity"
 
 
 REPORTED_PRODUCTS = {
     "UAH-90385-18025": ReportedProductInputs(2.50, 800),
     "48815-14050": ReportedProductInputs(12.00, 210),
+    "UAH-33505-35020": ReportedProductInputs(15.00, 300),
+    "90385-18046": ReportedProductInputs(2.50, 480),
+    "17881-54820": ReportedProductInputs(100.00, 30),
 }
 
 

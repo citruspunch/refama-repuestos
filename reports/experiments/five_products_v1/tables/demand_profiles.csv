@@ -1,0 +1,16 @@
+codigo_producto,scenario,usable_months,adi,cv2_positive_periods,zero_periods,demand_class,positive_months,zero_fraction,longest_zero_run_months,positive_sale_rows,zero_quantity_sale_rows,max_gap_between_sale_dates_days,months_since_last_positive_sale_at_last_usable_month,interpretation
+17881-54820,combined,49,1.75,0.40726095502370224,21,intermittent,28,0.42857142857142855,4,64,0,141.0,0,zero recorded sales under provisional coverage; availability and final demand unverified
+17881-54820,other,49,2.130434782608696,0.8069466226813046,26,lumpy,23,0.5306122448979592,11,40,0,385.0,0,zero recorded sales under provisional coverage; availability and final demand unverified
+17881-54820,refama,49,2.8823529411764706,0.3373522236817415,32,intermittent,17,0.6530612244897959,5,24,0,181.0,0,zero recorded sales under provisional coverage; availability and final demand unverified
+48815-14050,combined,51,1.0,0.23406865112909078,0,smooth,51,0.0,0,434,0,26.0,0,zero recorded sales under provisional coverage; availability and final demand unverified
+48815-14050,other,51,1.0408163265306123,0.3904228872348983,2,smooth,49,0.0392156862745098,1,307,0,56.0,0,zero recorded sales under provisional coverage; availability and final demand unverified
+48815-14050,refama,51,1.0851063829787233,0.24387864757106456,4,smooth,47,0.0784313725490196,1,127,0,55.0,0,zero recorded sales under provisional coverage; availability and final demand unverified
+90385-18046,combined,51,1.1590909090909092,0.8431946459824601,7,erratic,44,0.13725490196078433,1,131,1,79.0,0,zero recorded sales under provisional coverage; availability and final demand unverified
+90385-18046,other,51,1.3076923076923077,1.0167923981006135,12,erratic,39,0.23529411764705882,3,98,0,110.0,0,zero recorded sales under provisional coverage; availability and final demand unverified
+90385-18046,refama,51,2.217391304347826,0.4360408569668201,28,intermittent,23,0.5490196078431373,7,33,1,223.0,0,zero recorded sales under provisional coverage; availability and final demand unverified
+UAH-33505-35020,combined,47,1.0,0.3293797126049748,0,smooth,47,0.0,0,702,0,28.0,0,zero recorded sales under provisional coverage; availability and final demand unverified
+UAH-33505-35020,other,47,1.0,0.3650356809871377,0,smooth,47,0.0,0,648,0,28.0,0,zero recorded sales under provisional coverage; availability and final demand unverified
+UAH-33505-35020,refama,47,1.3823529411764706,0.35029487547214583,13,intermittent,34,0.2765957446808511,2,54,0,93.0,1,zero recorded sales under provisional coverage; availability and final demand unverified
+UAH-90385-18025,combined,50,1.0,0.860345399704503,0,erratic,50,0.0,0,513,0,28.0,0,zero recorded sales under provisional coverage; availability and final demand unverified
+UAH-90385-18025,other,50,1.0,0.9410944643195126,0,erratic,50,0.0,0,437,0,37.0,0,zero recorded sales under provisional coverage; availability and final demand unverified
+UAH-90385-18025,refama,50,1.3157894736842106,0.5820773399638135,12,erratic,38,0.24,2,76,0,86.0,0,zero recorded sales under provisional coverage; availability and final demand unverified

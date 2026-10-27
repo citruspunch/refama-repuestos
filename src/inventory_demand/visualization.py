@@ -254,3 +254,77 @@ def plot_models(monthly: pd.DataFrame, tables: dict, config: Config):
         ax.set(title=f"{PRODUCTS[code]}: NOT a live recommendation", xlabel="Assumed lead time (months)", ylabel="Units")
         ax.legend(fontsize=7)
     save(fig, "hypothetical_inventory_scenarios", config)
+
+
+def plot_portfolio(monthly, tables, catalog, config):
+    """Compact cross-product figures with independent unit scales, discovered from data."""
+    sns.set_theme(style="whitegrid", context="notebook")
+    codes = catalog.codigo_producto.tolist()
+    labels = catalog.set_index("codigo_producto").product_id.to_dict()
+    complete = monthly[monthly.complete_for_modeling & monthly.scenario.eq("combined")]
+
+    def panels():
+        columns = min(2, len(codes))
+        fig, axes = plt.subplots(int(np.ceil(len(codes) / columns)), columns,
+                                 figsize=(14, 3.1 * np.ceil(len(codes) / columns)), squeeze=False)
+        for ax in axes.flat[len(codes):]:
+            ax.set_visible(False)
+        return fig, list(axes.flat)
+
+    fig, axes = panels()
+    for code, ax in zip(codes, axes):
+        g = complete[complete.codigo_producto.eq(code)]
+        ax.plot(g.month, g.sales_units, color="#4e79a7", label="VENTA registrada")
+        ax.plot(g.month, g.sales_units.rolling(3).mean(), color="#b37828", label="Media móvil 3 meses")
+        ax.scatter(g.loc[g.sales_units.eq(0), "month"], g.loc[g.sales_units.eq(0), "sales_units"], color="#c3404d", s=10)
+        ax.set(title=f"{labels[code]} · {code}", ylabel="Unidades / mes", ylim=(0, None))
+        ax.tick_params(axis="x", rotation=20)
+        ax.legend(fontsize=8)
+    fig.suptitle("Ventas registradas: meses interiores de cobertura provisional; escalas propias")
+    save(fig, "portfolio_monthly_sales", config)
+
+    profiles = tables["demand_profiles"].query("scenario == 'combined'").set_index("codigo_producto").reindex(codes)
+    fig, ax = plt.subplots(figsize=(10, 5))
+    ax.bar(labels.values(), profiles.zero_fraction * 100, color="#4e79a7")
+    for i, row in enumerate(profiles.itertuples()):
+        ax.text(i, row.zero_fraction * 100 + 1, f"{row.zero_periods}/{row.usable_months} meses\nracha {row.longest_zero_run_months}", ha="center", fontsize=10)
+    ax.set(ylabel="Meses sin ventas registradas (%)", ylim=(0, 105), title="Frecuencia de ceros y mayor racha mensual por producto")
+    save(fig, "portfolio_intermittency", config)
+
+    fig, axes = panels()
+    p = tables.get("backtest_predictions", pd.DataFrame())
+    if len(p):
+        for code, ax in zip(codes, axes):
+            g = p[p.codigo_producto.eq(code) & p.scenario.eq("combined") & p.phase.eq("holdout")]
+            if g.empty:
+                ax.set_title(f"{labels[code]} · historial insuficiente")
+                continue
+            selected = g[g.selected]
+            naive = g[g.model.eq("naive")]
+            ax.plot(selected.target_month, selected.actual, color="#1c1028", marker="o", label="VENTA observada")
+            ax.plot(selected.target_month, selected.predicted, color="#4e79a7", label=selected.model.iloc[0])
+            ax.plot(naive.target_month, naive.predicted, color="#b37828", ls="--", label="Último mes")
+            ax.set(title=f"{labels[code]} · seis orígenes finales", ylabel="Unidades / mes", ylim=(0, None))
+            ax.tick_params(axis="x", rotation=20)
+            ax.legend(fontsize=8)
+        save(fig, "portfolio_holdout", config)
+    else:
+        plt.close(fig)
+
+    inventory = tables["inventory_pressure"].set_index("codigo_producto").reindex(codes)
+    fig, ax = plt.subplots(figsize=(10, 5))
+    ax.bar(labels.values(), inventory.bookkeeping_units_over_trailing12_monthly_sales, color="#4e79a7")
+    ax.set(ylabel="Saldo / venta mensual media de 12 meses", title="Inventario alineado al último mes interior de cada producto")
+    save(fig, "portfolio_inventory", config)
+
+    if "production_scenarios" in tables:
+        g = tables["production_scenarios"].query("status == 'hypothetical_production_scenario' and demand_factor == 1 and assumed_available_production_days == 1").copy()
+        if g.empty:
+            return  # Missing planning inputs are not zero production bars.
+        g = g.sort_values("assumed_units_per_production_day").drop_duplicates(["codigo_producto", "assumed_safety_stock_months"])
+        g["Producto"] = g.codigo_producto.map(labels)
+        fig, ax = plt.subplots(figsize=(10, 5))
+        sns.barplot(data=g, x="Producto", y="suggested_production_units", hue="assumed_safety_stock_months", ax=ax)
+        ax.set(ylabel="Unidades de producción supuestas", title="Un día asignado: seguridad de cero o un mes; ritmo inferior reportado")
+        ax.legend(title="Meses de seguridad")
+        save(fig, "portfolio_production", config)

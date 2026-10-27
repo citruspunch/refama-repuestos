@@ -2,6 +2,7 @@
 
 import json
 import pickle
+from urllib.parse import quote
 
 import numpy as np
 import pandas as pd
@@ -9,7 +10,7 @@ from statsmodels.stats.diagnostic import acorr_ljungbox
 
 from .config import Config
 from .eda import block_resample
-from .forecasting import CANDIDATES, ML_MODELS, fit_predict
+from .forecasting import CANDIDATES, EXPANDED_CANDIDATES, ML_MODELS, candidates_for_history, fit_predict
 
 
 def error_metrics(actual, predicted, mase_scales=None) -> dict:
@@ -43,13 +44,13 @@ def origin_plan(series: pd.DataFrame, config: Config) -> pd.DataFrame:
                           "horizon_months": 1} for i in range(config.initial_train_months, n)])
 
 
-def evaluate_origins(series: pd.DataFrame, origins: pd.DataFrame, config: Config) -> pd.DataFrame:
+def evaluate_origins(series: pd.DataFrame, origins: pd.DataFrame, config: Config, candidates=None) -> pd.DataFrame:
     rows = []
     for origin in origins.itertuples(index=False):
         train = series.iloc[:origin.position]
         # Fold-local nonseasonal MASE denominator: no global or future data is used.
         scale = float(np.abs(np.diff(train.sales_units.to_numpy(float))).mean())
-        for model in CANDIDATES:
+        for model in (CANDIDATES if candidates is None else candidates):
             try:
                 result = fit_predict(model, train, config.seed)
                 prediction, failure, fit_warnings = result.prediction, "", result.warnings
@@ -73,7 +74,9 @@ def summarize_predictions(predictions: pd.DataFrame) -> pd.DataFrame:
     for group, g in predictions.groupby(keys):
         rows.append({**dict(zip(keys, group)), "origins": len(g),
                      "successful_origins": int(g.predicted.notna().sum()),
-                     "all_origins_successful": bool(g.predicted.notna().all()),
+                      "all_origins_successful": bool(g.predicted.notna().all()),
+                      "positive_actual_months": int(g.actual.gt(0).sum()),
+                      "zero_actual_months": int(g.actual.eq(0).sum()),
                      "clipped_origins": int(g.nonnegative_clipped.sum()) if "nonnegative_clipped" in g else 0,
                      **error_metrics(g.actual, g.predicted, g.mase_scale)})
     out = pd.DataFrame(rows)
@@ -93,7 +96,7 @@ def choose_model(validation_summary: pd.DataFrame, config: Config) -> dict:
         raise RuntimeError("No candidate completed all validation origins")
     best = valid.sort_values(["mae", "model"]).iloc[0]
     tied = valid[valid.mae.le(best.mae * (1 + config.practical_tie_fraction) + 1e-12)].copy()
-    tied["simplicity"] = tied.model.map(CANDIDATES)
+    tied["simplicity"] = tied.model.map(EXPANDED_CANDIDATES)
     selected = tied.sort_values(["simplicity", "mae"]).iloc[0]
     return {"model": selected.model, "best_raw_mae_model": best.model,
             "selected_validation_mae": float(selected.mae), "best_validation_mae": float(best.mae),
@@ -121,17 +124,37 @@ def finite_sample_error_quantile(errors, coverage: float) -> float:
     return float(values[rank - 1]) if 1 <= rank <= len(values) else np.nan
 
 
-def run_backtests(monthly: pd.DataFrame, config: Config) -> dict[str, pd.DataFrame]:
+def run_backtests(monthly: pd.DataFrame, config: Config, *, expanded: bool = False) -> dict[str, pd.DataFrame]:
     all_predictions, selections, future_rows, comparisons, residual_rows, split_rows, interval_rows = [], [], [], [], [], [], []
     baseline_forecasts, robustness_rows = [], []
+    readiness, eligibility, artifacts = [], [], []
     complete = monthly[monthly.complete_for_modeling]
-    for (code, scenario), series in complete.groupby(["codigo_producto", "scenario"]):
+    for (code, scenario), observed in monthly.groupby(["codigo_producto", "scenario"]):
+        series = complete[complete.codigo_producto.eq(code) & complete.scenario.eq(scenario)]
         series = series.sort_values("month").reset_index(drop=True)
-        plan = origin_plan(series, config)
+        try:
+            plan = origin_plan(series, config)
+        except ValueError:
+            if not expanded:
+                raise
+            readiness.append({"codigo_producto": code, "scenario": scenario, "usable_months": len(series),
+                              "status": "blocked_insufficient_temporal_history", "minimum_months": config.initial_train_months + config.holdout_months + 6})
+            continue
+        readiness.append({"codigo_producto": code, "scenario": scenario, "usable_months": len(series),
+                          "status": "evaluated", "minimum_months": config.initial_train_months + config.holdout_months + 6})
+        initial = series.iloc[:config.initial_train_months]
+        candidates = candidates_for_history(initial) if expanded else CANDIDATES
+        if expanded:
+            for name in EXPANDED_CANDIDATES:
+                eligibility.append({"codigo_producto": code, "scenario": scenario, "model": name,
+                                    "eligible": name in candidates, "screening_end": initial.month.max(),
+                                    "screening_months": len(initial), "initial_positive_months": int(initial.sales_units.gt(0).sum()),
+                                    "initial_zero_fraction": float(initial.sales_units.eq(0).mean()),
+                                    "rule": "original_13_plus_zero; SBA/TSB only if initial_24 has >=2 positive and >=20% zero months"})
         # Execute validation FIRST, choose a fixed model, only then evaluate the final months.
-        validation = evaluate_origins(series, plan[plan.phase.eq("validation")], config)
+        validation = evaluate_origins(series, plan[plan.phase.eq("validation")], config, candidates)
         selection = choose_model(summarize_predictions(validation), config)
-        holdout = evaluate_origins(series, plan[plan.phase.eq("holdout")], config)
+        holdout = evaluate_origins(series, plan[plan.phase.eq("holdout")], config, candidates)
         predictions = pd.concat([validation, holdout], ignore_index=True)
         predictions["error"] = predictions.predicted - predictions.actual
         predictions["absolute_error"] = predictions.error.abs()
@@ -166,7 +189,8 @@ def run_backtests(monthly: pd.DataFrame, config: Config) -> dict[str, pd.DataFra
             residual_rows.append({"codigo_producto": code, "scenario": scenario, "phase": phase,
                                   "model": selection["model"], "n": len(residual),
                                   "mean_error": np.mean(residual), "std_error": np.std(residual, ddof=1),
-                                  "lag1_error_correlation": pd.Series(residual).autocorr(1) if len(residual) > 3 else np.nan,
+                                  "lag1_error_correlation": (pd.Series(residual).autocorr(1)
+                                                             if len(residual) > 3 and np.std(residual[:-1]) > 0 and np.std(residual[1:]) > 0 else np.nan),
                                   "ljung_box_lag": lag,
                                   "ljung_box_p_exploratory": ljung.lb_pvalue.iloc[0] if ljung is not None else np.nan})
             for coverage, width in ((.8, band80), (.95, band95)):
@@ -206,19 +230,29 @@ def run_backtests(monthly: pd.DataFrame, config: Config) -> dict[str, pd.DataFra
                             "live_next_calendar_month": (pd.Timestamp(config.as_of).to_period("M") + 1).to_timestamp(),
                             "live_forecast_available": False})
         # Serialize only the selected approach, with no names or transaction-level data.
-        stem = f"{code}_{scenario}"
-        model_dir = config.root / "artifacts"
+        stem = f"{quote(code, safe='') if expanded else code}_{scenario}"
+        model_dir = config.artifacts
         if isinstance(result.artifact, dict) and "estimator" not in result.artifact:
-            (model_dir / f"{stem}.json").write_text(json.dumps(result.artifact, indent=2), encoding="utf-8")
+            artifact_name = f"{stem}.json"
+            (model_dir / artifact_name).write_text(json.dumps(result.artifact, indent=2), encoding="utf-8")
         else:
-            with (model_dir / f"{stem}.pkl").open("wb") as handle:
+            artifact_name = f"{stem}.pkl"
+            with (model_dir / artifact_name).open("wb") as handle:
                 pickle.dump(result.artifact, handle, protocol=pickle.HIGHEST_PROTOCOL)
+        artifacts.append({"codigo_producto": code, "scenario": scenario, "model": selection["model"],
+                          "file": artifact_name, "training_end": series.month.max()})
+    if not all_predictions:
+        return {"model_readiness": pd.DataFrame(readiness), "candidate_eligibility": pd.DataFrame(eligibility)}
     predictions = pd.concat(all_predictions, ignore_index=True)
-    return {"backtest_predictions": predictions, "model_comparison": summarize_predictions(predictions),
+    result = {"backtest_predictions": predictions, "model_comparison": summarize_predictions(predictions),
             "selected_models": pd.DataFrame(selections), "next_history_month_forecasts": pd.DataFrame(future_rows),
             "paired_baseline_comparison": pd.DataFrame(comparisons), "residual_diagnostics": pd.DataFrame(residual_rows),
             "validation_splits": pd.concat(split_rows, ignore_index=True), "prediction_interval_diagnostics": pd.DataFrame(interval_rows),
-            "next_history_baseline_forecasts": pd.DataFrame(baseline_forecasts), "performance_stability": pd.DataFrame(robustness_rows)}
+             "next_history_baseline_forecasts": pd.DataFrame(baseline_forecasts), "performance_stability": pd.DataFrame(robustness_rows)}
+    if expanded:
+        result.update({"model_readiness": pd.DataFrame(readiness), "candidate_eligibility": pd.DataFrame(eligibility),
+                       "model_artifacts": pd.DataFrame(artifacts)})
+    return result
 
 
 def scenario_coherence(forecasts: pd.DataFrame) -> pd.DataFrame:

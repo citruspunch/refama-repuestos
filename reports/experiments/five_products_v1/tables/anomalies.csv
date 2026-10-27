@@ -1,0 +1,172 @@
+codigo_producto,movement_id,date,type,classification,quantity_in,quantity_out,balance,detail
+17881-54820,K02038,2022-06-24,large_adjustment,context_required,14.0,0.0,53.0,Absolute adjustment >= median interior monthly sales (2)
+17881-54820,K02059,2023-02-21,large_sale,legitimate_but_unusual_or_context_needed,0.0,10.0,100.0,Above Q3+3*IQR=9; retained
+17881-54820,K02099,2025-09-08,large_adjustment,context_required,0.0,3.0,12.0,Absolute adjustment >= median interior monthly sales (2)
+17881-54820,K02100,2025-11-06,large_adjustment,context_required,2.0,0.0,14.0,Absolute adjustment >= median interior monthly sales (2)
+17881-54820,K02105,2026-07-30,large_adjustment,context_required,2.0,0.0,2.0,Absolute adjustment >= median interior monthly sales (2)
+17881-54820,K02108,2026-08-25,large_adjustment,context_required,6.0,0.0,6.0,Absolute adjustment >= median interior monthly sales (2)
+48815-14050,K00587,2022-06-08,document_or_repetition,potential_data_quality_problem,0.0,24.0,165.0,Investigate source; no movements deleted
+48815-14050,K00588,2022-06-08,document_or_repetition,potential_data_quality_problem,0.0,24.0,141.0,Investigate source; no movements deleted
+48815-14050,K00595,2022-06-17,document_or_repetition,potential_data_quality_problem,0.0,20.0,864.0,Investigate source; no movements deleted
+48815-14050,K00596,2022-06-17,document_or_repetition,potential_data_quality_problem,0.0,20.0,844.0,Investigate source; no movements deleted
+48815-14050,K00599,2022-06-24,large_adjustment,context_required,0.0,250.0,576.0,Absolute adjustment >= median interior monthly sales (105)
+48815-14050,K00637,2022-09-14,large_adjustment,context_required,191.0,0.0,358.0,Absolute adjustment >= median interior monthly sales (105)
+48815-14050,K00727,2023-05-22,document_or_repetition,potential_data_quality_problem,0.0,2.0,349.0,Investigate source; no movements deleted
+48815-14050,K00728,2023-05-22,document_or_repetition,potential_data_quality_problem,0.0,2.0,347.0,Investigate source; no movements deleted
+48815-14050,K00831,2024-04-02,large_sale,legitimate_but_unusual_or_context_needed,0.0,100.0,392.0,Above Q3+3*IQR=56; retained
+48815-14050,K00912,2025-01-16,document_or_repetition,potential_data_quality_problem,0.0,10.0,41.0,Investigate source; no movements deleted
+48815-14050,K00913,2025-01-16,document_or_repetition,potential_data_quality_problem,0.0,10.0,31.0,Investigate source; no movements deleted
+90385-18046,K01067,2022-06-27,large_adjustment,context_required,0.0,214.0,1350.0,Absolute adjustment >= median interior monthly sales (80)
+90385-18046,K01085,2022-12-28,large_sale,legitimate_but_unusual_or_context_needed,0.0,200.0,848.0,Above Q3+3*IQR=170; retained
+90385-18046,K01098,2023-04-19,large_sale,legitimate_but_unusual_or_context_needed,0.0,400.0,131.0,Above Q3+3*IQR=170; retained
+90385-18046,K01134,2024-03-06,large_sale,legitimate_but_unusual_or_context_needed,0.0,200.0,0.0,Above Q3+3*IQR=170; retained
+90385-18046,K01139,2024-05-14,large_sale,legitimate_but_unusual_or_context_needed,0.0,300.0,988.0,Above Q3+3*IQR=170; retained
+90385-18046,K01140,2024-05-25,large_sale,legitimate_but_unusual_or_context_needed,0.0,200.0,788.0,Above Q3+3*IQR=170; retained
+90385-18046,K01151,2024-08-30,large_sale,legitimate_but_unusual_or_context_needed,0.0,200.0,368.0,Above Q3+3*IQR=170; retained
+90385-18046,K01185,2025-07-12,large_sale,legitimate_but_unusual_or_context_needed,0.0,300.0,2.0,Above Q3+3*IQR=170; retained
+90385-18046,K01190,2025-09-01,large_adjustment,context_required,264.0,0.0,264.0,Absolute adjustment >= median interior monthly sales (80)
+90385-18046,K01205,2026-06-10,large_adjustment,context_required,186.0,0.0,200.0,Absolute adjustment >= median interior monthly sales (80)
+90385-18046,K01209,2026-07-16,large_adjustment,context_required,130.0,0.0,150.0,Absolute adjustment >= median interior monthly sales (80)
+90385-18046,K01213,2026-08-04,large_adjustment,context_required,109.0,0.0,150.0,Absolute adjustment >= median interior monthly sales (80)
+90385-18046,K01218,2026-10-15,large_adjustment,context_required,85.0,0.0,100.0,Absolute adjustment >= median interior monthly sales (80)
+UAH-33505-35020,K01255,2022-12-28,large_sale,legitimate_but_unusual_or_context_needed,0.0,100.0,808.0,Above Q3+3*IQR=82; retained
+UAH-33505-35020,K01262,2023-01-04,large_sale,legitimate_but_unusual_or_context_needed,0.0,100.0,643.0,Above Q3+3*IQR=82; retained
+UAH-33505-35020,K01267,2023-01-16,large_sale,legitimate_but_unusual_or_context_needed,0.0,100.0,493.0,Above Q3+3*IQR=82; retained
+UAH-33505-35020,K01277,2023-01-23,large_adjustment,context_required,638.0,0.0,1022.0,Absolute adjustment >= median interior monthly sales (291)
+UAH-33505-35020,K01291,2023-02-09,large_sale,legitimate_but_unusual_or_context_needed,0.0,100.0,563.0,Above Q3+3*IQR=82; retained
+UAH-33505-35020,K01332,2023-03-24,large_sale,legitimate_but_unusual_or_context_needed,0.0,200.0,44.0,Above Q3+3*IQR=82; retained
+UAH-33505-35020,K01334,2023-03-27,negative_balance,potential_data_or_timing_problem,0.0,50.0,-11.0,"Arithmetically possible ledger, physically ambiguous"
+UAH-33505-35020,K01336,2023-03-28,large_adjustment,context_required,300.0,0.0,338.0,Absolute adjustment >= median interior monthly sales (291)
+UAH-33505-35020,K01341,2023-04-03,large_sale,legitimate_but_unusual_or_context_needed,0.0,100.0,164.0,Above Q3+3*IQR=82; retained
+UAH-33505-35020,K01343,2023-04-05,large_adjustment,context_required,356.0,0.0,500.0,Absolute adjustment >= median interior monthly sales (291)
+UAH-33505-35020,K01363,2023-04-29,large_adjustment,context_required,400.0,0.0,593.0,Absolute adjustment >= median interior monthly sales (291)
+UAH-33505-35020,K01364,2023-04-29,large_sale,legitimate_but_unusual_or_context_needed,0.0,300.0,293.0,Above Q3+3*IQR=82; retained
+UAH-33505-35020,K01379,2023-05-15,large_sale,legitimate_but_unusual_or_context_needed,0.0,100.0,64.0,Above Q3+3*IQR=82; retained
+UAH-33505-35020,K01380,2023-05-16,large_adjustment,context_required,470.0,0.0,534.0,Absolute adjustment >= median interior monthly sales (291)
+UAH-33505-35020,K01382,2023-05-17,large_sale,legitimate_but_unusual_or_context_needed,0.0,300.0,222.0,Above Q3+3*IQR=82; retained
+UAH-33505-35020,K01383,2023-05-17,large_sale,legitimate_but_unusual_or_context_needed,0.0,100.0,122.0,Above Q3+3*IQR=82; retained
+UAH-33505-35020,K01389,2023-05-25,large_adjustment,context_required,300.0,0.0,472.0,Absolute adjustment >= median interior monthly sales (291)
+UAH-33505-35020,K01406,2023-06-14,large_sale,legitimate_but_unusual_or_context_needed,0.0,100.0,338.0,Above Q3+3*IQR=82; retained
+UAH-33505-35020,K01411,2023-06-23,large_adjustment,context_required,300.0,0.0,538.0,Absolute adjustment >= median interior monthly sales (291)
+UAH-33505-35020,K01429,2023-07-26,large_adjustment,context_required,300.0,0.0,638.0,Absolute adjustment >= median interior monthly sales (291)
+UAH-33505-35020,K01432,2023-08-01,large_sale,legitimate_but_unusual_or_context_needed,0.0,100.0,519.0,Above Q3+3*IQR=82; retained
+UAH-33505-35020,K01438,2023-08-07,large_adjustment,context_required,300.0,0.0,712.0,Absolute adjustment >= median interior monthly sales (291)
+UAH-33505-35020,K01440,2023-08-10,large_sale,legitimate_but_unusual_or_context_needed,0.0,100.0,602.0,Above Q3+3*IQR=82; retained
+UAH-33505-35020,K01447,2023-08-24,large_sale,legitimate_but_unusual_or_context_needed,0.0,200.0,298.0,Above Q3+3*IQR=82; retained
+UAH-33505-35020,K01450,2023-08-29,large_adjustment,context_required,300.0,0.0,568.0,Absolute adjustment >= median interior monthly sales (291)
+UAH-33505-35020,K01472,2023-10-02,large_sale,legitimate_but_unusual_or_context_needed,0.0,150.0,88.0,Above Q3+3*IQR=82; retained
+UAH-33505-35020,K01476,2023-10-12,large_adjustment,context_required,300.0,0.0,369.0,Absolute adjustment >= median interior monthly sales (291)
+UAH-33505-35020,K01477,2023-10-12,large_sale,legitimate_but_unusual_or_context_needed,0.0,200.0,169.0,Above Q3+3*IQR=82; retained
+UAH-33505-35020,K01483,2023-10-25,large_sale,legitimate_but_unusual_or_context_needed,0.0,100.0,21.0,Above Q3+3*IQR=82; retained
+UAH-33505-35020,K01487,2023-10-30,large_sale,legitimate_but_unusual_or_context_needed,0.0,100.0,21.0,Above Q3+3*IQR=82; retained
+UAH-33505-35020,K01492,2023-11-03,large_sale,legitimate_but_unusual_or_context_needed,0.0,100.0,101.0,Above Q3+3*IQR=82; retained
+UAH-33505-35020,K01510,2023-12-01,large_sale,legitimate_but_unusual_or_context_needed,0.0,100.0,212.0,Above Q3+3*IQR=82; retained
+UAH-33505-35020,K01513,2023-12-05,large_sale,legitimate_but_unusual_or_context_needed,0.0,100.0,72.0,Above Q3+3*IQR=82; retained
+UAH-33505-35020,K01521,2023-12-19,large_sale,legitimate_but_unusual_or_context_needed,0.0,100.0,198.0,Above Q3+3*IQR=82; retained
+UAH-33505-35020,K01527,2024-01-08,large_sale,legitimate_but_unusual_or_context_needed,0.0,100.0,11.0,Above Q3+3*IQR=82; retained
+UAH-33505-35020,K01530,2024-01-09,large_sale,legitimate_but_unusual_or_context_needed,0.0,100.0,6.0,Above Q3+3*IQR=82; retained
+UAH-33505-35020,K01552,2024-02-05,large_sale,legitimate_but_unusual_or_context_needed,0.0,106.0,146.0,Above Q3+3*IQR=82; retained
+UAH-33505-35020,K01567,2024-02-26,large_sale,legitimate_but_unusual_or_context_needed,0.0,100.0,94.0,Above Q3+3*IQR=82; retained
+UAH-33505-35020,K01577,2024-03-11,large_sale,legitimate_but_unusual_or_context_needed,0.0,100.0,117.0,Above Q3+3*IQR=82; retained
+UAH-33505-35020,K01590,2024-04-04,large_sale,legitimate_but_unusual_or_context_needed,0.0,100.0,161.0,Above Q3+3*IQR=82; retained
+UAH-33505-35020,K01593,2024-04-10,large_sale,legitimate_but_unusual_or_context_needed,0.0,100.0,37.0,Above Q3+3*IQR=82; retained
+UAH-33505-35020,K01600,2024-04-18,large_sale,legitimate_but_unusual_or_context_needed,0.0,100.0,309.0,Above Q3+3*IQR=82; retained
+UAH-33505-35020,K01626,2024-05-28,large_sale,legitimate_but_unusual_or_context_needed,0.0,125.0,311.0,Above Q3+3*IQR=82; retained
+UAH-33505-35020,K01629,2024-05-29,large_sale,legitimate_but_unusual_or_context_needed,0.0,100.0,179.0,Above Q3+3*IQR=82; retained
+UAH-33505-35020,K01636,2024-06-04,large_sale,legitimate_but_unusual_or_context_needed,0.0,100.0,28.0,Above Q3+3*IQR=82; retained
+UAH-33505-35020,K01646,2024-06-12,large_sale,legitimate_but_unusual_or_context_needed,0.0,200.0,122.0,Above Q3+3*IQR=82; retained
+UAH-33505-35020,K01647,2024-06-13,large_sale,legitimate_but_unusual_or_context_needed,0.0,100.0,22.0,Above Q3+3*IQR=82; retained
+UAH-33505-35020,K01658,2024-07-08,large_sale,legitimate_but_unusual_or_context_needed,0.0,100.0,183.0,Above Q3+3*IQR=82; retained
+UAH-33505-35020,K01671,2024-07-27,document_or_repetition,potential_data_quality_problem,0.0,50.0,309.0,Investigate source; no movements deleted
+UAH-33505-35020,K01672,2024-07-27,document_or_repetition,potential_data_quality_problem,0.0,50.0,259.0,Investigate source; no movements deleted
+UAH-33505-35020,K01684,2024-08-28,large_sale,legitimate_but_unusual_or_context_needed,0.0,100.0,41.0,Above Q3+3*IQR=82; retained
+UAH-33505-35020,K01692,2024-09-09,large_sale,legitimate_but_unusual_or_context_needed,0.0,100.0,278.0,Above Q3+3*IQR=82; retained
+UAH-33505-35020,K01699,2024-10-03,large_sale,legitimate_but_unusual_or_context_needed,0.0,100.0,110.0,Above Q3+3*IQR=82; retained
+UAH-33505-35020,K01720,2024-10-28,large_sale,legitimate_but_unusual_or_context_needed,0.0,100.0,353.0,Above Q3+3*IQR=82; retained
+UAH-33505-35020,K01734,2024-11-26,large_sale,legitimate_but_unusual_or_context_needed,0.0,100.0,382.0,Above Q3+3*IQR=82; retained
+UAH-33505-35020,K01742,2024-12-02,large_sale,legitimate_but_unusual_or_context_needed,0.0,100.0,65.0,Above Q3+3*IQR=82; retained
+UAH-33505-35020,K01765,2025-01-13,large_sale,legitimate_but_unusual_or_context_needed,0.0,100.0,181.0,Above Q3+3*IQR=82; retained
+UAH-33505-35020,K01792,2025-02-10,large_sale,legitimate_but_unusual_or_context_needed,0.0,100.0,98.0,Above Q3+3*IQR=82; retained
+UAH-33505-35020,K01811,2025-03-13,large_sale,legitimate_but_unusual_or_context_needed,0.0,125.0,242.0,Above Q3+3*IQR=82; retained
+UAH-33505-35020,K01835,2025-04-21,large_sale,legitimate_but_unusual_or_context_needed,0.0,100.0,47.0,Above Q3+3*IQR=82; retained
+UAH-33505-35020,K01919,2025-08-28,large_sale,legitimate_but_unusual_or_context_needed,0.0,100.0,142.0,Above Q3+3*IQR=82; retained
+UAH-33505-35020,K01951,2026-01-29,large_sale,legitimate_but_unusual_or_context_needed,0.0,100.0,0.0,Above Q3+3*IQR=82; retained
+UAH-33505-35020,K02002,2026-06-26,document_or_repetition,potential_data_quality_problem,0.0,10.0,26.0,Investigate source; no movements deleted
+UAH-33505-35020,K02003,2026-06-26,document_or_repetition,potential_data_quality_problem,0.0,10.0,16.0,Investigate source; no movements deleted
+UAH-90385-18025,K00015,2022-06-28,negative_balance,potential_data_or_timing_problem,0.0,300.0,-81.0,"Arithmetically possible ledger, physically ambiguous"
+UAH-90385-18025,K00020,2022-07-02,large_adjustment,context_required,1400.0,0.0,1400.0,Absolute adjustment >= median interior monthly sales (949.5)
+UAH-90385-18025,K00027,2022-07-08,large_adjustment,context_required,2924.0,0.0,3800.0,Absolute adjustment >= median interior monthly sales (949.5)
+UAH-90385-18025,K00033,2022-07-15,large_sale,legitimate_but_unusual_or_context_needed,0.0,1000.0,3616.0,Above Q3+3*IQR=325; retained
+UAH-90385-18025,K00040,2022-07-23,large_sale,legitimate_but_unusual_or_context_needed,0.0,500.0,2819.0,Above Q3+3*IQR=325; retained
+UAH-90385-18025,K00041,2022-07-27,large_sale,legitimate_but_unusual_or_context_needed,0.0,500.0,2319.0,Above Q3+3*IQR=325; retained
+UAH-90385-18025,K00043,2022-07-29,large_sale,legitimate_but_unusual_or_context_needed,0.0,1000.0,1294.0,Above Q3+3*IQR=325; retained
+UAH-90385-18025,K00044,2022-07-29,large_sale,legitimate_but_unusual_or_context_needed,0.0,500.0,794.0,Above Q3+3*IQR=325; retained
+UAH-90385-18025,K00045,2022-07-30,large_sale,legitimate_but_unusual_or_context_needed,0.0,1000.0,-206.0,Above Q3+3*IQR=325; retained
+UAH-90385-18025,K00045,2022-07-30,negative_balance,potential_data_or_timing_problem,0.0,1000.0,-206.0,"Arithmetically possible ledger, physically ambiguous"
+UAH-90385-18025,K00053,2022-08-16,large_sale,legitimate_but_unusual_or_context_needed,0.0,600.0,335.0,Above Q3+3*IQR=325; retained
+UAH-90385-18025,K00057,2022-08-18,large_sale,legitimate_but_unusual_or_context_needed,0.0,500.0,478.0,Above Q3+3*IQR=325; retained
+UAH-90385-18025,K00072,2022-09-07,large_sale,legitimate_but_unusual_or_context_needed,0.0,500.0,8666.0,Above Q3+3*IQR=325; retained
+UAH-90385-18025,K00075,2022-09-10,large_sale,legitimate_but_unusual_or_context_needed,0.0,800.0,7466.0,Above Q3+3*IQR=325; retained
+UAH-90385-18025,K00078,2022-09-14,large_sale,legitimate_but_unusual_or_context_needed,0.0,500.0,12441.0,Above Q3+3*IQR=325; retained
+UAH-90385-18025,K00120,2022-12-22,large_sale,legitimate_but_unusual_or_context_needed,0.0,500.0,12366.0,Above Q3+3*IQR=325; retained
+UAH-90385-18025,K00125,2023-01-11,large_sale,legitimate_but_unusual_or_context_needed,0.0,2000.0,9911.0,Above Q3+3*IQR=325; retained
+UAH-90385-18025,K00128,2023-01-17,large_sale,legitimate_but_unusual_or_context_needed,0.0,1000.0,8867.0,Above Q3+3*IQR=325; retained
+UAH-90385-18025,K00136,2023-02-08,large_sale,legitimate_but_unusual_or_context_needed,0.0,1000.0,7631.0,Above Q3+3*IQR=325; retained
+UAH-90385-18025,K00139,2023-02-10,large_sale,legitimate_but_unusual_or_context_needed,0.0,1000.0,6386.0,Above Q3+3*IQR=325; retained
+UAH-90385-18025,K00142,2023-02-17,large_sale,legitimate_but_unusual_or_context_needed,0.0,400.0,5730.0,Above Q3+3*IQR=325; retained
+UAH-90385-18025,K00145,2023-02-24,large_sale,legitimate_but_unusual_or_context_needed,0.0,500.0,5130.0,Above Q3+3*IQR=325; retained
+UAH-90385-18025,K00149,2023-03-03,large_sale,legitimate_but_unusual_or_context_needed,0.0,500.0,4230.0,Above Q3+3*IQR=325; retained
+UAH-90385-18025,K00167,2023-03-27,large_sale,legitimate_but_unusual_or_context_needed,0.0,1000.0,9646.0,Above Q3+3*IQR=325; retained
+UAH-90385-18025,K00168,2023-03-27,large_sale,legitimate_but_unusual_or_context_needed,0.0,1000.0,8646.0,Above Q3+3*IQR=325; retained
+UAH-90385-18025,K00170,2023-03-31,large_sale,legitimate_but_unusual_or_context_needed,0.0,600.0,8031.0,Above Q3+3*IQR=325; retained
+UAH-90385-18025,K00177,2023-05-10,large_sale,legitimate_but_unusual_or_context_needed,0.0,1000.0,6733.0,Above Q3+3*IQR=325; retained
+UAH-90385-18025,K00178,2023-05-10,large_sale,legitimate_but_unusual_or_context_needed,0.0,500.0,6233.0,Above Q3+3*IQR=325; retained
+UAH-90385-18025,K00207,2023-06-19,large_sale,legitimate_but_unusual_or_context_needed,0.0,400.0,12494.0,Above Q3+3*IQR=325; retained
+UAH-90385-18025,K00220,2023-08-04,large_sale,legitimate_but_unusual_or_context_needed,0.0,500.0,10919.0,Above Q3+3*IQR=325; retained
+UAH-90385-18025,K00221,2023-08-04,large_sale,legitimate_but_unusual_or_context_needed,0.0,500.0,10419.0,Above Q3+3*IQR=325; retained
+UAH-90385-18025,K00238,2023-09-21,large_sale,legitimate_but_unusual_or_context_needed,0.0,500.0,10143.0,Above Q3+3*IQR=325; retained
+UAH-90385-18025,K00249,2023-10-31,large_sale,legitimate_but_unusual_or_context_needed,0.0,671.0,9601.0,Above Q3+3*IQR=325; retained
+UAH-90385-18025,K00257,2023-11-24,large_sale,legitimate_but_unusual_or_context_needed,0.0,700.0,8071.0,Above Q3+3*IQR=325; retained
+UAH-90385-18025,K00258,2023-11-28,large_sale,legitimate_but_unusual_or_context_needed,0.0,500.0,7571.0,Above Q3+3*IQR=325; retained
+UAH-90385-18025,K00264,2023-12-06,document_or_repetition,potential_data_quality_problem,0.0,50.0,7418.0,Investigate source; no movements deleted
+UAH-90385-18025,K00265,2023-12-06,document_or_repetition,potential_data_quality_problem,0.0,50.0,7368.0,Investigate source; no movements deleted
+UAH-90385-18025,K00275,2024-01-11,large_adjustment,context_required,0.0,5582.0,2170.0,Absolute adjustment >= median interior monthly sales (949.5)
+UAH-90385-18025,K00287,2024-01-31,large_sale,legitimate_but_unusual_or_context_needed,0.0,400.0,3082.0,Above Q3+3*IQR=325; retained
+UAH-90385-18025,K00293,2024-02-19,large_sale,legitimate_but_unusual_or_context_needed,0.0,1000.0,1586.0,Above Q3+3*IQR=325; retained
+UAH-90385-18025,K00294,2024-02-20,large_sale,legitimate_but_unusual_or_context_needed,0.0,500.0,1086.0,Above Q3+3*IQR=325; retained
+UAH-90385-18025,K00310,2024-03-13,document_or_repetition,potential_data_quality_problem,900.0,0.0,5056.0,Investigate source; no movements deleted
+UAH-90385-18025,K00311,2024-03-13,document_or_repetition,potential_data_quality_problem,900.0,0.0,5956.0,Investigate source; no movements deleted
+UAH-90385-18025,K00319,2024-04-05,large_sale,legitimate_but_unusual_or_context_needed,0.0,1000.0,8731.0,Above Q3+3*IQR=325; retained
+UAH-90385-18025,K00328,2024-04-25,large_sale,legitimate_but_unusual_or_context_needed,0.0,500.0,7742.0,Above Q3+3*IQR=325; retained
+UAH-90385-18025,K00332,2024-05-09,large_sale,legitimate_but_unusual_or_context_needed,0.0,500.0,6972.0,Above Q3+3*IQR=325; retained
+UAH-90385-18025,K00341,2024-05-31,large_sale,legitimate_but_unusual_or_context_needed,0.0,500.0,5888.0,Above Q3+3*IQR=325; retained
+UAH-90385-18025,K00345,2024-06-07,large_sale,legitimate_but_unusual_or_context_needed,0.0,364.0,5369.0,Above Q3+3*IQR=325; retained
+UAH-90385-18025,K00361,2024-08-02,large_sale,legitimate_but_unusual_or_context_needed,0.0,1000.0,3673.0,Above Q3+3*IQR=325; retained
+UAH-90385-18025,K00380,2024-10-09,large_sale,legitimate_but_unusual_or_context_needed,0.0,500.0,2416.0,Above Q3+3*IQR=325; retained
+UAH-90385-18025,K00386,2024-10-22,large_sale,legitimate_but_unusual_or_context_needed,0.0,500.0,1816.0,Above Q3+3*IQR=325; retained
+UAH-90385-18025,K00421,2025-01-17,large_sale,legitimate_but_unusual_or_context_needed,0.0,1000.0,5074.0,Above Q3+3*IQR=325; retained
+UAH-90385-18025,K00428,2025-02-05,large_sale,legitimate_but_unusual_or_context_needed,0.0,500.0,4224.0,Above Q3+3*IQR=325; retained
+UAH-90385-18025,K00433,2025-02-13,large_sale,legitimate_but_unusual_or_context_needed,0.0,500.0,3524.0,Above Q3+3*IQR=325; retained
+UAH-90385-18025,K00501,2025-06-21,large_sale,legitimate_but_unusual_or_context_needed,0.0,500.0,1414.0,Above Q3+3*IQR=325; retained
+UAH-90385-18025,K00543,2025-11-24,large_sale,legitimate_but_unusual_or_context_needed,0.0,500.0,9638.0,Above Q3+3*IQR=325; retained
+UAH-90385-18025,K00556,2026-02-27,large_sale,legitimate_but_unusual_or_context_needed,0.0,1000.0,7760.0,Above Q3+3*IQR=325; retained
+UAH-90385-18025,K00563,2026-04-22,large_sale,legitimate_but_unusual_or_context_needed,0.0,500.0,6867.0,Above Q3+3*IQR=325; retained
+17881-54820,,2023-02-01,abrupt_monthly_change_combined,context_required,,14.0,,Monthly difference robust z>3.5; not evidence of a transcription error
+17881-54820,,2022-08-01,abrupt_monthly_change_other,context_required,,3.0,,Monthly difference robust z>3.5; not evidence of a transcription error
+17881-54820,,2023-02-01,abrupt_monthly_change_other,context_required,,11.0,,Monthly difference robust z>3.5; not evidence of a transcription error
+17881-54820,,2023-03-01,abrupt_monthly_change_other,context_required,,0.0,,Monthly difference robust z>3.5; not evidence of a transcription error
+90385-18046,,2023-05-01,abrupt_monthly_change_combined,context_required,,50.0,,Monthly difference robust z>3.5; not evidence of a transcription error
+90385-18046,,2024-05-01,abrupt_monthly_change_combined,context_required,,500.0,,Monthly difference robust z>3.5; not evidence of a transcription error
+90385-18046,,2024-05-01,abrupt_monthly_change_other,context_required,,500.0,,Monthly difference robust z>3.5; not evidence of a transcription error
+90385-18046,,2023-07-01,abrupt_monthly_change_refama,context_required,,120.0,,Monthly difference robust z>3.5; not evidence of a transcription error
+90385-18046,,2023-08-01,abrupt_monthly_change_refama,context_required,,0.0,,Monthly difference robust z>3.5; not evidence of a transcription error
+90385-18046,,2024-09-01,abrupt_monthly_change_refama,context_required,,75.0,,Monthly difference robust z>3.5; not evidence of a transcription error
+90385-18046,,2024-10-01,abrupt_monthly_change_refama,context_required,,0.0,,Monthly difference robust z>3.5; not evidence of a transcription error
+90385-18046,,2025-03-01,abrupt_monthly_change_refama,context_required,,70.0,,Monthly difference robust z>3.5; not evidence of a transcription error
+90385-18046,,2025-04-01,abrupt_monthly_change_refama,context_required,,10.0,,Monthly difference robust z>3.5; not evidence of a transcription error
+UAH-90385-18025,,2022-08-01,abrupt_monthly_change_combined,context_required,,1720.0,,Monthly difference robust z>3.5; not evidence of a transcription error
+UAH-90385-18025,,2022-10-01,abrupt_monthly_change_combined,context_required,,496.0,,Monthly difference robust z>3.5; not evidence of a transcription error
+UAH-90385-18025,,2023-04-01,abrupt_monthly_change_combined,context_required,,298.0,,Monthly difference robust z>3.5; not evidence of a transcription error
+UAH-90385-18025,,2022-08-01,abrupt_monthly_change_other,context_required,,1705.0,,Monthly difference robust z>3.5; not evidence of a transcription error
+UAH-90385-18025,,2022-10-01,abrupt_monthly_change_other,context_required,,496.0,,Monthly difference robust z>3.5; not evidence of a transcription error
+UAH-90385-18025,,2023-04-01,abrupt_monthly_change_other,context_required,,278.0,,Monthly difference robust z>3.5; not evidence of a transcription error
