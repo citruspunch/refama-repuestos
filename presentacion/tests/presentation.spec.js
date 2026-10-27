@@ -80,6 +80,20 @@ test("las flechas del gráfico no avanzan la exposición ni duplican datos", asy
   await page.keyboard.press("ArrowRight")
   await at(page, "tendencia")
   await expect(page.locator(".chart-tooltip").first().locator(":scope > div")).toHaveCount(1)
+  const chart = page.locator(".recharts-surface[role='application']").first()
+  await expect(chart).toHaveAttribute("aria-label", /Ventas mensuales registradas/)
+  await expect(chart.locator("title")).toHaveText("")
+})
+
+test("el ciclo de meses muestra el calendario y sus dos coordenadas", async ({ page }) => {
+  await page.goto(`/${hashFor("meses-ciclicos")}`)
+  await at(page, "meses-ciclicos")
+  const diagram = page.getByRole("img", { name: /Los doce meses en un círculo/ })
+  await expect(diagram.locator("g")).toHaveCount(12)
+  await expect(diagram).toContainText("dic")
+  await expect(diagram).toContainText("ene")
+  await expect(diagram).toContainText("seno")
+  await expect(diagram).toContainText("coseno")
 })
 
 test("Espacio no avanza dos veces y la repetición de tecla se ignora", async ({ page }) => {
@@ -120,7 +134,7 @@ test("se conserva la identidad visual y las fotos de los productos", async ({ pa
   await expect(page.locator(".cover .recharts-wrapper")).toHaveCount(0)
   await visit(page, "productos")
   await expect(page.locator(".product-inputs tbody tr")).toHaveCount(5)
-  await expect(page.locator(".product-inputs thead th")).toHaveCount(2)
+  await expect(page.locator(".product-inputs thead th")).toHaveCount(4)
   for (const [index, id] of Object.keys(BUSINESS).entries()) {
     const image = page.locator(".product-thumb").nth(index)
     await expect(image).toHaveAttribute("alt", BUSINESS[id].shortName)

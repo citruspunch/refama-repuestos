@@ -10,7 +10,7 @@ Presentación completa en español sobre el proyecto universitario de pronóstic
 - [Fuentes y límites de la evidencia](EVIDENCIA.md).
 - [Comprobaciones y limitaciones de entrega](VALIDACION.md).
 
-Son 26 diapositivas y 30 pasos. La duración orientativa suma 57:30 y puede acortarse hacia 45 minutos al abreviar los ejemplos. No es un tiempo medido en ensayo.
+Son 26 diapositivas y 30 pasos. La duración orientativa suma 56:30 y puede acortarse hacia 45 minutos al abreviar los ejemplos. No es un tiempo medido en ensayo.
 
 La narrativa sigue el problema de la empresa, la preparación de los datos, los modelos, sus resultados y la simulación de inventarios. Conserva las comparaciones de los cinco productos y utiliza A y B para explicar las variables y los métodos con ejemplos concretos.
 
@@ -85,7 +85,7 @@ Escenario fijo de 1600×900 que mantiene proporciones en pantallas 16:9 y proyec
 
 Se conserva papel frío y tinta ciruela. La paleta indicada para A a E es `#ffd22b`, `#feb204`, `#ff8503`, `#d53600` y `#700e01`. Los distintivos de A, B y C usan letras oscuras; D y E, blancas. Rellenos y etiquetas mantienen esos colores. Las líneas de A, B y C usan tonos más profundos para tener contraste sin contorno oscuro. Los trazos tienen remates redondeados. La barra de navegación sigue redondeada.
 
-La portada identifica los productos por nombre y color. La tabla de productos conserva sus fotos, sin precios ni especificaciones secundarias. Las gráficas de ventas y prueba final mantienen dos filas, con A y B arriba y C, D y E abajo. Las ventas históricas comparten eje temporal y conservan escalas verticales propias. La prueba final mantiene las fechas de cada producto.
+La portada identifica los productos por nombre y color. La tabla de productos muestra sus fotos, precios netos y ritmos de producción reportados. Las gráficas de ventas y prueba final mantienen dos filas, con A y B arriba y C, D y E abajo. Las ventas históricas comparten eje temporal y conservan escalas verticales propias. La prueba final mantiene las fechas de cada producto.
 
 Las entradas visuales son finitas y se pueden repetir. Movimiento reducido muestra toda la información sin animación. No se añadieron dependencias ni controles interactivos nuevos.
 

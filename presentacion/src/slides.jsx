@@ -1,5 +1,5 @@
 import React from "react"
-import { BUSINESS, MODEL_NAMES, month, number } from "./business.js"
+import { BUSINESS, MODEL_NAMES, month, number, price } from "./business.js"
 import { useCueState, usePresentation } from "./PresentationContext.jsx"
 import { ForecastChart, PortfolioSales, portfolio, product, productIds, score } from "./Charts.jsx"
 import { evaluationSplit, forecastSeries, interiorMonths, productionVariant, replayTotal } from "./analysis.js"
@@ -94,9 +94,12 @@ function Decision() {
 
 function Products() {
   return <Slide className="products-slide">
-    <table className="comparison-table portfolio-table product-inputs"><thead><tr><th>Repuesto</th><th>Producto analizado</th></tr></thead><tbody>{productIds.map((id) => {
+    <table className="comparison-table portfolio-table product-inputs"><thead><tr><th>Repuesto</th><th>Producto analizado</th><th>Precio</th><th>Producción diaria</th></tr></thead><tbody>{productIds.map((id) => {
       const item = BUSINESS[id]
-      return <tr key={id}><td className="product-image-cell"><div className="product-image-wrapper"><img src={PRODUCT_IMAGES[id]} alt={item.shortName} className="product-thumb" /></div></td><th scope="row"><ProductLabel id={id}>{item.shortName}</ProductLabel></th></tr>
+      const dailyRate = item.reportedUnitsPerProductionDay
+        ? `${number(item.reportedUnitsPerProductionDay)} u./día`
+        : `${item.reportedUnitsPerProductionDayMin} a ${item.reportedUnitsPerProductionDayMax} u./día`
+      return <tr key={id}><td className="product-image-cell"><div className="product-image-wrapper"><img src={PRODUCT_IMAGES[id]} alt={item.shortName} className="product-thumb" /></div></td><th scope="row"><ProductLabel id={id}>{item.shortName}</ProductLabel></th><td>{price(item.netSellingPrice)}</td><td>{dailyRate}</td></tr>
     })}</tbody></table>
   </Slide>
 }
@@ -129,10 +132,7 @@ function Sample() {
       ["Qué predecimos", "Unidades vendidas por producto en el mes siguiente."],
       ["Qué sumamos", "Despachos a Refama y ventas a otros clientes."],
       ["Qué dejamos fuera", "Entradas a bodega y movimientos que no son ventas."],
-    ]} /><div className="sample-periods">{productIds.map((id) => {
-      const data = interiorMonths(product(id))
-      return <div key={id}><ProductLabel id={id}>{month(data[0].month)} a {month(data.at(-1).month)}</ProductLabel><strong>{data.length}<small> meses</small></strong></div>
-    })}</div></div>
+    ]} /><div className="sample-periods"><div><strong>Aproximadamente 4 años</strong></div><p>de historial analizado por producto.</p></div></div>
   </Slide>
 }
 
@@ -151,45 +151,13 @@ function Variability() {
   </Slide>
 }
 
-function Inventory() {
-  return <Slide>
-    <table className="comparison-table portfolio-table"><thead><tr><th>Producto</th><th>Saldo, unidades</th><th>Venta media mensual</th><th>Fecha del saldo</th></tr></thead><tbody>{productIds.map((id) => {
-      const inventory = product(id).inventory
-      return <tr key={id}><th><ProductLabel id={id}>{BUSINESS[id].shortName}</ProductLabel></th><td>{number(inventory.aligned_closing_balance)}</td><td>{number(inventory.trailing_12_mean_sales, 1)} u.</td><td>{month(inventory.last_interior_month)}</td></tr>
-    })}</tbody></table>
-    <p className="small-explanation">Promedio de los últimos 12 meses. A acumula más inventario frente a su venta reciente que los demás productos.</p>
-  </Slide>
-}
-
 function Demand() {
   return <Slide>
-    <div className="demand-flow">
-      <div className="demand-card latent">
-        <h3>Pedidos de clientes</h3>
-        <p>Lo que los clientes quieren comprar.</p>
-      </div>
-      <div className="demand-arrow" aria-hidden="true">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-          <line x1="5" y1="12" x2="19" y2="12" />
-          <polyline points="12 5 19 12 12 19" />
-        </svg>
-      </div>
-      <div className="demand-card filter">
-        <h3>Disponibilidad</h3>
-        <p>Lo que la bodega puede entregar.</p>
-      </div>
-      <div className="demand-arrow" aria-hidden="true">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-          <line x1="5" y1="12" x2="19" y2="12" />
-          <polyline points="12 5 19 12 12 19" />
-        </svg>
-      </div>
-      <div className="demand-card target">
-        <h3>Ventas en Kardex</h3>
-        <p>Lo que observamos y buscamos predecir.</p>
-      </div>
-    </div>
-    <p className="small-explanation">No contamos con un registro de pedidos no atendidos. Las ventas no muestran toda la demanda si hubo faltantes.</p>
+    <Flow items={[
+      { title: "Pedidos de clientes", text: "Cuánto compran y cuándo lo hacen." },
+      { title: "Disponibilidad", text: "Lo que la bodega puede entregar." },
+      { title: "Ventas en Kardex", text: "Lo que observamos y buscamos predecir." },
+    ]} />
   </Slide>
 }
 
@@ -198,7 +166,35 @@ function Features() {
   return <Slide>
     <ProductLabel id="A">Ejemplo para predecir {month(product("A").forecast.target_month, false)}</ProductLabel>
     <div className="feature-history">{recent.map((row) => <div key={row.month}><span>{month(row.month)}</span><strong>{number(row.sales_units)}</strong><small>unidades vendidas</small></div>)}<div className="feature-mean"><span>Promedio reciente</span><strong>{number(recent.reduce((sum, row) => sum + row.sales_units, 0) / 3)}</strong><small>unidades por mes</small></div></div>
-    <p className="large-caption">Ventas de los tres meses previos, su promedio, paso del tiempo y mes del año.</p>
+    <ul className="feature-points">
+      <li>Ventas de los tres meses previos</li>
+      <li>Su promedio</li>
+      <li>Índice temporal</li>
+      <li>Mes del año</li>
+    </ul>
+  </Slide>
+}
+
+function CyclicMonths() {
+  const months = ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sept", "oct", "nov", "dic"]
+  return <Slide>
+    <div className="month-cycle">
+      <svg viewBox="0 0 560 560" role="img" aria-label="Los doce meses en un círculo: diciembre y enero son vecinos. La coordenada horizontal representa el seno y la vertical el coseno.">
+        <circle cx="280" cy="280" r="180" className="cycle-ring" />
+        <line x1="70" y1="280" x2="490" y2="280" className="cycle-axis" />
+        <line x1="280" y1="70" x2="280" y2="490" className="cycle-axis" />
+        {months.map((name, index) => {
+          const angle = 2 * Math.PI * (index + 1) / 12
+          const x = Math.sin(angle), y = Math.cos(angle)
+          return <g key={name}>
+            <circle cx={280 + 180 * x} cy={280 - 180 * y} r="7" className="cycle-point" />
+            <text x={280 + 225 * x} y={280 - 225 * y} textAnchor="middle" dominantBaseline="middle">{name}</text>
+          </g>
+        })}
+        <text x="355" y="264" textAnchor="middle" className="cycle-axis-label">seno</text>
+        <text x="294" y="180" className="cycle-axis-label">coseno</text>
+      </svg>
+    </div>
   </Slide>
 }
 
@@ -375,9 +371,9 @@ export const SLIDES = [
   { id: "muestra", C: Sample, ch: "02 · Los datos" },
   { id: "tendencia", C: Trend, ch: "03 · Lo que cambió en las ventas" },
   { id: "variabilidad", C: Variability, ch: "03 · Lo que cambió en las ventas" },
-  { id: "inventario", C: Inventory, ch: "03 · Lo que cambió en las ventas" },
   { id: "demanda", C: Demand, ch: "03 · Lo que cambió en las ventas" },
   { id: "variables", C: Features, ch: "04 · Poner a prueba los pronósticos" },
+  { id: "meses-ciclicos", C: CyclicMonths, ch: "04 · Poner a prueba los pronósticos" },
   { id: "modelos-referencias", C: BaselineLesson, ch: "04 · Entender los modelos" },
   { id: "regresion", C: RegressionLesson, ch: "04 · Entender los modelos" },
   { id: "validacion", C: Validation, ch: "04 · Poner a prueba los pronósticos" },

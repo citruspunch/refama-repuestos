@@ -23,7 +23,7 @@ Estos cálculos enseñan el funcionamiento. La precisión se evalúa después co
 | Regresión lineal | Aprende cómo combinar variables del pasado para estimar la venta siguiente. La recta ilustra una relación con una sola entrada. |
 | Ridge | Penaliza los pesos grandes para reducir el sobreajuste. El cambio de pendiente enseña la idea, no demuestra una mejora de precisión. |
 
-Los modelos del proyecto usan las tres ventas previas, su promedio, el paso del tiempo y el calendario. La recta es didáctica y no representa el ajuste real de RUJAF.
+Los modelos del proyecto usan las tres ventas previas, su promedio, el índice temporal y el calendario. La recta es didáctica y no representa el ajuste real de RUJAF.
 
 ## Transición a la evaluación
 

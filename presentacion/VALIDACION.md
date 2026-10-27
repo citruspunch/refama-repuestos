@@ -1,6 +1,6 @@
 # Validación de la presentación simplificada
 
-La presentación tiene 26 diapositivas y 30 pasos. Los títulos, tiempos y notas de `GUION.md` coinciden con el recorrido. Duración orientativa de 57:30, no medida en ensayo.
+La presentación tiene 26 diapositivas y 30 pasos. Los títulos, tiempos y notas de `GUION.md` coinciden con el recorrido. Duración orientativa de 56:30, no medida en ensayo.
 
 ## Contenido
 

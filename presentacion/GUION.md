@@ -1,6 +1,6 @@
 # Guion de la presentación de RUJAF
 
-26 diapositivas y 30 pasos. Duración orientativa de 57:30, sin ensayo cronometrado. Las notas son apoyos para explicar y señalar los gráficos, no un texto para leer. Con explicaciones más breves de los ejemplos, el recorrido puede acercarse a 45 minutos.
+26 diapositivas y 30 pasos. Duración orientativa de 56:30, sin ensayo cronometrado. Las notas son apoyos para explicar y señalar los gráficos, no un texto para leer. Con explicaciones más breves de los ejemplos, el recorrido puede acercarse a 45 minutos.
 
 La secuencia sigue el problema, los datos, el desarrollo de los modelos, sus resultados y la aplicación al inventario. Las flechas avanzan los pasos. R repite la entrada visual. Las notas no aparecen en el HTML del público.
 
@@ -74,7 +74,7 @@ Tiempo: 2:00. Acumulado principal: 11:00.
 
 - Definir la salida del modelo como unidades vendidas por producto durante el mes siguiente. Es una cantidad numérica, no una clasificación de productos.
 - Sumar las ventas a ambos destinos. Excluir producción, compras, ajustes, traslados y devoluciones del objetivo de ventas.
-- Señalar que cada producto tiene su propio período. Disponemos de alrededor de cuatro años de observaciones mensuales, no de un historial extenso.
+- Disponemos de alrededor de cuatro años de observaciones mensuales por producto, no de un historial extenso.
 - Se excluyeron el primer y último mes de cada historia porque no se pudo confirmar su cobertura completa. No se trataron esos meses parciales como meses con ventas bajas.
 
 ## 08. Cómo cambiaron las ventas
@@ -99,20 +99,9 @@ Tiempo: 2:00. Acumulado principal: 16:00.
 - D tiene siete meses sin ventas registradas. E tiene 21 de 49, de modo que casi la mitad de su historia mensual está en cero.
 - Relacionar esta diferencia con los modelos. Un método que funciona con ventas frecuentes puede comportarse mal cuando las ventas aparecen de manera esporádica.
 
-## 10. Inventario frente a ventas recientes
+## 10. Lo que las ventas permiten conocer
 
-Tiempo: 2:00. Acumulado principal: 18:00.
-
-### Notas del presentador
-
-- Explicar las columnas: saldo registrado al cierre de la fecha indicada y promedio mensual de ventas de los doce meses anteriores.
-- A tiene 5,892 unidades registradas frente a unas 393 unidades mensuales de venta reciente. B, C y D tienen saldos mucho menores frente a su ritmo mensual.
-- E tiene poco volumen de venta. Una sola unidad o una venta poco frecuente puede cambiar mucho su lectura del inventario.
-- Señalar las fechas distintas una vez. Son saldos históricos del Kardex, no un conteo físico actual. La comparación motiva estudiar la reposición de cada producto por separado.
-
-## 11. Lo que las ventas permiten conocer
-
-Tiempo: 1:30. Acumulado principal: 19:30.
+Tiempo: 1:30. Acumulado principal: 17:30.
 
 ### Notas del presentador
 
@@ -120,20 +109,30 @@ Tiempo: 1:30. Acumulado principal: 19:30.
 - El Kardex muestra lo que salió como venta, pero no permite recuperar los pedidos que no se atendieron. Tampoco muestra el consumo final de las tiendas.
 - Por eso la predicción corresponde a ventas registradas, no a toda la demanda potencial. Esta limitación afecta tanto la interpretación de un cero como la simulación posterior.
 
-## 12. Qué información entra al modelo
+## 11. Qué información le damos al modelo
 
-Tiempo: 2:30. Acumulado principal: 22:00.
+Tiempo: 2:30. Acumulado principal: 20:00.
 
 ### Notas del presentador
 
 - Tomar el ejemplo de A. Para estimar septiembre se conocen junio, julio y agosto, con 360, 71 y 184 unidades. Su promedio es 205 unidades.
-- Explicar qué aporta cada entrada. Las ventas previas muestran el comportamiento reciente y su promedio reduce el efecto de un mes aislado. El paso del tiempo representa cambios de largo plazo y el calendario permite explorar si el mes del año aporta información.
-- En el modelo se usan tres ventas previas, su promedio, una variable de tiempo y dos de calendario. No hace falta desarrollar la representación matemática del calendario.
+- Explicar qué aporta cada entrada. Las ventas previas muestran el comportamiento reciente y su promedio reduce el efecto de un mes aislado. El índice temporal representa cambios de largo plazo y el calendario permite explorar si el mes del año aporta información.
+- En el modelo se usan tres ventas previas, su promedio, una variable de tiempo y dos de calendario, que explicaremos en la siguiente diapositiva.
 - Aclarar que 205 es aquí una variable de entrada, no la salida de Ridge. Construimos el mismo tipo de información para cada mes de entrenamiento y para cada producto, usando solo datos anteriores al mes que se quiere predecir.
+
+## 12. Los meses forman un ciclo
+
+Tiempo: 1:00. Acumulado principal: 21:00.
+
+### Notas del presentador
+
+- Señalar que diciembre y enero son meses vecinos, aunque sus números sean 12 y 1.
+- Cada mes ocupa un punto del círculo. El seno da su coordenada horizontal y el coseno la vertical; juntos identifican la posición del mes.
+- Las dos variables permiten explorar patrones anuales sin afirmar que exista estacionalidad en las ventas.
 
 ## 13. Dos formas sencillas de pronosticar
 
-Tiempo: 3:00. Acumulado principal: 25:00.
+Tiempo: 3:00. Acumulado principal: 24:00.
 
 ### Notas del presentador
 
@@ -145,7 +144,7 @@ Tiempo: 3:00. Acumulado principal: 25:00.
 
 ## 14. Regresión lineal y Ridge
 
-Tiempo: 4:00. Acumulado principal: 29:00.
+Tiempo: 4:00. Acumulado principal: 28:00.
 
 ### Notas del presentador
 
@@ -159,7 +158,7 @@ Tiempo: 4:00. Acumulado principal: 29:00.
 
 ## 15. Cómo entrenamos y probamos los modelos
 
-Tiempo: 3:00. Acumulado principal: 32:00.
+Tiempo: 3:00. Acumulado principal: 31:00.
 
 ### Notas del presentador
 
@@ -172,7 +171,7 @@ Tiempo: 3:00. Acumulado principal: 32:00.
 
 ## 16. Cómo medimos el error
 
-Tiempo: 2:30. Acumulado principal: 34:30.
+Tiempo: 2:30. Acumulado principal: 33:30.
 
 ### Notas del presentador
 
@@ -184,7 +183,7 @@ Tiempo: 2:30. Acumulado principal: 34:30.
 
 ## 17. Qué método elegimos para cada producto
 
-Tiempo: 2:00. Acumulado principal: 36:30.
+Tiempo: 2:00. Acumulado principal: 35:30.
 
 ### Notas del presentador
 
@@ -196,7 +195,7 @@ Tiempo: 2:00. Acumulado principal: 36:30.
 
 ## 18. Cuánto se equivocaron los modelos
 
-Tiempo: 3:00. Acumulado principal: 39:30.
+Tiempo: 3:00. Acumulado principal: 38:30.
 
 ### Notas del presentador
 
@@ -208,7 +207,7 @@ Tiempo: 3:00. Acumulado principal: 39:30.
 
 ## 19. Lo previsto y lo vendido, mes a mes
 
-Tiempo: 3:00. Acumulado principal: 42:30.
+Tiempo: 3:00. Acumulado principal: 41:30.
 
 ### Notas del presentador
 
@@ -221,7 +220,7 @@ Tiempo: 3:00. Acumulado principal: 42:30.
 
 ## 20. Un error bajo puede ocultar ventas
 
-Tiempo: 2:00. Acumulado principal: 44:30.
+Tiempo: 2:00. Acumulado principal: 43:30.
 
 ### Notas del presentador
 
@@ -232,7 +231,7 @@ Tiempo: 2:00. Acumulado principal: 44:30.
 
 ## 21. Revisión de las predicciones
 
-Tiempo: 2:00. Acumulado principal: 46:30.
+Tiempo: 2:00. Acumulado principal: 45:30.
 
 ### Notas del presentador
 
@@ -243,7 +242,7 @@ Tiempo: 2:00. Acumulado principal: 46:30.
 
 ## 22. De la predicción al inventario
 
-Tiempo: 2:00. Acumulado principal: 48:30.
+Tiempo: 2:00. Acumulado principal: 47:30.
 
 ### Notas del presentador
 
@@ -253,7 +252,7 @@ Tiempo: 2:00. Acumulado principal: 48:30.
 
 ## 23. Producción estimada para cada producto
 
-Tiempo: 3:00. Acumulado principal: 51:30.
+Tiempo: 3:00. Acumulado principal: 50:30.
 
 ### Notas del presentador
 
@@ -265,7 +264,7 @@ Tiempo: 3:00. Acumulado principal: 51:30.
 
 ## 24. Qué mostró la simulación de inventarios
 
-Tiempo: 3:00. Acumulado principal: 54:30.
+Tiempo: 3:00. Acumulado principal: 53:30.
 
 ### Notas del presentador
 
@@ -278,7 +277,7 @@ Tiempo: 3:00. Acumulado principal: 54:30.
 
 ## 25. Qué aporta el proyecto y qué falta conocer
 
-Tiempo: 1:30. Acumulado principal: 56:00.
+Tiempo: 1:30. Acumulado principal: 55:00.
 
 ### Notas del presentador
 
@@ -289,7 +288,7 @@ Tiempo: 1:30. Acumulado principal: 56:00.
 
 ## 26. Resultados y conclusiones
 
-Tiempo: 1:30. Acumulado principal: 57:30.
+Tiempo: 1:30. Acumulado principal: 56:30.
 
 ### Notas del presentador
 

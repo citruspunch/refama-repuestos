@@ -40,7 +40,7 @@ export const SalesChart = React.memo(function SalesChart({ id, domain, color }) 
   const stroke = color || PRODUCT_STROKES[id]
   return <div className="chart-wrap">
     <ResponsiveContainer width="100%" height="100%">
-      <LineChart data={data} margin={{ top: 12, right: 16, bottom: 4, left: 0 }} accessibilityLayer title={`Ventas mensuales registradas del producto ${id}, en unidades. ${month(data[0].month, false)} a ${month(data.at(-1).month, false)}. Escala vertical propia desde cero.`}>
+      <LineChart data={data} margin={{ top: 12, right: 16, bottom: 4, left: 0 }} accessibilityLayer aria-label={`Ventas mensuales registradas del producto ${id}, en unidades. ${month(data[0].month, false)} a ${month(data.at(-1).month, false)}. Escala vertical propia desde cero.`}>
         <CartesianGrid stroke={grid} vertical={false} />
         <XAxis dataKey="time" type="number" scale="time" domain={range} ticks={ticks} tickFormatter={(value) => month(new Date(value).toISOString())} tick={tick} axisLine={false} tickLine={false} dy={6} height={34} />
         <YAxis domain={[0, "auto"]} tick={tick} tickFormatter={(v) => number(v)} axisLine={false} tickLine={false} width={55} tickCount={3} />
@@ -64,7 +64,7 @@ export const BaselineComparison = React.memo(function BaselineComparison() {
   return <figure className="baseline-figure">
     <figcaption>MAE relativo · Último mes = 100</figcaption>
     <div className="baseline-bars"><ResponsiveContainer width="100%" height="100%">
-      <BarChart data={data} layout="vertical" margin={{ top: 12, right: 65, bottom: 8, left: 0 }} accessibilityLayer title="Error del modelo fijado respecto al último mes. Por debajo de 100 indica menor MAE.">
+      <BarChart data={data} layout="vertical" margin={{ top: 12, right: 65, bottom: 8, left: 0 }} accessibilityLayer aria-label="Error del modelo fijado respecto al último mes. Por debajo de 100 indica menor MAE.">
         <CartesianGrid stroke={grid} horizontal={false} />
         <XAxis type="number" domain={[0, max]} ticks={[0, 50, 100]} tick={tick} axisLine={false} tickLine={false} />
         <YAxis type="category" dataKey="id" width={30} tick={tick} axisLine={false} tickLine={false} />
@@ -83,7 +83,6 @@ export function TrendPanel({ id, domain }) {
   return <figure className="chart-panel" data-product={id}>
     <ProductLabel id={id}>{BUSINESS[id].shortName}</ProductLabel>
     <SalesChart id={id} domain={domain} />
-    <figcaption className="grid-ytd"><span>Unidades por mes · Escala propia</span></figcaption>
   </figure>
 }
 
@@ -94,7 +93,7 @@ export const ModelBars = React.memo(function ModelBars({ id, models, phase = "ho
     <figcaption>MAE en unidades por mes. Menor es mejor.</figcaption>
     <div className="model-bars">
       <ResponsiveContainer width="100%" height="100%">
-        <BarChart data={data} layout="vertical" margin={{ top: 12, right: 65, bottom: 18, left: 0 }} accessibilityLayer title={`Error absoluto medio de los métodos comparados para el producto ${id}`}>
+        <BarChart data={data} layout="vertical" margin={{ top: 12, right: 65, bottom: 18, left: 0 }} accessibilityLayer aria-label={`Error absoluto medio de los métodos comparados para el producto ${id}`}>
           <CartesianGrid stroke={grid} horizontal={false} />
           <XAxis type="number" domain={[0, max]} tick={tick} axisLine={false} tickLine={false} tickFormatter={(v) => number(v)} />
           <YAxis type="category" dataKey="name" width={285} tick={{ ...tick, fontSize: 21 }} axisLine={false} tickLine={false} />

@@ -17,13 +17,13 @@ function Tabs({ options, value, onChange }) {
 function Frame({ id, model, children, footer = "Ejemplo didáctico" }) {
   return <Slide className="model-lesson">
     <div className="lesson-body" data-lesson={id} data-model={model}>{children}</div>
-    <p className="lesson-footer">{footer}</p>
+    {footer ? <p className="lesson-footer">{footer}</p> : null}
   </Slide>
 }
 
 function Diagram({ label, wide = false, children }) {
   return <svg className={`lesson-diagram${wide ? " wide" : ""}`} viewBox={`0 0 ${wide ? 1360 : 1000} 360`} role="img" aria-label={label}>
-    <title>{label}</title>{children}
+    {children}
   </svg>
 }
 
@@ -42,7 +42,7 @@ export function BaselineLesson() {
   const x = (i) => 60 + i * 68
   const y = (value) => 286 - value / max * 220
   const first = data.selected.findIndex(Boolean)
-  return <Frame id={id} model={method} footer={`Ejemplo con ventas de B hasta ${month(data.history.at(-1).month)}. Unidades por mes.`}>
+  return <Frame id={id} model={method} footer="">
     <Tabs options={lesson(id).models.map((model) => [model, BASELINE_LABELS[model].tab])} value={method} onChange={setMethod} />
     <div className="lesson-visual" key={`${method}:${monthsBack}`}>
       <Diagram label={`${copy.tab}: ${data.used} meses usados y previsión de ${number(data.prediction, 1)} unidades. Las barras resaltadas aportan a la referencia.`}>
@@ -59,7 +59,6 @@ export function BaselineLesson() {
           {data.prediction > 0 ? <rect x="927" y={y(data.prediction)} width="30" height={286 - y(data.prediction)} rx="3" className="diagram-bar-forecast lesson-bar" /> : <circle cx="942" cy="286" r="6" className="diagram-forecast-dot" />}
         </g>
         <text x="940" y="320" textAnchor="middle" className="diagram-tick">Siguiente</text>
-        <text x="440" y="352" textAnchor="middle" className="diagram-caption">{data.used} {data.used === 1 ? "mes aporta" : "meses aportan"}</text>
       </Diagram>
       <Readout title={copy.title} value={data.prediction} unit="u./mes">{copy.text}</Readout>
     </div>
@@ -70,7 +69,7 @@ export function RegressionLesson() {
   const [method, setMethod] = useCueState("method", "linear_regression")
   const ridge = method === "ridge", ordinary = regressionLesson(), fitted = regressionLesson(ridge)
   const x = (value) => 70 + value * 84, y = (value) => 285 - value * 1.85
-  return <Frame id="regresion" model={method} footer="Ejemplo didáctico con una variable. El modelo del proyecto combina varias entradas.">
+  return <Frame id="regresion" model={method} footer="Ejemplo con una variable. Nuestro modelo combina varias entradas.">
     <Tabs options={[["linear_regression", "Regresión lineal"], ["ridge", "Ridge"]]} value={method} onChange={setMethod} />
     <div className="lesson-visual regression-visual" key={method}>
       <Diagram label={`${ridge ? "Ridge" : "Regresión lineal"}: puntos didácticos y recta de un predictor. Ridge reduce el peso en este ejemplo estandarizado, sin garantizar una mejor predicción.`}>
@@ -84,7 +83,6 @@ export function RegressionLesson() {
       </Diagram>
       <Readout title={ridge ? "Ridge" : "Regresión lineal"}>
         {ridge ? "Penaliza los pesos muy grandes para reducir el sobreajuste al historial." : "Aprende cómo combinar las variables para estimar las ventas del mes siguiente."}
-        <span className="lesson-weight"><span>Influencia de la señal</span><i><b style={{ width: `${100 * fitted.weight / ordinary.weight}%` }} /></i></span>
       </Readout>
     </div>
   </Frame>

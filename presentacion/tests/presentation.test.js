@@ -17,7 +17,7 @@ test("el registro tiene 26 diapositivas, explicación de ML y cierre de resultad
   assert.equal(end, 25)
   assert.equal(STORY[end].id, "conclusiones")
   assert.ok(!STORY.some((scene) => ["piloto", "cierre"].includes(scene.id)))
-  assert.equal(STORY.reduce((sum, scene) => sum + scene.seconds, 0), 3450)
+  assert.equal(STORY.reduce((sum, scene) => sum + scene.seconds, 0), 3390)
   assert.equal(route.length, 30)
   assert.equal(STORY.find((scene) => scene.id === "validacion").cues.length, 1)
   for (const id of ["variables", "regresion", "validacion", "precision", "resultado-a", "escenario-a"]) assert.ok(STORY.some((scene) => scene.id === id))
