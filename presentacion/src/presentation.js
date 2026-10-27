@@ -12,7 +12,6 @@ export const STORY = [
   { id: "muestra", title: "Qué datos usamos y qué queremos predecir", seconds: 120, cues: [cue("Definir las ventas mensuales y los períodos analizados")] },
   { id: "tendencia", title: "Cómo cambiaron las ventas", seconds: 180, cues: [cue("Leer las curvas históricas con sus propias escalas")] },
   { id: "variabilidad", title: "Los productos no se venden de la misma forma", seconds: 120, cues: [cue("Comparar cambios mensuales y períodos sin ventas")] },
-  { id: "inventario", title: "Inventario frente a ventas recientes", seconds: 120, cues: [cue("Contrastar los saldos con el ritmo de ventas")] },
   { id: "demanda", title: "Lo que las ventas permiten conocer", seconds: 90, cues: [cue("Distinguir ventas registradas de pedidos no atendidos")] },
   { id: "variables", title: "Qué información entra al modelo", seconds: 150, cues: [cue("Construir un ejemplo con los meses anteriores de A")] },
   ...LESSON_STORY,

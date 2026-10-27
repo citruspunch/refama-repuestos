@@ -83,7 +83,6 @@ export function TrendPanel({ id, domain }) {
   return <figure className="chart-panel" data-product={id}>
     <ProductLabel id={id}>{BUSINESS[id].shortName}</ProductLabel>
     <SalesChart id={id} domain={domain} />
-    <figcaption className="grid-ytd"><span>Unidades por mes · Escala propia</span></figcaption>
   </figure>
 }
 

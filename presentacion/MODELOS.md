@@ -1,6 +1,6 @@
 # Notas de la introducción visual de modelos
 
-Apoyo para las diapositivas 13 y 14. Las notas completas están en [GUION.md](GUION.md). Tiempo orientativo de 7 minutos entre ambas.
+Apoyo para las diapositivas 12 y 13. Las notas completas están en [GUION.md](GUION.md). Tiempo orientativo de 7 minutos entre ambas.
 
 Cada flecha avanza un paso. Las animaciones terminan sin avanzar la exposición. R repite la entrada visual.
 

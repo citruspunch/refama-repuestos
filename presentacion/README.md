@@ -5,12 +5,12 @@ Presentación completa en español sobre el proyecto universitario de pronóstic
 ## Abrir la entrega
 
 - **[Presentación lista para proyectar](dist/index.html)**. Abrir el archivo en un navegador. No necesita servidor ni internet después de compilarse.
-- [Guion y notas del presentador](GUION.md). Incluye las 26 diapositivas, con títulos y tiempos sincronizados.
-- [Apoyo para explicar los modelos](MODELOS.md). Cinco pasos en las diapositivas 13 y 14.
+- [Guion y notas del presentador](GUION.md). Incluye las 25 diapositivas, con títulos y tiempos sincronizados.
+- [Apoyo para explicar los modelos](MODELOS.md). Cinco pasos en las diapositivas 12 y 13.
 - [Fuentes y límites de la evidencia](EVIDENCIA.md).
 - [Comprobaciones y limitaciones de entrega](VALIDACION.md).
 
-Son 26 diapositivas y 32 pasos. La duración orientativa suma 57:30 y puede acortarse hacia 45 minutos al abreviar los ejemplos. No es un tiempo medido en ensayo.
+Son 25 diapositivas y 31 pasos. La duración orientativa suma 55:30 y puede acortarse hacia 45 minutos al abreviar los ejemplos. No es un tiempo medido en ensayo.
 
 La narrativa sigue el problema de la empresa, la preparación de los datos, los modelos, sus resultados y la simulación de inventarios. Conserva las comparaciones de los cinco productos y utiliza A y B para explicar las variables y los métodos con ejemplos concretos.
 
@@ -29,9 +29,9 @@ El contenido usa los resultados ejecutados de `five_products_v1`, sin reentrenar
 
 No hay avance automático. La posición queda en `#diapositiva/paso`, con índices desde cero. El visor sigue el guion y conserva otros parámetros de la URL.
 
-Las diapositivas 13 y 14 explican repetir el último mes, promediar tres meses, regresión lineal y Ridge. Las referencias usan ventas reales de B. La recta es un ejemplo didáctico identificado como tal. Después se explican entrenamiento, validación temporal y MAE antes de mostrar la selección y la prueba final.
+Las diapositivas 12 y 13 explican repetir el último mes, promediar tres meses, regresión lineal y Ridge. Las referencias usan ventas reales de B. La recta es un ejemplo didáctico identificado como tal. Después se explican entrenamiento, validación temporal y MAE antes de mostrar la selección y la prueba final.
 
-La diapositiva 23 compara producir con cero o un mes de reserva. Se mantienen los saldos históricos y la restricción de producción de C. El cero de producción de A usa una previsión positiva, distinta del fallo de Ridge explicado antes.
+La diapositiva 22 compara producir con cero o un mes de reserva. Se mantienen los saldos históricos y la restricción de producción de C. El cero de producción de A usa una previsión positiva, distinta del fallo de Ridge explicado antes.
 
 Los resultados presentan el MAE frente a repetir el último mes, las curvas de prueba final y el caso de E, donde predecir cero deja sin anticipar ventas. La simulación compara unidades que el inventario supuesto no pudo atender. No se presentan como ventas perdidas ni ahorros reales.
 
@@ -62,7 +62,7 @@ pnpm test:e2e
 
 | Archivo | Función |
 | --- | --- |
-| `GUION.md` | Notas y tiempos de las 26 diapositivas |
+| `GUION.md` | Notas y tiempos de las 25 diapositivas |
 | `MODELOS.md` | Apoyo breve para explicar los métodos principales |
 | `src/presentation.js` | Títulos, tiempos, pasos y navegación pura |
 | `src/slides.jsx` | Composición de diapositivas y registro ordenado |

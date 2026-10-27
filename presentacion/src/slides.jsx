@@ -1,5 +1,5 @@
 import React from "react"
-import { BUSINESS, MODEL_NAMES, month, number } from "./business.js"
+import { BUSINESS, MODEL_NAMES, month, number, price } from "./business.js"
 import { useCueState, usePresentation } from "./PresentationContext.jsx"
 import { ForecastChart, PortfolioSales, portfolio, product, productIds, score } from "./Charts.jsx"
 import { forecastSeries, interiorMonths, productionVariant, replayTotal } from "./analysis.js"
@@ -94,9 +94,12 @@ function Decision() {
 
 function Products() {
   return <Slide className="products-slide">
-    <table className="comparison-table portfolio-table product-inputs"><thead><tr><th>Repuesto</th><th>Producto analizado</th></tr></thead><tbody>{productIds.map((id) => {
+    <table className="comparison-table portfolio-table product-inputs"><thead><tr><th>Repuesto</th><th>Producto analizado</th><th>Precio</th><th>Producción diaria</th></tr></thead><tbody>{productIds.map((id) => {
       const item = BUSINESS[id]
-      return <tr key={id}><td className="product-image-cell"><div className="product-image-wrapper"><img src={PRODUCT_IMAGES[id]} alt={item.shortName} className="product-thumb" /></div></td><th scope="row"><ProductLabel id={id}>{item.shortName}</ProductLabel></th></tr>
+      const dailyRate = item.reportedUnitsPerProductionDay
+        ? `${number(item.reportedUnitsPerProductionDay)} u./día`
+        : `${item.reportedUnitsPerProductionDayMin} a ${item.reportedUnitsPerProductionDayMax} u./día`
+      return <tr key={id}><td className="product-image-cell"><div className="product-image-wrapper"><img src={PRODUCT_IMAGES[id]} alt={item.shortName} className="product-thumb" /></div></td><th scope="row"><ProductLabel id={id}>{item.shortName}</ProductLabel></th><td>{price(item.netSellingPrice)}</td><td>{dailyRate}</td></tr>
     })}</tbody></table>
   </Slide>
 }
@@ -148,16 +151,6 @@ function Variability() {
       const p = product(id)
       return <tr key={id}><th><ProductLabel id={id}>{BUSINESS[id].shortName}</ProductLabel></th><td>{({ A: "Cambios grandes", B: "Más regulares", C: "Más regulares", D: "Cambios grandes", E: "Poco frecuentes" })[id]}</td><td>{p.profile.zero_periods} de {p.profile.usable_months}</td></tr>
     })}</tbody></table>
-  </Slide>
-}
-
-function Inventory() {
-  return <Slide>
-    <table className="comparison-table portfolio-table"><thead><tr><th>Producto</th><th>Saldo, unidades</th><th>Venta media mensual</th><th>Fecha del saldo</th></tr></thead><tbody>{productIds.map((id) => {
-      const inventory = product(id).inventory
-      return <tr key={id}><th><ProductLabel id={id}>{BUSINESS[id].shortName}</ProductLabel></th><td>{number(inventory.aligned_closing_balance)}</td><td>{number(inventory.trailing_12_mean_sales, 1)} u.</td><td>{month(inventory.last_interior_month)}</td></tr>
-    })}</tbody></table>
-    <p className="small-explanation">Promedio de los últimos 12 meses.</p>
   </Slide>
 }
 
@@ -363,7 +356,6 @@ export const SLIDES = [
   { id: "muestra", C: Sample, ch: "02 · Los datos" },
   { id: "tendencia", C: Trend, ch: "03 · Lo que cambió en las ventas" },
   { id: "variabilidad", C: Variability, ch: "03 · Lo que cambió en las ventas" },
-  { id: "inventario", C: Inventory, ch: "03 · Lo que cambió en las ventas" },
   { id: "demanda", C: Demand, ch: "03 · Lo que cambió en las ventas" },
   { id: "variables", C: Features, ch: "04 · Poner a prueba los pronósticos" },
   { id: "modelos-referencias", C: BaselineLesson, ch: "04 · Entender los modelos" },

@@ -116,7 +116,7 @@ test("se conserva la identidad visual y las fotos de los productos", async ({ pa
   await expect(page.locator(".cover .recharts-wrapper")).toHaveCount(0)
   await visit(page, "productos")
   await expect(page.locator(".product-inputs tbody tr")).toHaveCount(5)
-  await expect(page.locator(".product-inputs thead th")).toHaveCount(2)
+  await expect(page.locator(".product-inputs thead th")).toHaveCount(4)
   for (const [index, id] of Object.keys(BUSINESS).entries()) {
     const image = page.locator(".product-thumb").nth(index)
     await expect(image).toHaveAttribute("alt", BUSINESS[id].shortName)
