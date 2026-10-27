@@ -150,7 +150,7 @@ test("los trazos de producto tienen contraste mínimo de 3 sin contorno", () => 
 
 test("los MAE conservados en las notas coinciden con las tablas fuente", () => {
   const text = readFileSync(new URL("../GUION.md", import.meta.url), "utf8")
-  const results = text.split("## 17.")[1].split("## 18.")[0]
+  const results = text.split("## 18.")[1].split("## 19.")[0]
   for (const p of Object.values(evidence.products)) for (const model of [p.selection.model, "naive"]) {
     const score = p.comparison.find((row) => row.phase === "holdout" && row.model === model)
     assert.ok(results.includes(number(score.mae, 2)))

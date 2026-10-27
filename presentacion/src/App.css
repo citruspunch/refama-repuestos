@@ -226,6 +226,13 @@ strong, b { font-variant-numeric: tabular-nums; }
 .sample-periods strong small { font-size: 21px; font-weight: 400; }
 .sample-periods p { font-size: 25px; color: var(--text-2); margin-top: 7px; }
 .sample-periods .boundary-note { font-size: 23px; margin-top: 14px; }
+.month-cycle { display: flex; justify-content: center; align-items: center; }
+.month-cycle svg { width: 560px; height: 560px; overflow: visible; }
+.month-cycle svg text { font-size: 24px; fill: var(--ink); }
+.month-cycle .cycle-ring { fill: none; stroke: var(--ink); stroke-width: 3; }
+.month-cycle .cycle-axis { stroke: var(--line-2); stroke-width: 2; }
+.month-cycle .cycle-point { fill: var(--ink); }
+.month-cycle .cycle-axis-label { font-size: 18px; fill: var(--text-2); }
 .two-charts { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 40px; min-height: 0; }
 .portfolio-sales { display: flex; flex-direction: column; gap: 18px; }
 .portfolio-sales > .chart-intro { font-size: 22px; }

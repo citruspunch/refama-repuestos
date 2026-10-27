@@ -14,11 +14,9 @@ export const STORY = [
   { id: "variabilidad", title: "Los productos no se venden de la misma forma", seconds: 120, cues: [cue("Comparar cambios mensuales y períodos sin ventas")] },
   { id: "demanda", title: "Lo que las ventas permiten conocer", seconds: 90, cues: [cue("Distinguir ventas registradas de pedidos no atendidos")] },
   { id: "variables", title: "Qué información le damos al modelo", seconds: 150, cues: [cue("Construir un ejemplo con los meses anteriores de A")] },
+  { id: "meses-ciclicos", title: "Los meses forman un ciclo", seconds: 60, cues: [cue("Explicar cómo seno y coseno representan el calendario")] },
   ...LESSON_STORY,
-  { id: "validacion", title: "Cómo entrenamos y probamos los modelos", seconds: 180, cues: [
-    cue("Avanzar mes a mes sin usar datos futuros", { prueba: false }),
-    cue("Separar la elección del método de la prueba final", { prueba: true }),
-  ] },
+  { id: "validacion", title: "Cómo entrenamos y probamos los modelos", seconds: 180, cues: [cue("Avanzar mes a mes sin usar datos futuros")] },
   { id: "precision", title: "Cómo medimos el error", seconds: 150, cues: [cue("Interpretar el MAE con un ejemplo de ventas reales")] },
   { id: "seleccion", title: "Qué método elegimos para cada producto", seconds: 120, cues: [cue("Explicar la selección a partir de la validación")] },
   { id: "resultado-a", title: "Cuánto se equivocaron los modelos", seconds: 180, cues: [cue("Comparar el MAE con repetir el último mes")] },

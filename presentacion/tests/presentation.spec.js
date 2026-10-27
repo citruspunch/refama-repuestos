@@ -81,6 +81,17 @@ test("las flechas del gráfico no avanzan la exposición ni duplican datos", asy
   await expect(chart.locator("title")).toHaveText("")
 })
 
+test("el ciclo de meses muestra el calendario y sus dos coordenadas", async ({ page }) => {
+  await page.goto(`/${hashFor("meses-ciclicos")}`)
+  await at(page, "meses-ciclicos")
+  const diagram = page.getByRole("img", { name: /Los doce meses en un círculo/ })
+  await expect(diagram.locator("g")).toHaveCount(12)
+  await expect(diagram).toContainText("dic")
+  await expect(diagram).toContainText("ene")
+  await expect(diagram).toContainText("seno")
+  await expect(diagram).toContainText("coseno")
+})
+
 test("Espacio no avanza dos veces y la repetición de tecla se ignora", async ({ page }) => {
   await page.goto(`/${hashFor("validacion")}`)
   await page.getByRole("button", { name: "Paso siguiente", exact: true }).focus()

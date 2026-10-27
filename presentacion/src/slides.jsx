@@ -175,15 +175,36 @@ function Features() {
   </Slide>
 }
 
+function CyclicMonths() {
+  const months = ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sept", "oct", "nov", "dic"]
+  return <Slide>
+    <div className="month-cycle">
+      <svg viewBox="0 0 560 560" role="img" aria-label="Los doce meses en un círculo: diciembre y enero son vecinos. La coordenada horizontal representa el seno y la vertical el coseno.">
+        <circle cx="280" cy="280" r="180" className="cycle-ring" />
+        <line x1="70" y1="280" x2="490" y2="280" className="cycle-axis" />
+        <line x1="280" y1="70" x2="280" y2="490" className="cycle-axis" />
+        {months.map((name, index) => {
+          const angle = 2 * Math.PI * (index + 1) / 12
+          const x = Math.sin(angle), y = Math.cos(angle)
+          return <g key={name}>
+            <circle cx={280 + 180 * x} cy={280 - 180 * y} r="7" className="cycle-point" />
+            <text x={280 + 225 * x} y={280 - 225 * y} textAnchor="middle" dominantBaseline="middle">{name}</text>
+          </g>
+        })}
+        <text x="355" y="264" textAnchor="middle" className="cycle-axis-label">seno</text>
+        <text x="294" y="180" className="cycle-axis-label">coseno</text>
+      </svg>
+    </div>
+  </Slide>
+}
+
 function Validation() {
-  const [test] = useCueState("prueba", false)
   return <Slide>
     <Flow items={[
       { title: "Entrenar", text: "Comenzar con los primeros 24 meses de cada producto." },
       { title: "Validar", text: "Predecir el mes siguiente, medir el error y ampliar el historial." },
       { title: "Probar", text: "Evaluar el método elegido en los seis meses finales." },
     ]} />
-    <p className="large-caption" key={String(test)}>{test ? "El método se elige antes de mirar la prueba final." : "Siempre usamos el pasado para predecir un mes posterior."}</p>
   </Slide>
 }
 
@@ -338,6 +359,7 @@ export const SLIDES = [
   { id: "variabilidad", C: Variability, ch: "03 · Lo que cambió en las ventas" },
   { id: "demanda", C: Demand, ch: "03 · Lo que cambió en las ventas" },
   { id: "variables", C: Features, ch: "04 · Poner a prueba los pronósticos" },
+  { id: "meses-ciclicos", C: CyclicMonths, ch: "04 · Poner a prueba los pronósticos" },
   { id: "modelos-referencias", C: BaselineLesson, ch: "04 · Entender los modelos" },
   { id: "regresion", C: RegressionLesson, ch: "04 · Entender los modelos" },
   { id: "validacion", C: Validation, ch: "04 · Poner a prueba los pronósticos" },

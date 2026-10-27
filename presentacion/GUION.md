@@ -1,6 +1,6 @@
 # Guion de la presentación de RUJAF
 
-25 diapositivas y 31 pasos. Duración orientativa de 55:30, sin ensayo cronometrado. Las notas son apoyos para explicar y señalar los gráficos, no un texto para leer. Con explicaciones más breves de los ejemplos, el recorrido puede acercarse a 45 minutos.
+26 diapositivas y 32 pasos. Duración orientativa de 56:30, sin ensayo cronometrado. Las notas son apoyos para explicar y señalar los gráficos, no un texto para leer. Con explicaciones más breves de los ejemplos, el recorrido puede acercarse a 45 minutos.
 
 La secuencia sigue el problema, los datos, el desarrollo de los modelos, sus resultados y la aplicación al inventario. Las flechas avanzan los pasos. R repite la entrada visual. Las notas no aparecen en el HTML del público.
 
@@ -117,12 +117,22 @@ Tiempo: 2:30. Acumulado principal: 20:00.
 
 - Tomar el ejemplo de A. Para estimar septiembre se conocen junio, julio y agosto, con 360, 71 y 184 unidades. Su promedio es 205 unidades.
 - Explicar qué aporta cada entrada. Las ventas previas muestran el comportamiento reciente y su promedio reduce el efecto de un mes aislado. El índice temporal representa cambios de largo plazo y el calendario permite explorar si el mes del año aporta información.
-- En el modelo se usan tres ventas previas, su promedio, una variable de tiempo y dos de calendario. No hace falta desarrollar la representación matemática del calendario.
+- En el modelo se usan tres ventas previas, su promedio, una variable de tiempo y dos de calendario, que explicaremos en la siguiente diapositiva.
 - Aclarar que 205 es aquí una variable de entrada, no la salida de Ridge. Construimos el mismo tipo de información para cada mes de entrenamiento y para cada producto, usando solo datos anteriores al mes que se quiere predecir.
 
-## 12. Dos formas sencillas de pronosticar
+## 12. Los meses forman un ciclo
 
-Tiempo: 3:00. Acumulado principal: 23:00.
+Tiempo: 1:00. Acumulado principal: 21:00.
+
+### Notas del presentador
+
+- Señalar que diciembre y enero son meses vecinos, aunque sus números sean 12 y 1.
+- Cada mes ocupa un punto del círculo. El seno da su coordenada horizontal y el coseno la vertical; juntos identifican la posición del mes.
+- Las dos variables permiten explorar patrones anuales sin afirmar que exista estacionalidad en las ventas.
+
+## 13. Dos formas sencillas de pronosticar
+
+Tiempo: 3:00. Acumulado principal: 24:00.
 
 ### Notas del presentador
 
@@ -132,9 +142,9 @@ Tiempo: 3:00. Acumulado principal: 23:00.
 - Usar el movimiento de la ventana para explicar la actualización mensual. Estos ejemplos muestran cómo calcular referencias, no su precisión.
 - Estas reglas son necesarias para comparar. Un modelo aprendido tiene que demostrar si reduce el error frente a una alternativa que ya se puede calcular con facilidad.
 
-## 13. Regresión lineal y Ridge
+## 14. Regresión lineal y Ridge
 
-Tiempo: 4:00. Acumulado principal: 27:00.
+Tiempo: 4:00. Acumulado principal: 28:00.
 
 ### Notas del presentador
 
@@ -146,9 +156,9 @@ Tiempo: 4:00. Acumulado principal: 27:00.
 - Las variables se ponen en una escala comparable durante el entrenamiento. Basta esa idea, sin describir parámetros ni fórmulas.
 - También se probaron otros métodos de pronóstico, incluidos métodos de series de tiempo y árboles. La explicación se concentra en las regresiones y los promedios porque fueron relevantes en las selecciones y los resultados del proyecto.
 
-## 14. Cómo entrenamos y probamos los modelos
+## 15. Cómo entrenamos y probamos los modelos
 
-Tiempo: 3:00. Acumulado principal: 30:00.
+Tiempo: 3:00. Acumulado principal: 31:00.
 
 ### Notas del presentador
 
@@ -158,9 +168,9 @@ Tiempo: 3:00. Acumulado principal: 30:00.
 - En la prueba se sigue avanzando de a un mes y se actualiza el entrenamiento con las ventas ya observadas. No son seis meses pronosticados de una sola vez.
 - Distinguir los papeles de validación y prueba. Una elige el método. La otra muestra cómo funcionó después de esa elección.
 
-## 15. Cómo medimos el error
+## 16. Cómo medimos el error
 
-Tiempo: 2:30. Acumulado principal: 32:30.
+Tiempo: 2:30. Acumulado principal: 33:30.
 
 ### Notas del presentador
 
@@ -170,9 +180,9 @@ Tiempo: 2:30. Acumulado principal: 32:30.
 - Los resultados finales se calculan sobre los seis meses completos de prueba, no solo sobre este ejemplo de tres meses.
 - Evitar comparar el MAE de A con el de E como si tuvieran el mismo volumen de venta. La comparación útil es entre métodos para el mismo producto y período.
 
-## 16. Qué método elegimos para cada producto
+## 17. Qué método elegimos para cada producto
 
-Tiempo: 2:00. Acumulado principal: 34:30.
+Tiempo: 2:00. Acumulado principal: 35:30.
 
 ### Notas del presentador
 
@@ -181,9 +191,9 @@ Tiempo: 2:00. Acumulado principal: 34:30.
 - El resultado no exige el mismo algoritmo para todos. Las diferencias del historial llevan a elecciones distintas.
 - La referencia cero de E es una regla de comparación, no un modelo que aprenda una relación. Su selección bajo MAE requiere interpretar las ventas poco frecuentes. Ese caso se mostrará después de los resultados generales.
 
-## 17. Cuánto se equivocaron los modelos
+## 18. Cuánto se equivocaron los modelos
 
-Tiempo: 3:00. Acumulado principal: 37:30.
+Tiempo: 3:00. Acumulado principal: 38:30.
 
 ### Notas del presentador
 
@@ -193,9 +203,9 @@ Tiempo: 3:00. Acumulado principal: 37:30.
 - E tiene 2.17 frente a 2.83. Es un error pequeño en unidades, pero su venta también es pequeña y poco frecuente. No interpretarlo como el producto mejor resuelto.
 - Resumir el hallazgo sin proclamar un ganador universal. El método elegido mejora frente a la referencia en A, C y E, pero no en B ni D. No se cambió la selección después de ver esta prueba.
 
-## 18. Lo previsto y lo vendido, mes a mes
+## 19. Lo previsto y lo vendido, mes a mes
 
-Tiempo: 3:00. Acumulado principal: 40:30.
+Tiempo: 3:00. Acumulado principal: 41:30.
 
 ### Notas del presentador
 
@@ -205,9 +215,9 @@ Tiempo: 3:00. Acumulado principal: 40:30.
 - D conserva diferencias grandes entre meses. E muestra por qué una línea en cero puede parecer cercana durante varios meses y aun así omitir las ventas que sí ocurren.
 - Las escalas y fechas pertenecen a cada producto. Usar los gráficos para interpretar el error, no para repetir todas las cifras de la tabla anterior.
 
-## 19. Un error bajo puede ocultar ventas
+## 20. Un error bajo puede ocultar ventas
 
-Tiempo: 2:00. Acumulado principal: 42:30.
+Tiempo: 2:00. Acumulado principal: 43:30.
 
 ### Notas del presentador
 
@@ -216,9 +226,9 @@ Tiempo: 2:00. Acumulado principal: 42:30.
 - Esto no significa que no exista demanda. Muestra que la métrica de pronóstico no responde por sí sola la pregunta de cuánto inventario mantener.
 - Para productos con ventas poco frecuentes, el costo de quedarse sin una pieza y el tiempo de reposición también importan. El proyecto no dispone de esos costos completos para determinar una reserva óptima.
 
-## 20. Revisión de las predicciones
+## 21. Revisión de las predicciones
 
-Tiempo: 2:00. Acumulado principal: 44:30.
+Tiempo: 2:00. Acumulado principal: 45:30.
 
 ### Notas del presentador
 
@@ -227,9 +237,9 @@ Tiempo: 2:00. Acumulado principal: 44:30.
 - Para estudiar el inventario de A se usó el promedio reciente de 205 unidades. Se calcula con meses anteriores, sin incorporar ventas del mes que se está estimando.
 - Esta sustitución es una decisión práctica para los escenarios, no una mejora de precisión demostrada en otra prueba independiente. La tabla de MAE anterior sigue mostrando los resultados del método originalmente elegido.
 
-## 21. De la predicción al inventario
+## 22. De la predicción al inventario
 
-Tiempo: 2:00. Acumulado principal: 46:30.
+Tiempo: 2:00. Acumulado principal: 47:30.
 
 ### Notas del presentador
 
@@ -238,9 +248,9 @@ Tiempo: 2:00. Acumulado principal: 46:30.
 - Definir la reserva como inventario adicional para responder a diferencias entre lo previsto y lo vendido. En las comparaciones se usa cero o un mes de ventas estimadas.
 - La simulación utiliza los ritmos de producción reportados por la empresa y supuestos de reposición. No se calculó una reserva óptima a partir de costos.
 
-## 22. Cómo cambia la producción con una reserva
+## 23. Cómo cambia la producción con una reserva
 
-Tiempo: 3:00. Acumulado principal: 49:30.
+Tiempo: 3:00. Acumulado principal: 50:30.
 
 ### Notas del presentador
 
@@ -251,9 +261,9 @@ Tiempo: 3:00. Acumulado principal: 49:30.
 - En C, con reserva se necesitarían 439 unidades, pero el día productivo supuesto permite 300. Señalar el asterisco. La restricción puede impedir alcanzar el inventario buscado.
 - Cada fila corresponde a su fecha histórica. Es una comparación por producto, no un calendario conjunto de fabricación.
 
-## 23. Qué mostró la simulación de inventarios
+## 24. Qué mostró la simulación de inventarios
 
-Tiempo: 3:00. Acumulado principal: 52:30.
+Tiempo: 3:00. Acumulado principal: 53:30.
 
 ### Notas del presentador
 
@@ -264,9 +274,9 @@ Tiempo: 3:00. Acumulado principal: 52:30.
 - Las predicciones utilizadas aquí incluyen la revisión práctica descrita antes. Esta simulación posterior no es una nueva prueba independiente de precisión del modelo.
 - El resultado permite estudiar la relación entre previsión, espera y reserva. No demuestra ahorros económicos ni una mejora real de servicio.
 
-## 24. Qué aporta el proyecto y qué falta conocer
+## 25. Qué aporta el proyecto y qué falta conocer
 
-Tiempo: 1:30. Acumulado principal: 54:00.
+Tiempo: 1:30. Acumulado principal: 55:00.
 
 ### Notas del presentador
 
@@ -275,9 +285,9 @@ Tiempo: 1:30. Acumulado principal: 54:00.
 - Sin costos completos de producción, almacenamiento y faltantes no corresponde convertir las diferencias de unidades en ahorros ni asegurar un óptimo económico.
 - La utilidad demostrada es analítica: permite identificar diferencias entre productos y comparar alternativas bajo supuestos explícitos.
 
-## 25. Resultados y conclusiones
+## 26. Resultados y conclusiones
 
-Tiempo: 1:30. Acumulado principal: 55:30.
+Tiempo: 1:30. Acumulado principal: 56:30.
 
 ### Notas del presentador
 
