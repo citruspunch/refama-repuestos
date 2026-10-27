@@ -5,6 +5,7 @@ import { BaselineComparison, ForecastChart, ModelBars, PortfolioSales, portfolio
 import { interiorMonths, productionVariant, replayTotal } from "./analysis.js"
 import { Flow, Metric, Note, ProductLabel, Rows, Slide } from "./ui.jsx"
 import { BaselineLesson, RegressionLesson, TreesLesson } from "./ModelLessons.jsx"
+import { NumberTicker } from "./NumberTicker.jsx"
 
 const qualityCount = (name) => portfolio.quality.find((row) => row.check === name)?.flagged_rows ?? 0
 
@@ -21,9 +22,9 @@ function Cover() {
         <h1>{title}</h1>
         <p className="cover-summary">Pronóstico de ventas y planificación de inventarios para cinco repuestos.</p>
         <dl className="cover-metrics">
-          <div><dt>movimientos</dt><dd>{number(portfolio.movementCount)}</dd></div>
-          <div><dt>métodos</dt><dd><small>Hasta </small>{portfolio.modelCount}</dd></div>
-          <div><dt>escenarios</dt><dd>{portfolio.scenarioCount}</dd></div>
+          <div><dt>movimientos</dt><dd><NumberTicker value={portfolio.movementCount} /></dd></div>
+          <div><dt>métodos</dt><dd><small>Hasta </small><NumberTicker value={portfolio.modelCount} /></dd></div>
+          <div><dt>escenarios</dt><dd><NumberTicker value={portfolio.scenarioCount} /></dd></div>
         </dl>
       </div>
       <div className="cover-visual">
@@ -119,7 +120,7 @@ function Origin() {
 
 function Traceability() {
   return <Slide>
-    <div className="trace-summary"><Metric value={number(portfolio.movementCount)} label="movimientos preservados" /><p>1,062 anteriores + 1,046 incorporados<br />Un consolidado, sin duplicación.</p></div>
+    <div className="trace-summary"><Metric value={portfolio.movementCount} animate label="movimientos preservados" /><p>1,062 anteriores + 1,046 incorporados<br />Un consolidado, sin duplicación.</p></div>
     <Flow items={[
       { title: "Archivos fuente", text: "Control de integridad con huellas SHA-256." },
       { title: "Validación", text: "Comprobación de fechas, cantidades y saldos." },
@@ -130,7 +131,7 @@ function Traceability() {
 
 function Quality() {
   return <Slide>
-    <div className="split"><div><Metric value={number(portfolio.movementCount - productIds.length)} label="transiciones verificadas" /><p className="large-caption">Sin diferencias aritméticas en saldos.</p></div>
+    <div className="split"><div><Metric value={portfolio.movementCount - productIds.length} animate label="transiciones verificadas" /><p className="large-caption">Sin diferencias aritméticas en saldos.</p></div>
       <div className="quality-list"><div><strong>{qualityCount("negative_balance")}</strong><span>Saldos negativos</span></div><div><strong>{qualityCount("adjustment_requires_context")}</strong><span>Ajustes</span></div><div><strong>{qualityCount("zero_balance")}</strong><span>Eventos con saldo cero</span></div><p>Se conservan cuatro traslados y una venta en cero. La conciliación no certifica stock físico.</p></div>
     </div>
   </Slide>
@@ -262,7 +263,7 @@ function Results() {
 function Intermittency() {
   const selected = score("E", product("E").selection.model)
   return <Slide>
-    <div className="split result-layout"><div><ProductLabel id="E">Selección · Referencia cero</ProductLabel><Metric value={number(selected.mae, 2)} label="MAE, unidades por mes" /><p className="result-delta">WAPE {percent(selected.wape)}<br />{selected.positive_actual_months} de 6 meses con ventas.</p></div>
+    <div className="split result-layout"><div><ProductLabel id="E">Selección · Referencia cero</ProductLabel><Metric value={selected.mae} animate decimalPlaces={2} label="MAE, unidades por mes" /><p className="result-delta">WAPE {percent(selected.wape)}<br />{selected.positive_actual_months} de 6 meses con ventas.</p></div>
       <ModelBars id="E" models={["zero", "croston_sba", "tsb", "moving_average_3"]} /></div>
     <Note warning>Predecir cero omite las 13 unidades vendidas en la prueba final. El MAE no mide el nivel de servicio.</Note>
   </Slide>

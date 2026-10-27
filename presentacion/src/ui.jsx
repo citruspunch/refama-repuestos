@@ -1,6 +1,7 @@
 import React from "react"
 import { ArrowLeft, ArrowRight, ExitFullscreen, Fullscreen, Note as NoteIcon, RotateLeft, Timer, Sliders } from "reicon-react"
 import { usePresentation } from "./PresentationContext.jsx"
+import { NumberTicker } from "./NumberTicker.jsx"
 
 const ICONS = {
   "arrow-left": ArrowLeft, "arrow-right": ArrowRight,
@@ -24,8 +25,8 @@ export function Slide({ children, className = "", takeaway, caveat }) {
   </section>
 }
 
-export function Metric({ value, label, detail, tone = "ink" }) {
-  return <div className={`metric ${tone}`}><strong>{value}</strong><span>{label}</span>{detail && <small>{detail}</small>}</div>
+export function Metric({ value, label, detail, tone = "ink", animate = false, decimalPlaces = 0 }) {
+  return <div className={`metric ${tone}`}><strong>{animate ? <NumberTicker value={value} decimalPlaces={decimalPlaces} /> : value}</strong><span>{label}</span>{detail && <small>{detail}</small>}</div>
 }
 
 export function Flow({ items, vertical = false }) {
