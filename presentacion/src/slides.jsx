@@ -157,7 +157,7 @@ function Inventory() {
       const inventory = product(id).inventory
       return <tr key={id}><th><ProductLabel id={id}>{BUSINESS[id].shortName}</ProductLabel></th><td>{number(inventory.aligned_closing_balance)}</td><td>{number(inventory.trailing_12_mean_sales, 1)} u.</td><td>{month(inventory.last_interior_month)}</td></tr>
     })}</tbody></table>
-    <p className="small-explanation">Promedio de los últimos 12 meses. A acumula más inventario frente a su venta reciente que los demás productos.</p>
+    <p className="small-explanation">Promedio de los últimos 12 meses.</p>
   </Slide>
 }
 
