@@ -18,9 +18,10 @@ function ChartTooltip({ active, payload, label }) {
 }
 
 // Los datos son estáticos: pausar el escenario no debe remontar los trazos de Recharts.
-export const SalesChart = React.memo(function SalesChart({ id, compact = false }) {
+export const SalesChart = React.memo(function SalesChart({ id, compact = false, color }) {
   const data = product(id).monthly.filter((row) => row.complete_for_modeling)
   const ticks = data.filter((_, index) => index % 12 === 0).map((row) => row.month)
+  const stroke = color || BUSINESS[id].color
   return <div className={`chart-wrap ${compact ? "compact" : ""}`}>
     <ResponsiveContainer width="100%" height="100%">
       <LineChart data={data} margin={{ top: 18, right: 18, bottom: 10, left: 8 }} accessibilityLayer title={`Ventas mensuales registradas del producto ${id}, en unidades`}>
@@ -28,7 +29,7 @@ export const SalesChart = React.memo(function SalesChart({ id, compact = false }
         <XAxis dataKey="month" ticks={ticks} tickFormatter={(value) => month(value)} tick={tick} axisLine={false} tickLine={false} dy={10} height={42} />
         <YAxis domain={[0, "auto"]} tick={tick} tickFormatter={(v) => number(v)} axisLine={false} tickLine={false} width={65} />
         <Tooltip content={<ChartTooltip />} />
-        <Line dataKey="sales_units" name="Ventas registradas" type="linear" stroke={BUSINESS[id].color} strokeWidth={compact ? 3 : 4} dot={false} isAnimationActive={false} />
+        <Line dataKey="sales_units" name="Ventas registradas" type="linear" stroke={stroke} strokeWidth={compact ? 3.5 : 4} dot={false} isAnimationActive={false} />
       </LineChart>
     </ResponsiveContainer>
   </div>

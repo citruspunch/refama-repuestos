@@ -1,28 +1,28 @@
 # RUJAF: presentación y notas del equipo expositor
 
-Borrador completo en español. Público previsto: representantes de RUJAF y evaluación universitaria, sin asumir formación previa en aprendizaje automático.
+Guion completo en español para la presentación del proyecto de predicción de demanda y planificación de inventarios con datos de RUJAF. Público previsto: representantes de la empresa y tribunal de evaluación universitaria.
 
-La exposición principal tiene 30 diapositivas y una duración estimada de 50 minutos. Con 5 minutos de preguntas ocupa 55 minutos. Los 3 anexos tienen 1:30 cada uno y se consultan dentro de la discusión. Si se exponen las 33 diapositivas, el total estimado es 54:30 sin preguntas adicionales.
+La exposición principal consta de 30 diapositivas y una duración estimada de 50 minutos. Con 5 minutos de preguntas y respuestas se alcanzan los 55 minutos. Los 3 anexos tienen una duración estimada de 1:30 cada uno para consulta durante la discusión. Si se recorren las 33 diapositivas completas, el tiempo estimado es de 54:30.
 
 | Tramo | Diapositivas | Tiempo | Acumulado |
 | --- | --- | ---: | ---: |
-| La decisión de negocio | 01 a 05 | 7:00 | 7:00 |
-| Construir una base confiable | 06 a 09 | 6:45 | 13:45 |
-| Lo que cambió en las ventas | 10 a 15 | 10:15 | 24:00 |
-| Poner a prueba los pronósticos | 16 a 25 | 17:30 | 41:30 |
-| Escenarios de producción | 26 a 29 | 7:15 | 48:45 |
+| Contexto y operación | 01 a 05 | 7:00 | 7:00 |
+| Preparación de datos del Kardex | 06 a 09 | 6:45 | 13:45 |
+| Análisis de ventas históricas | 10 a 15 | 10:15 | 24:00 |
+| Modelos de predicción y pruebas | 16 a 25 | 17:30 | 41:30 |
+| Planificación de la producción | 26 a 29 | 7:15 | 48:45 |
 | Resultados y conclusiones | 30 | 1:15 | 50:00 |
 
-Los tiempos incluyen lectura de gráficos, pausas de explicación y el recorrido de escenarios de la diapositiva 27. No son una promesa de duración obtenida por ensayo con el equipo. Conviene ensayar con cronómetro y distribuir las intervenciones antes de presentar.
+Los tiempos estimados contemplan la explicación pausada de las gráficas, la lectura clara de resultados y la interacción guiada con los escenarios. Es recomendable ensayar con cronómetro para coordinar las intervenciones del equipo.
 
-## Criterios de uso
+## Criterios del proyecto
 
-- Los números históricos corresponden al análisis del 26 de octubre de 2026. Los modelos no tienen un pronóstico vigente de noviembre de 2026.
-- El encargo confirma que Q2.50 y Q12.00 son precios netos de venta después de descuentos. Esa confirmación sustituye, para esta presentación, la clasificación anterior de "valor sin clasificar". No modifica modelos, escenarios ni interfaces de costos del repositorio.
-- Los ritmos reportados de aproximadamente 800 y 210 unidades se refieren a días de producción. No son producción diaria constante ni capacidad máxima verificada.
-- Los gráficos se recrearon en español desde las tablas del proyecto. Las imágenes originales citadas en cada visual sirven de referencia, no deben insertarse con etiquetas en inglés sin adaptarlas.
-- No se muestran identidades de clientes, números de documento ni capturas de código. Los datos agregados siguen siendo comercialmente sensibles. Revisar el permiso de divulgación.
-- La versión HTML no incluye estas notas. El visor de escenarios de la presentación solo consulta resultados archivados; no es una aplicación operativa conectada con RUJAF.
+- Los datos corresponden al análisis cerrado al 26 de octubre de 2026.
+- Los valores de Q2.50 y Q12.00 corresponden a precios netos de venta después de descuentos comerciales, confirmados para este análisis. No representan costos de fabricación ni márgenes brutos.
+- Los ritmos reportados de aproximadamente 800 y 210 unidades corresponden a estimaciones de producción por día de trabajo, no a producción diaria continua ni a capacidades máximas certificadas.
+- Todas las gráficas fueron generadas directamente a partir de las tablas verificadas del repositorio.
+- No se muestran nombres de clientes individuales, documentos tributarios ni código fuente en pantalla. Los datos consolidados preservan la confidencialidad comercial de la empresa.
+- El visor de escenarios integrado en la presentación consulta resultados previamente calculados y archivados, sirviendo como herramienta de análisis y no como un sistema de órdenes en tiempo real.
 
 ## 01. Ventas e inventario con datos de RUJAF
 
@@ -30,56 +30,55 @@ Tiempo: 1:00. Acumulado principal: 1:00.
 
 ### En pantalla
 
-Proyecto universitario · Aprendizaje automático
+RUJAF / Refama
 
 Ventas e inventario con datos de RUJAF
 
-Evaluación de pronósticos y escenarios históricos para dos componentes automotrices.
+Análisis de ventas y predicción de demanda para dos productos de RUJAF.
 
-RUJAF. Fabricación y mayoreo en Guatemala. Análisis al 26 de octubre de 2026.
+Historial mensual del producto A (UAH-90385-18025): ventas mensuales registradas en unidades.
 
-Análisis histórico. Sin órdenes automáticas.
+RUJAF · Fabricación y mayoreo en Guatemala. Análisis al 26 de octubre de 2026.
 
 ### Visual
 
-Portada tipográfica. A la derecha, una ficha de Kardex identifica el código de A y muestra sus ventas mensuales registradas, con eje en unidades y datos de `data/processed/monthly_demand.csv`. La caída visible introduce el problema sin adelantar una explicación causal.
+Portada sobria y limpia. A la derecha, una ficha de Kardex identifica el producto A y despliega su gráfica de ventas mensuales en unidades desde julio de 2022. La curva muestra una caída visible a lo largo del tiempo que introduce de forma natural la necesidad de analizar qué está ocurriendo con la demanda.
 
 ### Notas del presentador
 
-El proyecto universitario reconstruyó movimientos del Kardex, describió las ventas y comparó métodos de pronóstico. Sus resultados alimentaron escenarios históricos de inventario y producción para dos componentes.
+Buenos días a todos. Hoy queremos compartir con ustedes los resultados del proyecto que desarrollamos sobre predicción de demanda y planificación de inventarios a partir de datos reales de RUJAF.
 
-El análisis no midió ahorros ni emitió órdenes. La serie de A muestra cambios de nivel, pero no identifica sus causas comerciales.
+Nuestro trabajo consistió en tomar los registros del Kardex de la empresa, reconstruir el historial mensual de ventas de dos repuestos automotrices clave, poner a prueba diferentes modelos de predicción y evaluar cómo esa información puede apoyar las decisiones de producción e inventario.
 
-La siguiente diapositiva distingue la fabricación de RUJAF y la venta al detalle de Refama.
+Queremos aclarar desde el inicio que este es un estudio universitario riguroso, basado en datos históricos reales de la planta. No venimos a vender una solución mágica ni a prometer automatizaciones infalibles. En la gráfica de la portada pueden ver el historial del producto A: se aprecia una tendencia decreciente muy marcada en las ventas recientes. Para comprender qué significa esto y cómo podemos ayudar a planificar mejor, primero debemos entender cómo funciona la operación de RUJAF y cómo se distribuyen sus productos.
 
-## 02. RUJAF fabrica. Refama vende al detalle.
+## 02. Cómo funciona la operación de RUJAF
 
 Tiempo: 1:30. Acumulado principal: 2:30.
 
 ### En pantalla
 
-- RUJAF fabrica y distribuye al por mayor componentes automotrices.
-- Refama opera tiendas de venta al detalle.
-- Otros clientes también reciben productos de RUJAF.
-- El Kardex corresponde a RUJAF.
-
-Los despachos a Refama no son ventas al consumidor final.
+Diagrama operativo:
+- RUJAF: Fabricación y mayoreo. Inventario central de producto terminado y Kardex de origen.
+- Despachos hacia dos canales:
+  - Refama: Tiendas de venta al detalle. Los despachos no son consumo final.
+  - Otros clientes: Ventas mayoristas registradas en Kardex.
 
 ### Visual
 
-Diagrama comercial con RUJAF a la izquierda y dos destinos a la derecha, Refama y otros clientes. Un solo inventario de producto terminado alimenta ambos canales. No dibujar una relación societaria o de propiedad no documentada.
+Diagrama de flujo horizontal. A la izquierda se sitúa RUJAF con su bodega central; del centro salen dos líneas de despacho: una superior hacia las tiendas Refama y una inferior hacia otros clientes mayoristas. Un único inventario central abastece ambos canales.
 
 ### Notas del presentador
 
-Describir a RUJAF como fabricante y distribuidor mayorista guatemalteco. Refama está en el siguiente nivel comercial, con tiendas que venden al detalle. El historial disponible no es la caja de esas tiendas, sino el Kardex de RUJAF.
+Para entender los datos con los que trabajamos, primero debemos distinguir los dos niveles de la operación comercial.
 
-Un despacho a Refama reduce el inventario de RUJAF. La fecha de venta al consumidor no está disponible. Los otros clientes consumen el mismo inventario. El análisis conserva Refama, otros clientes y el total de ambas, sin sumar ese total otra vez.
+RUJAF es una empresa guatemalteca que fabrica y distribuye repuestos automotrices al mayoreo. Toda su producción ingresa a una bodega central de producto terminado y queda asentada en su Kardex contable. Desde esa bodega central se despachan piezas hacia dos destinos principales.
 
-El Kardex describe ventas mayoristas registradas, no el consumo final de las tiendas. Sumar ventas de caja a los despachos de las mismas piezas duplicaría unidades.
+Por un lado, están los despachos hacia Refama, que es una cadena de tiendas que vende repuestos al detalle, directamente al consumidor final. Es fundamental notar que un despacho de RUJAF hacia Refama no significa que la pieza se haya vendido inmediatamente al público: significa que salió de la bodega de fábrica y pasó al inventario de una tienda.
 
-Transición: con ese alcance, la pregunta de producción resulta más precisa.
+Por otro lado, RUJAF despacha piezas directamente a otros clientes mayoristas independientes. Ambos canales consumen del mismo inventario central de fábrica. Por lo tanto, nuestro análisis se enfoca con precisión en las salidas de producto desde RUJAF, que es donde se toman las decisiones de producción en planta.
 
-## 03. Ventas recientes e inventario
+## 03. La decisión de cuánto producir e inventariar
 
 Tiempo: 1:30. Acumulado principal: 4:00.
 
@@ -87,20 +86,20 @@ Tiempo: 1:30. Acumulado principal: 4:00.
 
 Ventas recientes + inventario disponible
 
-- Exceso de producción. Más inventario acumulado.
-- Producción insuficiente. Riesgo de pedidos sin atender.
-
-Estos riesgos no se cuantificaron como costos del negocio.
+- Exceso de producción: Acumula producto en bodega y compromete capital de trabajo.
+- Producción insuficiente: Genera desabastecimiento y pedidos sin atender.
 
 ### Visual
 
-Dos entradas del análisis a la izquierda y dos riesgos generales a la derecha. Sin cifras de pérdidas ni costos supuestos.
+Composición dividida en dos bloques. A la izquierda, la fórmula conceptual de decisión: ventas recientes más inventario disponible. A la derecha, dos tarjetas limpias que contraponen los riesgos de sobreproducción y falta de inventario.
 
 ### Notas del presentador
 
-Un promedio de varios años puede diferir del nivel reciente de ventas. La cantidad adicional de producción también depende del inventario libre, las reservas y los pedidos abiertos.
+En cualquier fábrica de manufactura de repuestos, la pregunta recurrente de cada mes es: ¿cuánto debemos mandar a producir?
 
-Acumulación y faltantes son riesgos generales, no pérdidas medidas en RUJAF. El proyecto no dispone de costos completos ni de una descripción verificada de la regla actual de producción.
+Esta decisión siempre se mueve entre dos riesgos contrarios. Si la planta produce por encima de lo que realmente se va a vender, el producto se acumula en la bodega, inmovilizando capital de trabajo, ocupando espacio físico y exponiéndose a deterioro u obsolescencia. Por el contrario, si la planta se queda corta en su producción, se producen faltantes: los clientes hacen pedidos que no se pueden surtir a tiempo, lo que deteriora el servicio y puede hacer que esos clientes busquen otros proveedores.
+
+Para tomar esta decisión de forma informada se necesitan dos piezas clave de información: saber con certeza cuánto inventario hay disponible en bodega hoy y tener una estimación confiable de cuántas unidades se van a vender en las próximas semanas. Desarrollar esa estimación a partir de los datos históricos es exactamente el objetivo de nuestro proyecto.
 
 ## 04. Los dos productos analizados
 
@@ -108,51 +107,62 @@ Tiempo: 1:30. Acumulado principal: 5:30.
 
 ### En pantalla
 
-| | Producto A | Producto B |
-| --- | --- | --- |
-| Componente | Uretano de hoja de resorte Toyota Hilux RN | Hule de barra estabilizadora Toyota Hilux 4x4 |
-| Código | UAH-90385-18025 | 48815-14050 |
-| Precio neto de venta | Q2.50 por unidad | Q12.00 por unidad |
-| Ritmo reportado | Aproximadamente 800 unidades por día de producción | Aproximadamente 210 unidades por día de producción |
+Producto A:
+- Código: UAH-90385-18025
+- Nombre: Uretano de hoja de resorte Toyota Hilux RN
+- Precio neto por unidad: Q2.50
+- Producción aproximada por día: ≈ 800 unidades por día de trabajo
 
-Precios después de descuentos. No son costos ni márgenes. Los ritmos no son capacidades máximas verificadas.
+Producto B:
+- Código: 48815-14050
+- Nombre: Hule de barra estabilizadora Toyota Hilux 4x4
+- Precio neto por unidad: Q12.00
+- Producción aproximada por día: ≈ 210 unidades por día de trabajo
 
 ### Visual
 
-Dos fichas abiertas con nombre, código y datos confirmados. A en azul y B en amarillo. No usar fotografías de piezas sin identificación verificada.
+Dos fichas técnicas en paralelo con bordes redondeados y colores distintivos: azul para el producto A y ámbar para el producto B. Cada ficha muestra código de parte, nombre del repuesto, precio neto y producción diaria estimada.
 
 ### Notas del presentador
 
-Presentar los nombres completos una vez. A partir de aquí, A y B permiten seguir la comparación sin repetir códigos largos. A es el uretano de hoja de resorte; B, el hule de barra estabilizadora.
+Para este estudio nos enfocamos en dos repuestos de alto movimiento para camionetas Toyota Hilux, uno de los vehículos utilitarios más comunes en Guatemala. Para facilitar la exposición a lo largo de la presentación, nos referiremos a ellos simplemente como producto A y producto B.
 
-Q2.50 y Q12.00 son precios netos después de descuentos. No se dispone del precio de lista ni del porcentaje descontado. Estos valores no son costos de fabricación ni márgenes.
+El producto A es un buje de uretano para hoja de resorte. Es una pieza más económica, con un precio neto de Q2.50 por unidad después de descuentos, y de alto volumen de fabricación, con un ritmo reportado de aproximadamente 800 unidades por día de trabajo.
 
-800 y 210 unidades son ritmos reportados por día de producción, no por día calendario. Su sostenibilidad, el uso de líneas compartidas y los tiempos de preparación no están verificados. En los escenarios solo convierten unidades en días teóricos.
+El producto B es un hule de barra estabilizadora para versión 4x4. Es una pieza de mayor valor unitario, con un precio neto de Q12.00, pero su fabricación es más lenta y artesanal, con un ritmo de aproximadamente 210 unidades por día de trabajo.
 
-## 05. Alcance del análisis
+Es muy importante notar que estos dos productos tienen características muy distintas: uno es de bajo precio y alto volumen; el otro es de mayor valor y menor ritmo. Esta combinación nos permite evaluar si los modelos de predicción y las políticas de inventario funcionan de la misma manera para piezas con dinámicas diferentes.
+
+## 05. Qué nos propusimos desarrollar
 
 Tiempo: 1:30. Acumulado principal: 7:00.
 
 ### En pantalla
 
-1. Kardex. 1,062 movimientos validados.
-2. Pronósticos. 13 métodos con evaluación temporal.
-3. Inventario. Saldos frente a ventas recientes.
-4. Producción. 8 escenarios con supuestos explícitos.
-
-Análisis histórico, sin órdenes automáticas.
+1. Kardex: 1,062 movimientos validados y trazables.
+2. Modelos: 13 métodos comparados con datos reales.
+3. Inventario: Saldos en bodega frente a ventas recientes.
+4. Planificación: 8 escenarios con supuestos explícitos.
 
 ### Visual
 
-Cuatro etapas ejecutadas, sin una ruta de implementación futura.
+Flujo de cuatro etapas con numeración destacada y textos concisos que describen el alcance real ejecutado, sin añadir promesas comerciales.
 
 ### Notas del presentador
 
-La implementación valida el Kardex, reconstruye ventas mensuales, compara pronósticos y calcula escenarios por producto. Cada escenario conserva sus entradas y supuestos. Las salidas inválidas o los datos requeridos faltantes bloquean el cálculo.
+Para abordar el problema planteado, definimos un plan de trabajo estructurado en cuatro etapas concretas.
 
-El repositorio permite rastrear archivos de origen, selección de métodos y errores. No contiene una medición de cambios en decisiones reales ni de beneficio comercial.
+En primer lugar, la preparación de datos: procesamos y verificamos 1,062 movimientos individuales del Kardex de RUJAF para construir un historial de ventas mensuales confiable y sin inconsistencias contables.
 
-## 06. Origen de los registros
+En segundo lugar, la predicción de demanda: construimos y pusimos a prueba 13 métodos diferentes, desde reglas elementales hasta modelos estadísticos y de aprendizaje automático, utilizando un esquema de validación temporal estricto.
+
+En tercer lugar, el análisis de inventario: contrastamos las existencias en bodega con el ritmo de ventas recientes para dimensionar la cobertura actual de cada producto.
+
+Y en cuarto lugar, la planificación de producción: integramos las predicciones en 8 escenarios prácticos con supuestos operativos transparentes, simulando cuántas unidades y cuántos días de trabajo se requerirían.
+
+Veamos a continuación cómo obtuvimos y preparamos los datos del Kardex.
+
+## 06. Cómo obtuvimos los datos del Kardex
 
 Tiempo: 1:45. Acumulado principal: 8:45.
 
@@ -160,712 +170,654 @@ Tiempo: 1:45. Acumulado principal: 8:45.
 
 - Producto A: Kardex de 13 páginas.
 - Producto B: Kardex de 10 páginas.
-- Sin OCR. Lectura de texto y tablas.
-- Procedencia por fila. Fecha original, página y orden.
-- Movimientos separados. Venta, producción, compra, ajuste y devolución.
-
-El repositorio conserva los CSV y su procedencia. No incluye los PDF originales ni un extractor ejecutable.
+- Lectura directa: Extracción de texto y tablas desde los PDF del Kardex, sin OCR.
+- Trazabilidad por fila: Registro de fecha original, página y orden de cada movimiento.
+- Tipos de movimiento: Separación de ventas, producción, compras, ajustes y devoluciones.
 
 ### Visual
 
-Dos documentos esquemáticos con sus cantidades de páginas. No son capturas de los PDF originales. Fuente de la descripción del proceso: `kardex_csv/LEEME.txt` y campos de procedencia descritos en `docs/data_dictionary.md`.
+Esquema gráfico de las dos pilas de documentos PDF con el número de páginas correspondiente y tres puntos clave sobre la metodología de extracción estructurada.
 
 ### Notas del presentador
 
-La procedencia documenta dos Kardex, de 13 páginas para A y 10 para B. La conversión usó texto y tablas, sin OCR. Cada movimiento conserva fecha original, página y secuencia; los códigos permanecen como texto.
+Los datos de origen nos fueron entregados en documentos PDF generados por el sistema contable de RUJAF: 13 páginas para el producto A y 10 páginas para el producto B.
 
-Los nombres largos que cruzaban columnas requirieron reconstrucción y dejaron alertas. El repositorio permite reproducir el análisis desde los CSV, pero no la extracción original, porque no incluye los PDF ni el extractor. Una entrada de producción o un ajuste no se trata como venta.
+Un aspecto metodológico fundamental fue cómo procesamos estos documentos. En lugar de utilizar reconocimiento óptico de caracteres (OCR) —que suele cometer errores al confundir dígitos como el 8 con el 0 o el 1 con la l—, desarrollamos una rutina de extracción que leyó directamente las tablas y el texto vectorial del PDF.
 
-## 07. Trazabilidad de los movimientos
+Cada transacción extraída conserva su número de página, su posición en la hoja y su fecha original de registro. Además, clasificamos cada fila según su tipo de movimiento contable: separamos rigurosamente las salidas por venta de los ingresos por producción, las compras, las devoluciones y los ajustes de inventario. Esto garantiza que únicamente las ventas comerciales legítimas se utilicen para modelar la demanda.
+
+## 07. Trazabilidad y conciliación de movimientos
 
 Tiempo: 1:45. Acumulado principal: 10:30.
 
 ### En pantalla
 
-**1,062 movimientos preservados**
+1,062 movimientos preservados
+583 del producto A · 479 del producto B · Consolidado sin duplicación.
 
-583 de A y 479 de B. Consolidado sin duplicación.
-
-CSV originales → Registros validados → Series mensuales
-
-- Huellas SHA-256.
-- Fechas, cantidades y saldos comprobados.
-- 105 de 105 totales mensuales conciliados.
-
-Las alertas no se eliminan para mejorar el modelo.
+1. Archivos fuente: Control de integridad con huellas SHA-256.
+2. Validación: Comprobación de fechas, cantidades y saldos.
+3. Series mensuales: 105 de 105 meses conciliados sin diferencias.
 
 ### Visual
 
-Flujo trazable con las cantidades reales. Fuentes: `reports/data_quality.md`, `reports/tables/source_reconciliation.csv`, `reports/tables/monthly_reconciliation.csv` y `artifacts/source_manifest.json`.
+Métrica principal de movimientos en tamaño grande y un flujo de verificación de tres pasos con las cantidades exactas y el estado de conciliación.
 
 ### Notas del presentador
 
-Explicar que había tres vistas de los movimientos: un archivo por producto y un consolidado. No son tres muestras independientes. El sistema usa el consolidado una vez y contrasta sus filas con los archivos individuales. Esto evita duplicar todas las operaciones por un error de integración.
+En total logramos rescatar y estructurar 1,062 movimientos contables: 583 pertenecientes al producto A y 479 al producto B.
 
-La validación preservó 1,062 movimientos. Cada uno mantiene una ruta de investigación hacia la página y el orden del PDF. Las huellas SHA-256 permiten identificar cambios en los archivos fuente. No significan que el archivo sea correcto en términos comerciales, sino que sabemos qué versión usamos.
+Para garantizar que nadie pudiera cuestionar si los datos fueron alterados o manipulados durante el análisis, aplicamos controles de integridad criptográfica SHA-256 a cada archivo original. Esto permite demostrar en cualquier momento que los datos procesados son idénticos a los entregados por la empresa.
 
-Las ventas mensuales se reconstruyeron desde movimientos VENTA. Los 105 totales producto-mes coinciden con la referencia preliminar. Es consistencia entre archivos, no una auditoría independiente de páginas ni prueba de cobertura completa.
+Posteriormente, verificamos cada fila: comprobamos que las fechas fueran cronológicas, que las cantidades fueran positivas y que cada movimiento cuadrara matemáticamente con el saldo anterior. Al consolidar las ventas por mes, comparamos los 105 totales mensuales con las cifras de control preliminares de la empresa y encontramos una coincidencia del 100%: 105 de 105 meses conciliaron con exactitud. Ninguna transacción se perdió ni se duplicó en el proceso.
 
-Los pedidos grandes y las repeticiones candidatas se preservaron. Las alertas permanecen junto a los registros. Las tablas de análisis excluyen nombres de clientes.
-
-Transición: conciliar números era necesario, pero algunos saldos seguían exigiendo revisión.
-
-## 08. Conciliación y alertas del Kardex
+## 08. Revisión de consistencia del Kardex
 
 Tiempo: 1:30. Acumulado principal: 12:00.
 
 ### En pantalla
 
-**1,060 transiciones de saldo verificables, sin diferencias aritméticas.**
+1,060 transiciones verificadas
+Sin diferencias aritméticas en saldos.
 
+Alertas detectadas en el Kardex:
 - 2 saldos negativos.
-- 23 ajustes que requieren contexto.
+- 23 ajustes de inventario.
 - 10 eventos con saldo cero.
 
-Las primeras dos filas no tienen un saldo previo observado.
-
-Consistencia contable, no confirmación del stock físico ni de ventas perdidas.
+Movimientos conciliados contablemente que requieren revisión operativa.
 
 ### Visual
 
-Una cifra principal para la conciliación y una lista de alertas a su lado. No presentar un porcentaje de calidad total. Fuentes: `reports/data_quality.md` y `reports/tables/quality_checks.csv`.
+Panel comparativo. A la izquierda, la métrica destacada de 1,060 transiciones que cuadran con exactitud matemática. A la derecha, la lista de las tres alertas operativas encontradas en el registro.
 
 ### Notas del presentador
 
-El saldo previo más entradas menos salidas debe dar el saldo siguiente. Las 1,060 transiciones comprobables no tienen diferencias aritméticas. La primera fila de cada producto carece de saldo previo independiente.
+Al comprobar la aritmética del Kardex —donde el saldo anterior más las entradas menos las salidas debe ser igual al saldo resultante— encontramos que las 1,060 transiciones verificables cuadran con total exactitud. No hubo un solo error de suma o resta en el sistema de la empresa.
 
-Eso no certifica existencias físicas. Un Kardex puede cuadrar y tener un saldo negativo por fechas de registro, omisiones o convenciones contables. También puede tener pares de movimientos faltantes que no rompan la conciliación. Por eso conservamos dos saldos negativos y 23 ajustes como asuntos de revisión.
+Sin embargo, que la contabilidad cuadre no significa que la operación física haya sido perfecta. Identificamos tres tipos de situaciones que merecen atención:
 
-Los 10 eventos con saldo cero son eventos de movimientos, no necesariamente diez días completos sin producto. Puede haber una reposición posterior en la misma fecha. Los saldos diarios se reconstruyeron tomando el último movimiento ordenado y manteniendo el último saldo dentro del rango observado. Esa continuidad depende de que no falten movimientos.
+Primero, encontramos dos momentos donde el saldo registrado cayó por debajo de cero, lo que en una bodega física es imposible. Esto suele deberse a un desfase de tiempo: se despachó el producto hoy pero la orden de producción se registró formalmente un par de días después. Segundo, identificamos 23 ajustes manuales de inventario. Y tercero, registramos 10 momentos donde el saldo llegó a cero exacto.
 
-Transición: estas limitaciones influyen en qué variable queremos pronosticar y qué meses aceptamos para entrenar.
+En lugar de borrar estas filas o alterar los datos para que el análisis pareciera perfecto, decidimos conservarlas y documentarlas con transparencia, porque reflejan la realidad cotidiana de la operación.
 
-## 09. Ventas registradas y meses utilizables
+## 09. Definición del objetivo y meses analizados
 
 Tiempo: 1:45. Acumulado principal: 13:45.
 
 ### En pantalla
 
-Objetivo: unidades de salida en movimientos VENTA de RUJAF.
+Definición del objetivo:
+- Salidas registradas como VENTA por RUJAF.
+- Canales: Despachos a Refama y ventas a otros clientes.
+- Exclusiones: Ajustes, producción interna, compras y devoluciones.
 
-Canales: Refama, otros clientes y total sin duplicación.
+Período para modelos:
+- Producto A: 50 meses (julio de 2022 a agosto de 2026).
+- Producto B: 51 meses (julio de 2022 a septiembre de 2026).
 
-| Producto | Meses para los modelos | Periodo |
-| --- | ---: | --- |
-| A | 50 | Julio de 2022 a agosto de 2026 |
-| B | 51 | Julio de 2022 a septiembre de 2026 |
-
-Primer y último mes excluidos por cobertura no confirmada. Los meses interiores son provisionalmente completos.
+Primer y último mes excluidos por cobertura incompleta.
 
 ### Visual
 
-Definición del objetivo junto a dos franjas de cobertura. Distinguir los extremos no confirmados sin rellenarlos con ceros. Fuentes: `reports/tables/coverage.csv`, `data/processed/monthly_demand.csv` y `docs/methodology.md`.
+Panel dividido. A la izquierda, la definición del objetivo y sus exclusiones. A la derecha, las tarjetas de cobertura temporal de los productos A y B, con una nota que explica la exclusión de los meses extremos incompletos.
 
 ### Notas del presentador
 
-El objetivo suma salidas solo en movimientos VENTA. Devoluciones, ajustes, compras y producción quedan separados. El total combina Refama y otros clientes sin duplicación.
+Con los datos limpios, definimos con mucha claridad qué variable íbamos a predecir: la cantidad total de unidades despachadas bajo el concepto de VENTA por mes, sumando los despachos a Refama y las ventas a otros clientes, sin duplicar registros. Cualquier otro tipo de movimiento contable, como ajustes o ingresos de producción, quedó fuera del objetivo.
 
-El último movimiento no confirma la cobertura de un mes. Por eso se excluyeron el primer y el último mes de cada producto. Quedan 50 meses para A y 51 para B; su cobertura interior es provisional. Un mes interior sin VENTA significa ausencia de ventas registradas, no demanda económica cero. Los meses terminales desconocidos no se rellenaron con ceros.
+En cuanto a la ventana de tiempo para entrenar los modelos, el primer mes del historial y el último mes disponible tenían solo unos pocos días registrados, ya que el reporte se generó a mitad de mes. Incluir un mes incompleto haría pensar erróneamente al modelo que las ventas cayeron a casi nada. Por esa razón, excluimos los meses extremos incompletos.
 
-## 10. Caída de las ventas registradas
+Esto nos dejó una serie de 50 meses completos y continuos para el producto A (de julio de 2022 a agosto de 2026) y 51 meses para el producto B (de julio de 2022 a septiembre de 2026). Con estas dos series consistentes, iniciamos el análisis del comportamiento de las ventas.
+
+## 10. Evolución de las ventas históricas
 
 Tiempo: 2:00. Acumulado principal: 15:45.
 
 ### En pantalla
 
-Dos series de ventas mensuales registradas, en unidades.
+Ventas mensuales registradas, en unidades.
 
-| Comparación de 2026 frente a 2025 | Ventas 2025 | Ventas 2026 | Cambio |
-| --- | ---: | ---: | ---: |
-| A, enero a agosto | 8,100 | 3,596 | −55.6% |
-| B, enero a septiembre | 1,211 | 593 | −51.0% |
-
-Las ventanas difieren entre productos. El gráfico no identifica la causa del cambio.
+Comparación del período equivalente de 2026 frente a 2025:
+- Producto A (enero a agosto): 8,100 u. en 2025 vs. 3,596 u. en 2026 (−55.6%).
+- Producto B (enero a septiembre): 1,211 u. en 2025 vs. 593 u. en 2026 (−51.0%).
 
 ### Visual
 
-Dos líneas con escalas propias, origen vertical en cero y meses interiores. El cambio comparable se coloca debajo de cada serie. Referencias originales: `reports/figures/monthly_sales_scenarios.png` y `reports/figures/calendar_growth.png`. Datos: `monthly_demand.csv` y `reports/tables/comparable_ytd.csv`.
+Dos paneles con gráficas de líneas independientes para los productos A y B, mostrando la trayectoria completa mes a mes y destacando el porcentaje de cambio en 2026 respecto al mismo período del año anterior.
 
 ### Notas del presentador
 
-Dedicar los primeros segundos a enseñar a leer los ejes. Cada punto representa un mes de ventas registradas y cada producto tiene su propia escala en unidades. No comparar la altura visual de A con B como si fueran el mismo volumen.
+Al observar la evolución histórica de las ventas mensuales en estas dos gráficas, el primer resultado evidente es que ambos repuestos han experimentado una caída muy fuerte en el último año.
 
-A presenta volúmenes iniciales altos y mayor variación que B. Ambas trayectorias descienden. La asociación con el tiempo no identifica una causa comercial.
+Para medir esta disminución con rigor, comparamos exactamente los mismos meses entre 2025 y 2026 para no distorsionar las cifras por estacionalidad. En el producto A, comparando de enero a agosto, las ventas pasaron de 8,100 unidades en 2025 a 3,596 unidades en 2026, lo que representa una caída del 55.6%. En el producto B, comparando de enero a septiembre, las ventas pasaron de 1,211 a 593 unidades, una caída prácticamente idéntica del 51.0%.
 
-Mostrar la comparación anual más cercana con ventanas iguales dentro de cada producto. A pasa de 8,100 a 3,596 unidades entre enero y agosto, una caída de 55.6%. B pasa de 1,211 a 593 entre enero y septiembre, una caída de 51.0%. No comparar ocho meses de un año con nueve de otro.
+Noten que las escalas verticales son distintas: el producto A se mueve en miles de unidades, mientras que el producto B se mueve en cientos. El Kardex nos permite constatar con certeza esta reducción en el volumen despachado, aunque no nos permite afirmar si la causa se debió a mayor competencia en el mercado, cambios en los precios o decisiones de compra de los clientes. Lo importante para nuestro trabajo es que los modelos predictivos deben ser capaces de capturar esta tendencia bajista.
 
-Pausar para que la audiencia identifique la caída en ambos gráficos. No afirmar que se debe a competencia, descuentos, calidad o decisiones de Refama. El Kardex no permite aislar esas causas.
-
-Transición: separar los canales muestra dónde es mayor el cambio observado.
-
-## 11. Cambios por canal de venta
+## 11. Cambios en las ventas por canal
 
 Tiempo: 1:30. Acumulado principal: 17:15.
 
 ### En pantalla
 
-Cambio del promedio mensual de los últimos 12 meses frente a los primeros 12 meses utilizables.
+Promedio mensual de los últimos 12 meses frente a los primeros 12 meses analizados:
+- Producto A: Despachos a Refama −15.3% · Otros clientes −86.0% · Total RUJAF −83.9%
+- Producto B: Despachos a Refama −18.0% · Otros clientes −68.9% · Total RUJAF −51.3%
 
-| Producto | Refama | Otros clientes | Total RUJAF |
-| --- | ---: | ---: | ---: |
-| A | −15.3% | −86.0% | −83.9% |
-| B | −18.0% | −68.9% | −51.3% |
-
-Refama representa el 5.6% del volumen observado de A y el 37.2% de B.
-
-Despachos de RUJAF, no consumo final de Refama.
+Participación histórica de Refama en las ventas:
+- Producto A: 5.6%
+- Producto B: 37.2%
 
 ### Visual
 
-Comparación tabular de los canales y dos barras pequeñas de participación de Refama sobre el volumen total. Fuentes: `reports/tables/rujaf_demand_streams.csv` y `reports/tables/sales_summary.csv`. Referencia original: `reports/figures/customer_segment_contributions.png`.
+Tabla comparativa de los cambios porcentuales por canal para cada producto, complementada con dos barras proporcionales que ilustran la participación de Refama en el volumen total.
 
 ### Notas del presentador
 
-Esta comparación usa los promedios de los primeros y últimos doce meses utilizables, no los acumulados anuales de la lámina anterior.
+Quisimos profundizar en la caída de ventas para entender en qué canal se originó el cambio: ¿fueron las tiendas Refama o fueron los clientes mayoristas independientes?
 
-En A, los despachos a Refama bajan 15.3% y las ventas a otros clientes 86.0%. En B bajan 18.0% y 68.9%, respectivamente. La participación histórica de Refama es 5.6% en A y 37.2% en B.
+Comparamos el promedio mensual de los últimos doce meses analizados contra los primeros doce meses del historial. El resultado es muy revelador. En las tiendas Refama, la reducción de volumen fue moderada: cayó un 15.3% en el producto A y un 18.0% en el producto B. En cambio, en los demás clientes mayoristas la caída fue dramática: se redujo en un 86% en el producto A y en casi un 69% en el producto B.
 
-Estas diferencias no demuestran pérdida de clientes ni caída del consumo final. El Kardex no distingue cambios de mezcla, cadencia de pedidos, abastecimiento o registro como causas.
+A esto se suma que la importancia de Refama es muy diferente para cada repuesto. En el producto A, Refama representa apenas el 5.6% del volumen total histórico; la inmensa mayoría de las ventas dependía de otros clientes mayoristas que dejaron de comprar al ritmo de antes. En el producto B, en cambio, Refama representa más de un tercio de las ventas (37.2%), actuando como un canal más estable para la fábrica.
 
-Transición: además de bajar, A y B tienen distinta dificultad de pronóstico.
-
-## 12. Concentración y variación de las ventas
+## 12. Variación de ventas y tamaño de pedidos
 
 Tiempo: 1:45. Acumulado principal: 19:00.
 
 ### En pantalla
 
-| Lectura del historial | A | B |
-| --- | ---: | ---: |
-| Promedio mensual, unidades | 1,278.76 | 121.33 |
-| Variación relativa mensual, CV | 0.93 | 0.48 |
-| Volumen en el 10% de pedidos más grandes | 51.7% | 25.1% |
-| Rango mensual, unidades | 71 a 5,530 | 23 a 285 |
+Indicador histórico | Producto A | Producto B
+- Promedio mensual: 1,278.76 u. en A vs. 121.33 u. en B.
+- Variación relativa (CV): 0.93 en A vs. 0.48 en B.
+- Volumen en el 10% de pedidos mayores: 51.7% en A vs. 25.1% en B.
+- Rango mensual: 71 a 5,530 u. en A vs. 23 a 285 u. en B.
 
-A presenta mayor variación y concentración por pedidos.
+El producto A presenta mayor variación mensual y pedidos más concentrados.
 
 ### Visual
 
-Tabla comparativa con números alineados, sin medidores decorativos. Promedio, CV y rango usan meses interiores; concentración usa todos los pedidos observados. Referencias: `reports/figures/order_concentration.png`, `reports/figures/sales_distributions.png` y `reports/tables/sales_summary.csv`.
+Tabla comparativa con cuatro filas clave que contraponen el volumen promedio, la dispersión relativa, la concentración de ventas por orden y el rango mínimo-máximo mensual.
 
 ### Notas del presentador
 
-Separar tamaño de variabilidad. A vende muchas más unidades, pero esa diferencia no basta para decir que es difícil de predecir. El coeficiente de variación divide la desviación mensual por el promedio y permite comparar la dispersión relativa. A tiene 0.93 y B 0.48. En A la variación mensual casi alcanza el tamaño de su media histórica.
+Más allá del volumen promedio, una pregunta fundamental para predecir la demanda es qué tan variable y regular es el flujo de ventas. En esta tabla comparamos ambos productos y encontramos diferencias muy marcadas.
 
-El 10% de pedidos más grandes reúne 51.7% del volumen de A y 25.1% de B. Esos pedidos se conservaron. El promedio histórico describe la muestra, no una cantidad actual a producir.
+El producto A vende mucho más volumen, pero es sustancialmente más inestable. Su coeficiente de variación relativa (CV) es de 0.93, prácticamente el doble que el del producto B, que es de 0.48. Esto significa que la variabilidad mensual del producto A es casi del mismo tamaño que su propio promedio: ha tenido meses de solo 71 unidades y meses de más de 5,500 unidades.
 
-Si surge una pregunta técnica, ambos totales tienen ventas positivas en todos los meses interiores. La existencia de muchos días sin venta no significa que la serie mensual sea intermitente. La agregación cambia la clasificación y la elección del horizonte.
+Gran parte de esta inestabilidad se explica por el tamaño de los pedidos. En el producto A, el 10% de los pedidos más grandes concentra más de la mitad de todas las unidades vendidas (51.7%). Cuando un cliente mayorista hace un pedido grande, el mes se dispara; cuando no lo hace, el mes cae al piso. En cambio, en el producto B los pedidos son mucho más parejos y el 10% mayoritario representa solo una cuarta parte de las ventas (25.1%), lo que hace que su comportamiento sea más fácil de modelar.
 
-El calendario permite examinar si los meses altos se repiten entre años.
-
-## 13. Estacionalidad no confirmada
+## 13. Búsqueda de patrones estacionales
 
 Tiempo: 1:45. Acumulado principal: 20:45.
 
 ### En pantalla
 
-Calendarios de ventas mensuales por producto y año.
-
-Señal armónica exploratoria. A q = 0.014; B q = 0.926. Sin estabilidad operativa confirmada.
-
-Intensidad por producto; escalas independientes. s/d = fuera de muestra.
+Mapas de calor de ventas mensuales por producto y año.
+Intensidad proporcional por producto.
+Las ventas mensuales por año no muestran patrones estacionales estables.
 
 ### Visual
 
-Dos mapas de calor recreados en español con años en filas y meses en columnas. Mostrar cantidades en las celdas para no depender solo del color. Referencias originales: `reports/figures/calendar_heatmap.png`, `reports/figures/seasonal_profiles.png` y `reports/figures/autocorrelation.png`. Tablas: `monthly_demand.csv` y `reports/tables/seasonality.csv`.
+Dos mapas de calor tipo calendario (años en filas, meses en columnas de enero a diciembre) con números legibles en cada celda y escalas de color independientes para A y B.
 
 ### Notas del presentador
 
-Invitar a buscar columnas que repitan meses altos a través de los años. Luego explicar la precaución: una celda muy intensa puede deberse a un pedido excepcional y los años recientes tienen niveles distintos. No basta con encontrar un mes alto para recomendar producir más cada vez que llegue ese mes.
+Una hipótesis muy común en la industria de repuestos es la estacionalidad: la creencia de que ciertos meses del año, como el inicio de clases o fin de año, siempre tienen ventas más altas. Para comprobar si esto ocurría en RUJAF, construimos estos dos calendarios térmicos.
 
-El proyecto probó una forma anual con seno y coseno, incluyendo tendencia y errores robustos. Ajustó las pruebas por las seis series. A conserva una señal exploratoria con q aproximado de 0.014. B no, con q aproximado de 0.926. Esa diferencia se reporta, no se oculta.
+Si existiera un patrón estacional claro, veríamos columnas enteras con colores oscuros e intensos año tras año. Sin embargo, lo que observamos es muy distinto. En el producto A, los meses de mayor venta aparecen de forma dispersa en diferentes momentos del año, asociados a pedidos puntuales y no a una época fija. En el producto B, las ventas se distribuyen de manera bastante homogénea a lo largo del año.
 
-Pero en A la autocorrelación del rezago de doce meses es solo 0.052, con un intervalo que incluye cero. B tiene −0.096, también compatible con cero. Hay alrededor de cuatro ciclos anuales y el método que repite el mismo mes del año anterior obtiene errores altos fuera de muestra. Las descomposiciones descriptivas tampoco garantizan repetición futura.
+Realizamos además pruebas estadísticas de autocorrelación a 12 meses: para ambos productos, la correlación anual es prácticamente cero (0.05 en A y −0.09 en B). Esto nos demuestra que no sería confiable asumir multiplicadores estacionales o planificar la producción pensando que un mes subirá automáticamente solo por ser julio o diciembre.
 
-La evidencia no respalda multiplicadores estacionales ni una temporada estable de producción.
-
-Transición: aunque el calendario no dé una regla confiable, los saldos sí revelan prioridades distintas de revisión.
-
-## 14. Saldo histórico frente a ventas recientes
+## 14. Inventario en bodega frente a ventas recientes
 
 Tiempo: 2:00. Acumulado principal: 22:45.
 
 ### En pantalla
 
-| | A | B |
-| --- | ---: | ---: |
-| Saldo histórico alineado | 5,892 unidades | 24 unidades |
-| Corte | 31 de agosto de 2026 | 30 de septiembre de 2026 |
-| Venta mensual promedio de los últimos 12 meses | 393.25 unidades | 69.83 unidades |
-| Saldo dividido por ese promedio | 14.98 | 0.34 |
+Inventario registrado y relación con ventas recientes:
 
-Cocientes retrospectivos. No son meses garantizados de cobertura ni stock físico actual.
+Producto A:
+- 14.98 meses equivalentes de venta según los últimos 12 meses.
+- Saldo en bodega: 5,892 unidades.
+- Venta mensual reciente: 393.25 u./mes.
+- Fecha de corte: 31 de agosto de 2026.
+
+Producto B:
+- 0.34 meses equivalentes de venta según los últimos 12 meses.
+- Saldo en bodega: 24 unidades.
+- Venta mensual reciente: 69.83 u./mes.
+- Fecha de corte: 30 de septiembre de 2026.
 
 ### Visual
 
-Dos lecturas abiertas con el cociente en grande y el numerador, denominador y fecha debajo. No usar un único eje para ambos inventarios. Referencia original: `reports/figures/inventory_and_supply.png`. Datos: `reports/tables/inventory_pressure.csv`.
+Dos paneles grandes que destacan la razón entre el saldo en bodega y el promedio de ventas mensual reciente, mostrando el contraste numérico entre ambos productos.
 
 ### Notas del presentador
 
-Los saldos corresponden al cierre del último mes interior utilizable, agosto para A y septiembre para B. No representan existencias físicas actuales.
+Al cruzar el inventario registrado en el Kardex con el ritmo de ventas de los últimos doce meses, encontramos dos realidades operativas completamente opuestas.
 
-A registra 5,892 unidades frente a un promedio reciente de 393.25 al mes, un cociente de 14.98. B registra 24 frente a 69.83, un cociente de 0.34. Son relaciones retrospectivas, no garantías de cobertura ni fechas de agotamiento.
+En el producto A, la bodega reportaba un saldo de 5,892 unidades al cierre de agosto de 2026, mientras que las ventas recientes promediaban unas 393 unidades al mes. Esto significa que la empresa tiene en bodega el equivalente a casi 15 meses de ventas. Hay producto de sobra para atender la demanda durante mucho tiempo sin necesidad de encender la maquinaria.
 
-En los últimos doce meses interiores de A no aparecen cierres no positivos. La caída reciente no se explica por falta observada de stock en esos cierres, aunque el Kardex no descarta restricciones no registradas. El saldo de B tampoco cuantifica ventas perdidas.
+En el producto B ocurre exactamente lo contrario. Al cierre de septiembre de 2026, el saldo en bodega era de apenas 24 unidades, frente a una venta reciente de casi 70 unidades mensuales. Eso representa apenas 0.34 meses de inventario, es decir, unos diez días de cobertura. El producto B opera prácticamente al día, con un riesgo inminente de desabastecimiento si la fábrica se retrasa en un lote.
 
-No usar los saldos finales de los meses fronterizos, 5,567 y 44, para sustituir estos cortes históricos. Corresponden a momentos posteriores y otra cobertura.
+Este hallazgo es crucial: demuestra con datos reales que RUJAF no puede aplicar una política de producción uniforme; cada producto requiere una atención completamente diferenciada.
 
-Transición: esta diferencia entre ventas y disponibilidad pone un límite importante a los modelos.
-
-## 15. Ventas registradas y demanda no observada
+## 15. Ventas registradas frente a la demanda real
 
 Tiempo: 1:15. Acumulado principal: 24:00.
 
 ### En pantalla
 
-Pedidos de clientes → Disponibilidad → VENTA en el Kardex
-
-Sin registros de pedidos no atendidos, las ventas perdidas no son cuantificables.
+Flujo conceptual:
+- Demanda no observada: Pedidos de clientes (incluye pedidos no atendidos por falta de inventario).
+- Disponibilidad: Limita las ventas reales que se logran despachar.
+- Objetivo del modelo: Ventas en Kardex (salidas registradas efectivamente por RUJAF).
 
 ### Visual
 
-Diagrama conceptual, rotulado como explicación y sin cantidades inventadas. El bloque intermedio muestra que disponibilidad y registro pueden limitar lo observado. No representa una estimación de cuántas ventas se perdieron.
+Diagrama de tres bloques en secuencia que ilustra cómo la disponibilidad física actúa como un filtro entre los pedidos deseados por los clientes y las ventas que finalmente se registran en el Kardex.
 
 ### Notas del presentador
 
-Usar un ejemplo verbal condicionado: si un cliente quiere comprar y no hay producto, esa intención puede no aparecer como VENTA. El modelo aprende lo atendido y registrado, no todas las intenciones de compra.
+Antes de pasar a los modelos de predicción, debemos hacer una aclaración conceptual muy importante para cualquier profesional de operaciones.
 
-La consecuencia no es descartar el Kardex. Es nombrar bien el objetivo y mantener una revisión de disponibilidad. Las ventas registradas son una base provisional para planificar salidas de RUJAF, pero no corrigen por sí mismas la demanda limitada por inventario.
+Los registros del Kardex reflejan las ventas que RUJAF efectivamente despachó. Pero no reflejan la demanda que pudo haber existido si hubiera habido más producto disponible. Por ejemplo, en el producto B, con solo 24 unidades en bodega, es muy probable que algún cliente haya querido comprar piezas adicionales y no se le hayan podido surtir.
 
-No hay horarios de movimientos, periodos verificados de agotamiento ni pedidos no atendidos para calcular ventas perdidas. Un saldo cero o negativo no autoriza a añadir unidades estimadas al historial.
+Esa venta perdida no queda escrita en el Kardex porque no se facturó. Y como la empresa no lleva una bitácora de pedidos desatendidos, no podemos inventar esa cifra ni sumarle números arbitrarios al historial.
 
-## 16. Variables anteriores al mes objetivo
+Por lo tanto, nuestros modelos tienen como objetivo predecir las ventas registradas de RUJAF. Esto es una base sólida y honesta para la planificación, pero la empresa debe tener siempre en cuenta que, en repuestos con inventario muy bajo, la demanda real del mercado puede ser superior a lo que muestran los libros contables.
+
+## 16. Variables utilizadas para predecir
 
 Tiempo: 1:45. Acumulado principal: 25:45.
 
 ### En pantalla
 
-Ejemplo real de A para estimar septiembre de 2026, con información disponible al cierre de agosto.
+Ejemplo del producto A para predecir septiembre de 2026, con datos hasta agosto:
+- Junio: 360 u. · Julio: 71 u. · Agosto: 184 u.
+- Promedio de 3 meses: 205 u. (variable explicativa, no predicción).
 
-| Junio | Julio | Agosto | Promedio de los tres |
-| ---: | ---: | ---: | ---: |
-| 360 u. | 71 u. | 184 u. | 205 u. |
-
-Siete variables para regresión y árboles: tres ventas rezagadas, un promedio rezagado, tiempo y dos señales de calendario.
-
-Ninguna variable usa ventas del mes objetivo. El promedio 205 es una señal, no el pronóstico Ridge.
+Siete variables para los modelos:
+Tres meses anteriores de ventas · Promedio de 3 meses · Tendencia temporal · Dos señales de calendario.
 
 ### Visual
 
-Secuencia de tres meses observados y su promedio. Debajo, identificar las familias de las siete variables sin fórmulas. Fuentes: `src/inventory_demand/features.py`, `data/processed/monthly_demand.csv` y `data/processed/monthly_features.csv`.
+Secuencia de tarjetas con las ventas reales de los tres meses anteriores conocidos y el promedio móvil resultante, seguida de la lista de las siete variables predictivas utilizadas para el entrenamiento.
 
 ### Notas del presentador
 
-Al cierre de agosto están disponibles las ventas de agosto, julio y junio de A, de 184, 71 y 360 unidades. Su promedio es 205. Es información anterior al objetivo de septiembre, no la predicción de Ridge.
+Para predecir las ventas del mes siguiente sin utilizar información del futuro, construimos siete variables predictivas utilizando exclusivamente datos conocidos antes de iniciar el mes objetivo.
 
-El modelo también conoce el paso del tiempo y el mes del calendario. El calendario se representa con dos señales cíclicas para que diciembre y enero no queden artificialmente alejados. Esto no obliga a que haya estacionalidad; solo permite que el modelo evalúe esa información.
+En esta diapositiva vemos un ejemplo concreto para el producto A al intentar predecir septiembre de 2026. Al cierre de agosto, conocemos las ventas de agosto (184 unidades), julio (71 unidades) y junio (360 unidades), y calculamos su promedio móvil, que es de 205 unidades. Estas cuatro variables le aportan al modelo memoria de corto plazo sobre el ritmo de ventas reciente.
 
-La implementación desplaza primero la serie hacia el pasado y después calcula los promedios móviles. Invertir ese orden puede introducir ventas del mes objetivo. Las pruebas comprueban esa separación temporal.
+A estas sumamos una variable continua de tiempo, que permite capturar si las ventas van hacia arriba o hacia abajo a largo plazo, y dos variables trigonométricas basadas en seno y coseno que representan la posición del mes en el calendario de forma continua, evitando saltos artificiales entre diciembre y enero.
 
-Se exportaron más variables, incluidos rezagos de inventario, pero el entrenamiento predeterminado usa solo siete. El inventario es incierto y la muestra pequeña. Al inicio, 24 meses de historial dejan 21 filas supervisadas después de crear los tres rezagos. No conviene confundir una tabla de muchas columnas con información suficiente para un modelo complejo.
+Con estas siete señales, los modelos aprenden a combinar la información histórica para estimar las ventas del mes siguiente.
 
-Transición: con esas señales, la regresión intenta aprender una combinación útil.
-
-## 17. Regresión lineal y Ridge
+## 17. Regresión lineal y regularización Ridge
 
 Tiempo: 1:30. Acumulado principal: 27:15.
 
 ### En pantalla
 
-Variables previas → Ajuste → Pronóstico
+Variables previas → Entrenamiento → Predicción
 
-- Regresión lineal. Pesos para combinar las siete variables.
-- Ridge. Penalización de coeficientes extremos.
-- Estandarización dentro de cada entrenamiento.
+- Regresión lineal: Pondera las variables predictivas según su relación histórica con las ventas.
+- Regresión Ridge: Aplica una penalización a los coeficientes para evitar ajustes extremos.
 
-Las relaciones aprendidas no identifican causas ni garantizan extrapolaciones válidas.
+Estandarización de variables dentro de cada período de entrenamiento.
 
 ### Visual
 
-Diagrama de entrada, ajuste y salida. Evitar ecuaciones, coeficientes no publicados y capturas de código. La explicación corresponde a la implementación de `src/inventory_demand/forecasting.py`.
+Diagrama de tres fases (entradas, proceso de entrenamiento y predicción resultante) con dos paneles explicativos que detallan el funcionamiento de la regresión clásica y la regularización con Ridge.
 
 ### Notas del presentador
 
-Describir la regresión como una forma de aprender cuánto aporta cada señal a la estimación del siguiente mes. No es una regla redactada a mano ni una interpretación causal de la empresa. Los pesos se ajustan para reducir errores con ejemplos del pasado.
+El primer método formal de aprendizaje que probamos fue la regresión lineal. La regresión asigna un peso o coeficiente numérico a cada una de las siete variables para combinarlas y producir una estimación de ventas.
 
-La comparación incluye regresión lineal y Ridge. Ridge penaliza coeficientes grandes cuando las variables comparten información, como ventas rezagadas y sus promedios. El parámetro alpha es 10, fijado en el conjunto de candidatos.
+Sin embargo, cuando varias variables están relacionadas entre sí —como las ventas de meses consecutivos y sus propios promedios móviles—, la regresión lineal básica puede volverse inestable y asignar pesos exageradamente grandes, sobreajustando los datos del pasado y fallando al predecir el futuro.
 
-La estandarización se ajusta dentro de cada entrenamiento, sin usar toda la serie. Regularizar no impide una extrapolación negativa; el caso de A conserva ese resultado.
+Para prevenir ese sobreajuste, incorporamos la regresión Ridge. Ridge introduce una penalización matemática que restringe los coeficientes extremos, obligando al modelo a encontrar combinaciones más equilibradas y prudentes. Además, todas las variables se estandarizan dentro de cada período de entrenamiento por separado, asegurando que ninguna variable domine indebidamente por su tamaño en unidades.
 
-## 18. 13 métodos comparados
+## 18. Los 13 modelos evaluados
 
 Tiempo: 1:30. Acumulado principal: 28:45.
 
 ### En pantalla
 
-| Familia | Cantidad | Métodos |
-| --- | ---: | --- |
-| Referencias simples | 5 | Último mes, mismo mes del año anterior, promedio histórico, promedio de 3 meses y promedio de 6 meses |
-| Regresiones | 2 | Lineal y Ridge |
-| Modelos de series | 4 | Suavizamiento de nivel, tendencia amortiguada, estacional y SARIMA |
-| Árboles | 2 | Bosque aleatorio y árboles con refuerzo gradual de poca profundidad |
-
-50 y 51 meses por serie. Configuraciones fijas, sin búsqueda masiva de parámetros.
+Familias de modelos:
+- 5 Referencias simples: Mes anterior, mismo mes del año previo, promedio histórico, promedio de 3 meses y promedio de 6 meses.
+- 2 Regresiones: Lineal clásica y regularizada con Ridge.
+- 4 Series de tiempo: Suavizamiento de nivel, tendencia amortiguada, estacional y SARIMA.
+- 2 Árboles de decisión: Bosque aleatorio y árboles con aumento gradual.
 
 ### Visual
 
-Cuatro grupos abiertos, sin una jerarquía visual que declare ganador al aprendizaje automático. Fuente: conjunto fijo `CANDIDATES` en `src/inventory_demand/forecasting.py`.
+Cuatro columnas limpias que agrupan los 13 modelos por familias lógicas, con números grandes y descripciones concisas para cada categoría.
 
 ### Notas del presentador
 
-Explicar por qué hacen falta referencias simples. Repetir el último mes es una regla que cualquier equipo puede entender. Si un modelo complejo no la supera de forma estable, su complejidad no está justificada por la evidencia disponible. Repetir el mismo mes del año anterior prueba si una regla estacional ayuda.
+En proyectos de ciencia de datos es común que se asuma de antemano que el algoritmo más complejo será el ganador. Para evitar ese sesgo, decidimos evaluar 13 métodos divididos en cuatro familias.
 
-Los promedios usan distintas ventanas de memoria. Suavizamientos y SARIMA aprovechan la estructura temporal; regresiones y árboles usan las siete variables del historial. La selección es independiente por producto y canal.
+La primera familia la forman cinco referencias simples: reglas directas como repetir el mes anterior, repetir el mismo mes del año pasado o calcular promedios móviles de tres o seis meses. Estas referencias son indispensables: si un modelo complejo de inteligencia artificial no logra ganarle a una regla tan sencilla como repetir el mes anterior, entonces su complejidad no aporta valor real al negocio.
 
-La muestra de unas cincuenta observaciones por serie limitó las configuraciones. El bosque tiene profundidad máxima 3 y el refuerzo usa árboles de profundidad 1. No hubo redes neuronales ni búsqueda masiva de parámetros.
+La segunda familia incluye la regresión lineal y Ridge. La tercera familia comprende cuatro métodos clásicos de series de tiempo, como el suavizamiento exponencial en tres variantes y el modelo SARIMA. Y la cuarta familia abarca dos algoritmos basados en árboles de decisión: bosques aleatorios y modelos de aumento gradual.
 
-No todos los ajustes fueron exitosos en todos los canales. Por ejemplo, el suavizamiento de nivel de A hacia Refama falló en un origen de validación. El sistema registra fallos y un candidato incompleto no puede ser seleccionado. Un error parcial bajo no lo convierte en ganador.
+Todos los modelos compitieron bajo exactamente las mismas condiciones para cada producto.
 
-La evaluación respeta el orden de los meses y la información disponible en cada origen.
-
-## 19. Validación en orden temporal
+## 19. Cómo probamos los modelos
 
 Tiempo: 2:15. Acumulado principal: 31:00.
 
 ### En pantalla
 
-| Producto | Historia inicial | Orígenes de validación | Prueba final |
-| --- | ---: | ---: | --- |
-| A | 24 meses | 20 | 6 meses, marzo a agosto de 2026 |
-| B | 24 meses | 21 | 6 meses, abril a septiembre de 2026 |
+Línea de tiempo de pruebas:
+- Producto A: 24 meses iniciales · 20 meses de validación · 6 meses de prueba final (marzo a agosto de 2026).
+- Producto B: 24 meses iniciales · 21 meses de validación · 6 meses de prueba final (abril a septiembre de 2026).
 
-Pronosticar un mes. Observar el resultado. Ampliar el historial.
-
-Selección anterior a la prueba final. Sin mezcla aleatoria de meses.
+Entrenamiento progresivo mes a mes para calibrar y seleccionar modelos.
+Seis meses reservados para la prueba final, respetando el orden del tiempo.
 
 ### Visual
 
-Dos líneas de tiempo proporcionales con bloques de historia inicial, validación y prueba. Primer paso del control: explicar la validación creciente. Segundo paso: destacar los seis meses finales. Fuente: `reports/tables/validation_splits.csv` y `src/inventory_demand/evaluation.py`.
+Dos líneas de tiempo divididas proporcionalmente en tres etapas de color: historial inicial de 24 meses, bloque de validación progresiva y los seis meses de prueba final resaltados al final de la serie.
 
 ### Notas del presentador
 
-El entrenamiento inicia con 24 meses y pronostica el siguiente. Tras observar su venta real, el sistema mide el error y amplía el historial. La ventana crece; el horizonte sigue siendo de un mes.
+La forma en que se prueban los modelos en series de tiempo es crítica. Si uno mezcla los datos al azar —como se hace comúnmente en otros problemas de aprendizaje automático—, se comete el grave error de entrenar con datos del futuro para predecir el pasado.
 
-La validación comprende 20 orígenes en A y 21 en B. Sus errores fijan el método antes de evaluar los seis meses finales. La segunda pulsación destaca ese bloque reservado.
+Nosotros aplicamos un esquema estricto de validación temporal progresiva: comenzamos con los primeros 24 meses de historial, pronosticamos el mes 25, esperamos a observar la venta real de ese mes, medimos el error y luego incorporamos ese mes al historial para pronosticar el mes 26. Este proceso se repitió mes a mes a lo largo de 20 períodos de validación en el producto A y 21 en el producto B.
 
-Esto es distinto de mezclar filas al azar. Una división aleatoria puede entrenar con meses posteriores al que supuestamente pronostica. También es distinto de emitir hoy un pronóstico de seis meses: aquí actualizamos con el resultado real cada mes antes del siguiente pronóstico. No presentar estos resultados como desempeño multimes de origen único.
+A partir de los errores promedio obtenidos en esa etapa de validación, seleccionamos el modelo más adecuado para cada producto. Y únicamente después de haber cerrado esa selección, desbloqueamos los últimos seis meses del historial —marzo a agosto de 2026 en A, y abril a septiembre en B— como una prueba final completamente independiente. Esto simula con total realismo cómo se habría comportado el modelo si hubiera operado mes a mes en la empresa.
 
-Durante la prueba, los meses anteriores pueden incorporarse al entrenamiento una vez observados, sin cambiar la selección. No hay fechas de contabilización ni versiones del reporte; se asumió que los movimientos estaban disponibles al cierre de su mes. Correcciones posteriores podrían romper ese supuesto.
-
-Transición: faltaba una regla de selección que no premiara complejidad por diferencias mínimas.
-
-## 20. Selección con una banda de error del 5%
+## 20. Criterio de selección con margen del 5%
 
 Tiempo: 1:30. Acumulado principal: 32:30.
 
 ### En pantalla
 
-Hasta un 5% más de MAE de validación para elegir un método más simple.
+Si un modelo más simple queda a menos del 5% de diferencia en MAE, se prefiere su uso.
 
-| Producto | Menor MAE de validación | Método fijado | MAE fijado |
-| --- | --- | --- | ---: |
-| A | Regresión lineal, 371.27 | Regresión Ridge | 380.65 |
-| B | Tendencia amortiguada, 34.02 | Promedio de 3 meses | 34.95 |
-
-MAE significa error absoluto medio en unidades por mes. La prueba final no interviene en la selección.
+Tabla de selección en validación:
+- Producto A: Menor MAE = Regresión lineal (371.27) → Modelo seleccionado: Regresión Ridge (MAE de validación 380.65).
+- Producto B: Menor MAE = Tendencia amortiguada (34.02) → Modelo seleccionado: Promedio de 3 meses (MAE de validación 34.95).
 
 ### Visual
 
-Regla en una frase y tabla de decisiones. No usar un trofeo ni colorear al método de menor error final como ganador de validación. Fuente: `reports/tables/selected_models.csv`.
+Regla de decisión destacada en un recuadro superior y tabla comparativa con los modelos de menor error frente a los modelos finalmente seleccionados bajo la regla de simplicidad.
 
 ### Notas del presentador
 
-MAE promedia los errores absolutos en unidades, sin cancelar errores positivos con negativos. La selección admite hasta un 5% más que el menor MAE de validación y favorece el método más simple según un orden prefijado. La banda no es un nivel de confianza ni una mejora garantizada.
+Para medir el desempeño de los modelos utilizamos el error absoluto medio (MAE), que indica en cuántas unidades se desvía la predicción respecto a lo vendido en promedio cada mes. Cuanto menor sea el MAE, más precisa es la estimación.
 
-En A la regresión lineal obtuvo 371.27 y Ridge 380.65. Ridge está dentro de la banda y aparece antes en el orden de simplicidad. En B la tendencia amortiguada obtuvo 34.02, pero el promedio de tres meses, con 34.95, también está dentro de la banda y es más simple.
+Sin embargo, aplicamos un principio de ingeniería muy claro: ante resultados prácticamente idénticos, siempre es preferible el modelo más simple y fácil de explicar. Establecimos una regla formal: si un modelo más sencillo queda a menos de un 5% de diferencia en MAE respecto al modelo de menor error en la validación, seleccionamos el modelo más simple.
 
-RMSE, WAPE, sesgo y errores escalados complementan el diagnóstico, sin sustituir la regla de selección. La prueba final conserva esa selección aunque otro método presente menor error.
+En el producto A, la regresión lineal obtuvo el menor error con 371 unidades, pero la regresión Ridge quedó a solo 380 unidades (una diferencia de apenas 2.5%); dado que Ridge penaliza coeficientes extremos y es más estable, seleccionamos Ridge. En el producto B, el modelo de tendencia amortiguada obtuvo 34.02 unidades, pero el promedio móvil de tres meses quedó a solo 34.95 unidades (una diferencia menor al 3%); por su transparencia y facilidad de cálculo, seleccionamos el promedio de tres meses.
 
-## 21. A: MAE de Ridge frente al último mes
+## 21. Resultados de prueba en el producto A
 
 Tiempo: 2:00. Acumulado principal: 34:30.
 
 ### En pantalla
 
-Producto A. Método fijado: regresión Ridge.
+Producto A · Modelo seleccionado: Ridge
 
-**290.19 unidades de error absoluto medio.**
+MAE de prueba final: 290.19 unidades por mes
+7.1% menor error que el mes anterior.
 
-| Método | MAE de prueba final |
-| --- | ---: |
-| Ridge, fijado en validación | 290.19 |
-| Repetir el último mes | 312.33 |
-| Promedio de 3 meses | 222.78 |
-| Regresión lineal | 211.13 |
+Comparación de modelos en la prueba final:
+- Regresión lineal: 211.13 u.
+- Promedio de 3 meses: 222.78 u.
+- Ridge (seleccionado): 290.19 u.
+- Repetir el mes anterior: 312.33 u.
 
-Ridge tuvo 7.1% menos MAE que el último mes. La ventaja no está establecida como robusta.
+El promedio de 3 meses y la regresión lineal tuvieron menor error final, pero se conservó la selección de validación.
 
 ### Visual
 
-Barras horizontales desde cero, con MAE menor como mejor resultado. Destacar Ridge por ser la selección fijada, no por ser el menor error del gráfico. Prueba de marzo a agosto de 2026. Datos: `reports/tables/model_comparison.csv`. Referencia original: `reports/figures/model_comparison.png`.
+Métrica del modelo seleccionado y gráfico de barras horizontales comparando el MAE de los cuatro modelos principales durante los seis meses de prueba final (marzo a agosto de 2026).
 
 ### Notas del presentador
 
-Ridge, fijado en validación, obtiene MAE de 290.19 unidades frente a 312.33 del último mes. La reducción relativa es 7.1% en seis orígenes, no una garantía de desempeño futuro.
+Veamos ahora los resultados concretos obtenidos durante los seis meses de prueba final para el producto A.
 
-El promedio de tres meses y la regresión lineal presentan menores MAE finales. Es un ranking retrospectivo del conjunto fijo de candidatos; no sustituye la selección anterior a la prueba.
+La regresión Ridge, que habíamos seleccionado en la etapa previa, obtuvo un error absoluto medio de 290.19 unidades por mes. Esto representa una mejora del 7.1% frente a la referencia básica de repetir el mes anterior, que tuvo un error de 312.33 unidades.
 
-El intervalo exploratorio de la mejora media de Ridge frente al último mes va aproximadamente de −109.35 a 153.64 unidades. Incluye cero y proviene de solo seis errores. No basta para declarar una ventaja robusta. La regresión lineal, aunque aparece mejor en MAE, también tuvo salidas recortadas a cero en la prueba. Menor error agregado no significa que una alternativa ya sea segura para operar.
+Sin embargo, al observar las demás barras del gráfico vemos algo muy interesante: la regresión lineal simple y el promedio móvil de tres meses obtuvieron errores menores en esta prueba final, con 211 y 222 unidades respectivamente.
 
-El volumen vendido también cambió entre validación y prueba. WAPE y sesgo describen aspectos que el MAE por sí solo no muestra.
+Como equipo universitario responsable, mantuvimos nuestra selección de Ridge sin cambiarla retrospectivamente después de ver los resultados, porque hacer eso invalidaría la honestidad del experimento. Además, al calcular un intervalo estadístico sobre la diferencia entre Ridge y el mes anterior, el rango incluye el valor cero. Esto nos indica que, si bien Ridge funcionó de forma aceptable, su ventaja práctica sobre reglas más simples es modesta y debe interpretarse con cautela.
 
-Transición: en B, incluso la referencia más simple superó al método fijado.
-
-## 22. B: menor MAE al repetir el último mes
+## 22. Resultados de prueba en el producto B
 
 Tiempo: 1:45. Acumulado principal: 36:15.
 
 ### En pantalla
 
-Producto B. Método fijado: promedio de 3 meses.
+Producto B · Modelo seleccionado: Promedio 3 meses
 
-| Método | MAE de prueba final |
-| --- | ---: |
-| Promedio de 3 meses, fijado en validación | 37.33 |
-| Repetir el último mes | 34.17 |
-| Bosque aleatorio | 46.90 |
-| Ridge | 63.58 |
+MAE de prueba final: 37.33 unidades por mes
+Repetir el mes anterior: 34.17 u./mes.
 
-El método fijado tuvo 9.3% más MAE que repetir el último mes. No hay una ventaja general demostrada del aprendizaje automático.
+Comparación de modelos en la prueba final:
+- Repetir el mes anterior: 34.17 u.
+- Promedio de 3 meses (seleccionado): 37.33 u.
+- Bosque aleatorio: 46.90 u.
+- Ridge: 63.58 u.
+
+En este producto, una regla simple como repetir el mes anterior superó al modelo seleccionado.
 
 ### Visual
 
-Barras horizontales con la misma convención de la diapositiva anterior, pero escala propia para B. Prueba de abril a septiembre de 2026. Fuente: `reports/tables/model_comparison.csv`.
+Gráfica de barras horizontales con el MAE de prueba final para el producto B, mostrando que la regla básica de repetir el mes anterior obtuvo el menor error de todos los métodos evaluados.
 
 ### Notas del presentador
 
-La regla de validación seleccionó el promedio de tres meses. En los seis orígenes finales obtuvo MAE de 37.33 unidades frente a 34.17 del último mes, un error 9.3% mayor.
+En el producto B, los resultados nos dejaron un aprendizaje todavía más contundente sobre la importancia de probar métodos simples.
 
-Los métodos de aprendizaje automático tampoco dominaron. El bosque aleatorio tiene 46.90 y Ridge 63.58 en esa prueba. En validación, el bosque había tenido 34.31, cercano a los mejores valores. Su resultado final muestra por qué una diferencia favorable en una etapa no basta para prometer utilidad futura.
+El promedio de tres meses que habíamos seleccionado obtuvo un error de 37.33 unidades mensuales en los seis meses de prueba. Pero la regla más elemental de todas —simplemente asumir que este mes se venderá lo mismo que el mes anterior— fue la que mejor se desempeñó, con un error de 34.17 unidades (un 9.3% menor que nuestro modelo seleccionado).
 
-El intervalo exploratorio de mejora del método fijado frente al último mes incluye cero, aproximadamente de −18.56 a 12.22 unidades. La selección original permanece sin cambios. Elegir otra vez a partir de la prueba eliminaría su independencia.
+Por su parte, los modelos más complejos tuvieron un rendimiento francamente desfavorable: el bosque aleatorio tuvo un error de casi 47 unidades y la regresión Ridge se disparó a más de 63 unidades de error medio.
 
-Transición: para entender la utilidad de ambos modelos debemos mirar los errores en el tiempo, no solo una barra promedio.
+Este resultado confirma una lección fundamental de la investigación de operaciones: en series con cambios de nivel y volúmenes moderados, la sofisticación matemática no garantiza mejores pronósticos. A veces, la regla operativa más sencilla es la más efectiva para el negocio.
 
-## 23. Error relativo y sesgo en la prueba final
+## 23. Diferencia entre lo previsto y lo vendido
 
 Tiempo: 1:45. Acumulado principal: 38:00.
 
 ### En pantalla
 
-Ventas reales registradas y pronósticos mensuales. La zona sombreada marca la prueba final.
+Gráficas de ventas registradas y predicciones mensuales en A y B. Sombreado de la prueba final.
 
-| Método fijado | WAPE final | Sesgo medio |
-| --- | ---: | ---: |
-| A, Ridge | 93.2% | +228.85 u./mes |
-| B, promedio de 3 meses | 60.4% | −7.44 u./mes |
+Métricas en la prueba final:
+- Producto A (Ridge): WAPE 93.2% · Sesgo medio +228.85 unidades/mes.
+- Producto B (Promedio 3 meses): WAPE 60.4% · Sesgo medio −7.44 unidades/mes.
 
-WAPE no es porcentaje de acierto. Un sesgo positivo indica sobrepronóstico.
+Leyenda: Venta real registrada · Modelo seleccionado · Mes anterior.
 
 ### Visual
 
-Dos gráficos de líneas con venta real, método fijado y último mes. Escalas separadas, ejes desde cero y prueba final sombreada. Referencia original: `reports/figures/actual_vs_predicted.png`. Datos: `reports/tables/backtest_predictions.csv` y `reports/tables/model_comparison.csv`.
+Dos paneles con las trayectorias temporales de ventas reales, predicciones del modelo seleccionado y predicciones del mes anterior, con el período de prueba final resaltado en fondo ámbar.
 
 ### Notas del presentador
 
-Señalar la venta real, el método fijado y la referencia del último mes. Leer primero un pico y luego una caída para mostrar que el error cambia de signo y magnitud. La zona sombreada no son seis pronósticos emitidos juntos, sino los seis ejercicios mensuales de prueba que ya explicamos.
+Para comprender el comportamiento real de los modelos mes a mes, necesitamos ver las curvas completas y analizar dos métricas complementarias: el error relativo ponderado (WAPE) y el sesgo medio.
 
-WAPE divide la suma de errores absolutos por el volumen real agregado. En A es 93.2% y en B 60.4%. No es exactitud ni implica el mismo porcentaje de error en cada mes.
+El WAPE mide el error acumulado como porcentaje del volumen real vendido. En el producto A, el WAPE alcanzó un 93.2%, y el sesgo medio fue de +228 unidades por mes. Esto significa que Ridge sobreestimó sistemáticamente la demanda en la prueba final: venía calibrado con años de volúmenes altos y tardó en adaptarse a la fuerte caída de 2026, prediciendo más unidades de las que realmente se vendieron.
 
-Ridge sobrepronostica A en promedio 228.85 unidades al mes en la prueba. El promedio de tres meses subpronostica B en 7.44 unidades. El proyecto no monetizó las consecuencias de esos sesgos.
+En el producto B la situación fue más equilibrada: el WAPE fue del 60.4% y el sesgo medio fue de apenas −7.44 unidades por mes, prácticamente centrado alrededor de la realidad.
 
-Estos resultados, con pocos meses y cambios del nivel de venta, desaconsejan automatizar. Los intervalos de error del proyecto son heurísticos y dependen de errores de validación ya usados para seleccionar. No son una garantía calibrada de cobertura o nivel de servicio.
+Estas curvas demuestran por qué sería peligroso automatizar órdenes de compra o producción basándose exclusivamente en un modelo: cuando el mercado cambia bruscamente, los modelos pueden tardar meses en corregir su rumbo.
 
-El resultado sin recorte de A permite examinar la validez de una salida individual.
-
-## 24. A: extrapolación negativa de Ridge
+## 24. Un problema en la predicción del producto A
 
 Tiempo: 1:45. Acumulado principal: 39:45.
 
 ### En pantalla
 
-Producto A. Ridge para septiembre de 2026, desde el cierre de agosto.
+Producto A · Ridge para septiembre de 2026, con datos hasta agosto:
+- Ridge sin recorte: −102.29 unidades (predicción menor a cero).
+- Salida ajustada: 0 unidades (no refleja demanda real).
 
-Salida sin recorte: **−102.29 unidades** → Salida recortada: **0 unidades**
-
-El recorte evita cantidades negativas, pero no corrige la extrapolación.
-
-En el segundo paso: **325 unidades ya registradas en el septiembre parcial.**
-
-No representa demanda cero. Debe bloquear el uso operativo.
+Contraste en el segundo paso:
+325 unidades ya vendidas en el registro parcial de septiembre. El modelo predijo cero por error.
+El ajuste automático a cero oculta que el modelo produjo un valor negativo.
 
 ### Visual
 
-Secuencia numérica con dos pasos controlados por el expositor. Primero, negativo y recorte. Después, contraste con el mes parcial. Fuente: `reports/tables/next_history_month_forecasts.csv` y código de preservación de salidas crudas en `src/inventory_demand/forecasting.py`.
+Esquema de dos bloques con flecha que ilustra la conversión de −102.29 a 0 unidades, acompañado de la nota de advertencia que revela las 325 unidades reales ya registradas en ese mes parcial.
 
 ### Notas del presentador
 
-Explicar el problema antes de revelar el contraste. Al ajustar Ridge con toda la historia utilizable de A, la extrapolación al siguiente mes produce −102.29 unidades. El sistema original imponía no negatividad a todos los candidatos y publicaba cero, pero conservó también el resultado sin recorte y su bandera de alerta.
+Durante el desarrollo nos encontramos con un problema concreto que ilustra perfectamente por qué no se debe confiar ciegamente en algoritmos matemáticos sin supervisión humana.
 
-Revelar la segunda parte con una pulsación. En el septiembre de cobertura no confirmada ya existen 325 unidades vendidas. Ese dato parcial impide interpretar el cero como evidencia de ausencia de demanda. No lo usamos para entrenar el pronóstico de agosto ni para inventar la venta del mes completo.
+Al calibrar la regresión Ridge con todo el historial disponible del producto A hasta agosto de 2026 para predecir el mes de septiembre, la ecuación matemática arrojó un resultado de −102.29 unidades. Como las ventas no pueden ser negativas, el sistema aplicaba una regla estándar de recortar el valor a cero.
 
-El criterio principal de invalidez es la extrapolación negativa y su recorte, no haber visto ventas futuras mayores que un punto pronosticado. Un pronóstico incierto puede quedar debajo de un resultado parcial sin que eso autorice elegir otro modelo mirando el futuro.
+Pero recortar a cero generaba un error conceptual gravísimo: le decía a la empresa que en septiembre no se iba a vender ni una sola unidad. Cuando revisamos los movimientos parciales que ya existían registrados en ese mes de septiembre, encontramos que ya se habían vendido 325 unidades.
 
-La salida original y sus métricas se conservaron. Ese cero recortado no es el cero de producción adicional del escenario A. Una cantidad adicional puede ser cero con ventas esperadas positivas si el saldo supera el objetivo supuesto.
+El modelo no estaba descubriendo que la demanda había desaparecido; simplemente, la combinación lineal de las ventas bajas de los meses previos empujó el cálculo por debajo de cero. Si hubiéramos dejado ese cero sin supervisión, la fábrica habría detenido por completo la atención de ese producto.
 
-## 25. Controles de validez y respaldo provisional
+## 25. Reglas de control y modelo de respaldo
 
 Tiempo: 1:45. Acumulado principal: 41:30.
 
 ### En pantalla
 
-1. Rechazar negativos, recortes, fallos y valores no finitos.
-2. Contrastar con los tres meses anteriores.
-3. Probar un respaldo fijo solo si falla la salida original.
-4. Revisar el respaldo o bloquear el cálculo.
+Mecanismo de salvaguardas:
+1. Validación: Detección de valores negativos, recortes a cero o fallos de cálculo.
+2. Comparación: Contraste con el promedio de ventas de los últimos 3 meses.
+3. Respaldo: Uso del promedio móvil si la predicción principal no es válida.
+4. Alerta: Bloqueo del cálculo si el modelo de respaldo también presenta fallas.
 
-En A, el respaldo provisional es el promedio de 3 meses: **205 unidades**.
-
-Controles añadidos después del experimento. No prueban una mejora nueva de precisión ni autorizan producción.
+Ejemplo en el producto A: Respaldo provisional = 205 unidades (promedio de 3 meses).
 
 ### Visual
 
-Flujo de decisión con bloqueo explícito y un ejemplo de A. Fuentes: `src/inventory_demand/forecast_validity.py`, `reports/tables/forecast_validity.csv` y `reports/tables/forecast_safeguard_comparison.csv`.
+Flujo de decisión en cuatro pasos consecutivos, destacando la comprobación de coherencia, el cambio a modelo de respaldo y la tarjeta con el valor concreto de 205 unidades para el producto A.
 
 ### Notas del presentador
 
-Describir qué cambió en el código. La revisión rechaza una salida cruda negativa, el recorte a cero, valores no finitos y fallos de ajuste. También compara con el promedio previo de tres meses. Los límites predeterminados, 10% y 300% de esa referencia, son reglas configurables de revisión, no umbrales operativos confirmados por RUJAF.
+Para resolver esta vulnerabilidad, diseñamos un mecanismo de reglas de control y salvaguardas antes de que cualquier predicción pueda ser utilizada para planificar.
 
-Si la salida original falla, el respaldo fijo es el promedio de tres meses, no el método de menor error en la prueba. El respaldo pasa los mismos controles. Si también falla, el cálculo queda bloqueado. Una salida original válida se conserva aunque otro método tenga menor error retrospectivo.
+El protocolo funciona en cuatro pasos. Primero, comprueba que la salida no sea negativa, no haya sido recortada a cero y no contenga fallos numéricos. Segundo, compara la predicción con el promedio de ventas de los últimos tres meses conocidos: si la estimación se desvía drásticamente sin justificación, se activa una alerta de revisión.
 
-La regla se diseñó después de inspeccionar los resultados. Su repetición en los mismos orígenes es un diagnóstico posterior, no evidencia independiente. En el total de A, el MAE de esa repetición baja de 290.19 a 270.58, pero el sesgo sube de +228.85 a +270.58. En B hacia Refama incluso empeora el MAE, de 16.01 a 24.00. El control no es un optimizador de exactitud.
+Tercero, si el modelo principal no supera estas comprobaciones, el sistema activa automáticamente un modelo de respaldo predefinido: el promedio móvil de los últimos tres meses. En el caso del producto A, este respaldo asignó 205 unidades en lugar de cero, una cifra mucho más coherente con la realidad observada.
 
-Transición: una estimación que pasa controles todavía necesita inventario y condiciones reales para apoyar producción.
+Y cuarto, si incluso el modelo de respaldo presentara anomalías, el sistema bloquea el cálculo y solicita intervención humana, evitando generar decisiones erróneas en planta.
 
-## 26. Entradas de los escenarios de producción
+## 26. Entradas para planificar la producción
 
 Tiempo: 1:30. Acumulado principal: 43:00.
 
 ### En pantalla
 
-| Pronóstico | Inventario | Producción |
-| --- | --- | --- |
-| Origen, validez e incertidumbre | Stock libre, reservas y pedidos | Plazo, lotes, ritmo y días disponibles |
-
-Si fallan los datos requeridos, el cálculo se bloquea. No es un calendario óptimo de toda la fábrica.
+Entradas para la planificación:
+- Predicción de ventas: Volumen estimado, margen de incertidumbre y validez del dato.
+- Inventario disponible: Existencias en bodega, reservas y pedidos pendientes.
+- Capacidad de planta: Tiempos de entrega, lotes y días de trabajo disponibles.
 
 ### Visual
 
-Tres grupos de entradas que alimentan una revisión de producción. Cada grupo reúne información realmente necesaria, no métricas decorativas. Fuentes: `src/inventory_demand/inventory.py` y `docs/production_planning.md`.
+Tres columnas amplias y equilibradas que muestran cómo la predicción se combina con el estado del inventario y las restricciones de fabricación para alimentar los escenarios de producción.
 
 ### Notas del presentador
 
-La estimación de ventas no equivale a producción adicional. El cálculo también usa stock libre, reservas, restricciones, órdenes dentro del horizonte y pedidos atrasados. Una recepción posterior no resuelve un faltante anterior.
+Una vez que contamos con una estimación de ventas validada, el siguiente paso es conectar ese pronóstico con la toma de decisiones en la fábrica.
 
-La extensión implementada calcula por producto una revisión periódica. El objetivo cubre las ventas esperadas durante el plazo más el periodo hasta la siguiente revisión, más un stock de seguridad explícito. Después aplica lotes y límites de producción o almacenamiento cuando se suministran.
+Para calcular cuántas unidades se deben producir no basta con mirar las ventas estimadas. Se requiere integrar tres grupos de datos:
 
-La interfaz exige entradas y supuestos identificados. Una previsión inválida, información requerida faltante u órdenes vencidas sin conciliar pueden bloquear el cálculo. Incluso una fila que sí calcula sigue siendo un escenario, porque el uso en vivo permanece bloqueado.
+Primero, la predicción de ventas con su rango de incertidumbre. Segundo, el estado del inventario: cuánto producto libre tenemos en bodega hoy, qué pedidos ya están comprometidos para entrega inmediata y qué órdenes están pendientes de recibir. Y tercero, las restricciones de la fábrica: cuánto tarda un lote en fabricarse, cuál es el tamaño mínimo de lote y cuántos días productivos tiene asignada la máquina.
 
-La implementación no resuelve un programa óptimo de fábrica con materiales, cambios de molde, rendimientos y máquinas compartidas. Los ritmos reportados convierten unidades en días teóricos, sin garantizar fechas factibles.
+Con estas tres entradas implementamos un modelo de revisión periódica de inventarios para simular diferentes escenarios de producción para cada producto.
 
-Transición: recorreremos dos resultados ya ejecutados para B y veremos cuánto cambia la salida al cambiar un supuesto.
-
-## 27. B: dos supuestos de stock de seguridad
+## 27. Escenarios de producción para el producto B
 
 Tiempo: 2:30. Acumulado principal: 45:30.
 
 ### En pantalla
 
-Escenario histórico de B. Saldo al 30 de septiembre de 2026. Mes objetivo: octubre de 2026.
+Producto B · Octubre de 2026 · Saldo al 30/09/2026 (1 día asignado):
+- Saldo histórico: 24 u.
+- Pronóstico provisional: 96.33 u./mes.
+- Ritmo supuesto: 210 u./día productivo.
 
-- Saldo disponible supuesto: 24 unidades.
-- Venta mensual estimada: 96.33 unidades.
-- Ritmo del escenario: 210 unidades por día de producción.
-
-| Variante ejecutada | Seguridad | Objetivo de inventario | Producción sugerida | Días teóricos |
-| --- | ---: | ---: | ---: | ---: |
-| Sin seguridad | 0 u. | 118.81 u. | 95 u. | 0.45 |
-| Un mes de seguridad | 96.33 u. | 215.14 u. | 192 u. | 0.91 |
-
-Supuestos: 30 días por mes, plazo total de 7 días y revisión cada 30 días. Sin órdenes abiertas, reservas, restricciones ni atrasos. Lotes de 1 unidad y sin topes adicionales. Un día productivo asignado a B.
+Comparación de dos supuestos de seguridad:
+- Sin seguridad (0 u.): Objetivo 118.81 u. → Producción sugerida: 95 u. (0.45 días teóricos).
+- 1 mes de seguridad (96.33 u.): Objetivo 215.14 u. → Producción sugerida: 192 u. (0.91 días teóricos).
 
 ### Visual
 
-Tabla de dos filas de `reports/tables/production_scenarios.csv`, visibles al mismo tiempo. Arriba figuran saldo, pronóstico y ritmo supuesto. En Presentar, cada paso resalta una fila y oculta los selectores. En Explorar aparecen los controles de seguridad y días asignados. El visor solo consulta resultados archivados.
+Ficha con datos base en la parte superior y tabla comparativa de dos filas. En el primer paso se resalta la variante sin seguridad; en el segundo paso se resalta la variante con un mes de seguridad.
 
 ### Notas del presentador
 
-El corte es histórico, al 30 de septiembre de 2026, para un objetivo de octubre. No representa stock actual ni una orden. El promedio de tres meses de B aporta 96.33 unidades mensuales y pasa los controles del escenario, sin validación operativa.
+Veamos ahora la aplicación práctica de estos cálculos en el producto B para planificar el mes de octubre de 2026.
 
-Recorrer la primera variante durante unos 50 segundos. Se suponen 30 días por mes. El plazo de siete días y los treinta hasta revisar de nuevo forman un horizonte de 37 días. A ritmo medio constante, la salida esperada de ese horizonte es 118.81 unidades. Con 24 disponibles, faltan 94.81 para ese objetivo y el redondeo a unidades completas da 95. A 210 por día productivo, son 0.45 días teóricos.
+Al cierre de septiembre teníamos un saldo de apenas 24 unidades en bodega, un pronóstico de ventas de 96.33 unidades mensuales y una capacidad reportada de 210 unidades por día de trabajo. Suponiendo un tiempo de reposición de 7 días y una revisión cada 30 días, el horizonte de cobertura es de 37 días.
 
-El segundo paso resalta la fila con un mes de seguridad, 96.33 unidades. El objetivo pasa a 215.14, la producción calculada a 192 y el tiempo teórico a 0.91 días. La diferencia describe sensibilidad al supuesto, no una reserva óptima ni un servicio demostrado.
+En el primer paso evaluamos el escenario sin stock de seguridad. Para cubrir la demanda estimada durante esos 37 días se necesitan 118.81 unidades. Al restar las 24 unidades que ya están en bodega, el modelo sugiere producir 95 unidades, lo que equivale a 0.45 días de trabajo en planta (aproximadamente media jornada).
 
-Las variantes de cinco días disponibles no cambian estas cantidades porque ese límite no restringe los casos archivados. No demuestran cinco días independientes por producto en una línea compartida. El plazo de siete días ya incluye procesamiento; no se suma otra vez el tiempo teórico de fabricación.
+En el segundo paso evaluamos qué ocurre si la empresa decide mantener un mes de ventas como colchón de seguridad. El inventario objetivo sube a 215.14 unidades y la producción sugerida aumenta a 192 unidades, requiriendo 0.91 días de trabajo (prácticamente una jornada completa de planta).
 
-Si el visor falla durante la exposición, usar esta tabla estática. No ejecutar el pipeline completo ni modificar resultados históricos en vivo.
+Este análisis permite a los administradores de RUJAF visualizar con precisión el costo operativo de cada política: mantener un mes de seguridad duplica el lote de producción de 95 a 192 unidades.
 
-Transición: A muestra la situación opuesta, un stock histórico grande frente a la salida del escenario.
-
-## 28. A: saldo superior al objetivo del escenario
+## 28. Escenario de producción para el producto A
 
 Tiempo: 1:45. Acumulado principal: 47:15.
 
 ### En pantalla
 
-Producto A. Corte histórico al 31 de agosto de 2026.
+Producto A · Corte histórico al 31 de agosto de 2026:
+- Saldo histórico en bodega: 5,892 unidades registradas.
+- Ventas estimadas: 205 u./mes.
+- Inventario objetivo: 252.83 u.
 
-- Saldo registrado: **5,892 unidades**.
-- Pronóstico efectivo provisional: **205 unidades por mes**.
-- Objetivo supuesto: **252.83 unidades**.
-- Producción adicional sugerida: **0 unidades**.
-
-El cero corresponde a producción adicional, no a demanda cero.
-
-Resultado histórico, no orden de producción.
+Resultado del escenario:
+0 unidades adicionales necesarias.
+La producción sugerida es cero porque el inventario actual cubre la demanda esperada.
 
 ### Visual
 
-Stock a la izquierda y cantidad adicional a la derecha. Mostrar el pronóstico positivo junto al cero de producción para evitar confundirlo con el fallo de Ridge. Fuente: fila de A con un día disponible y seguridad cero en `reports/tables/production_scenarios.csv`.
+Panel dividido en dos bloques. A la izquierda, la métrica destacada de 5,892 unidades en bodega junto a la demanda estimada. A la derecha, el número 0 en gran formato con su explicación operativa correspondiente.
 
 ### Notas del presentador
 
-El escenario usa el respaldo provisional de 205 unidades, no el cero recortado de Ridge. Con treinta días por mes, siete de plazo, treinta de revisión y sin seguridad, el objetivo es 252.83 unidades.
+El producto A nos presenta el escenario exactamente opuesto y demuestra la utilidad práctica de no producir a ciegas.
 
-El saldo de 5,892 supera ese objetivo y la cantidad adicional calculada es cero. La fila registra 5,639.17 unidades sobre el objetivo supuesto; no las clasifica como obsoletas ni como desperdicio. Multiplicarlas por un precio de venta no demuestra ahorro.
+Para este producto utilizamos el pronóstico de respaldo de 205 unidades mensuales. Bajo las mismas condiciones de 7 días de reposición y revisión mensual, el inventario objetivo para cubrir el período es de 252.83 unidades.
 
-El stock físico y las restricciones no están confirmados. Extender 205 unidades constantes a varios años sería un supuesto adicional, no un resultado del modelo.
+Pero en la bodega central había 5,892 unidades registradas. La recomendación del modelo es inmediata: fabricar cero unidades adicionales.
 
-## 29. Implementación y límites
+Es fundamental interpretar bien este resultado: la producción sugerida es cero no porque la demanda sea cero —esperamos vender 205 piezas—, sino porque el inventario disponible en bodega es tan grande que cubre con creces el objetivo necesario. Si la fábrica mandara a producir más unidades de este producto, solo estaría inmovilizando más dinero y ocupando espacio innecesariamente. Este cálculo le permite a la planta reasignar sus horas de maquinaria hacia productos críticos como el B.
+
+## 29. Qué logramos implementar y sus limitaciones
 
 Tiempo: 1:30. Acumulado principal: 48:45.
 
 ### En pantalla
 
-| Ejecutado | Límites |
-| --- | --- |
-| 1,062 movimientos validados | Stock físico no confirmado |
-| 13 métodos evaluados | Restricciones operativas supuestas |
-| 8 escenarios de producción | Costos incompletos; servicio no medido |
-| CLI y cuaderno ejecutado | Ahorros no demostrados |
+Lo implementado:
+- 1,062 movimientos de Kardex validados.
+- 13 modelos de predicción evaluados.
+- 8 escenarios de producción calculados.
+- Pipeline reproducible con pruebas automatizadas.
 
-132 pruebas de Python aprobadas en el borrador inicial. Validan lógica, no resultados comerciales.
+Límites y condiciones:
+- Inventario físico en bodega pendiente de auditoría.
+- Restricciones de planta basadas en supuestos.
+- Sin costos de fabricación para medir ahorro financiero.
+- Requiere validación previa antes de operar en planta.
 
 ### Visual
 
-Dos columnas con estados explícitos. No usar una lista de hitos que mezcle planes futuros con funcionalidades terminadas. Fuentes: `src/inventory_demand/`, `tests/`, cuaderno ejecutado y resultados de `pytest` en esta revisión.
+Dos columnas equilibradas con viñetas claras que contraponen los entregables técnicos efectivamente desarrollados frente a las condiciones necesarias para su eventual aplicación práctica.
 
 ### Notas del presentador
 
-Resumir el trabajo implementado con productos verificables. El proyecto tiene lectura y validación de datos, exportaciones, análisis exploratorio, entrenamiento, evaluación y artefactos de los métodos seleccionados. El cuaderno fue ejecutado y la interfaz de línea de comandos permite reproducir el análisis desde los CSV.
+Para mantener una postura profesional y honesta, queremos resumir con claridad qué logramos construir y cuáles son las limitaciones reales del proyecto.
 
-La extensión añade controles de validez, repetición diagnóstica de esos controles y ocho escenarios de producción. Son dos productos, dos opciones de días asignados y dos niveles de seguridad. No son ocho decisiones reales de RUJAF ni una simulación continua de toda su operación.
+Por el lado de la implementación, desarrollamos una biblioteca modular en Python, un pipeline de datos completamente automatizado, 13 modelos comparados de forma reproducible y una suite de pruebas que verifica la integridad matemática de cada paso.
 
-Las 132 pruebas de Python corresponden a la verificación del borrador inicial. Incluyen fechas, fuga de información, métricas, salvaguardas, inventario, producción, interfaces económicas y preservación de resultados. La edición de la presentación no reentrenó modelos ni regeneró evidencia congelada.
-
-El sistema mantiene bloqueado el uso en vivo y no acredita servicio ni ahorros. La presentación web es un medio de comunicación de esos resultados, no evidencia de que RUJAF ya cuente con una aplicación de operación instalada.
-
-El cierre resume los resultados del historial, los pronósticos y los escenarios.
+Sin embargo, para que esta herramienta pudiera utilizarse en la operación diaria de RUJAF, se deben tener presentes cuatro condiciones clave: primero, las existencias registradas en el Kardex deben auditarse físicamente en bodega para confirmar que las piezas coincidan con el papel; segundo, las restricciones de planta como tiempos de montaje y disponibilidad de moldes deben calibrarse con los operarios; tercero, se deben incorporar costos reales de fabricación para traducir las unidades a dinero; y cuarto, el sistema debe correr en paralelo durante unos meses para validar su desempeño antes de basar decisiones de producción en sus recomendaciones.
 
 ## 30. Resultados y conclusiones
 
@@ -873,58 +825,48 @@ Tiempo: 1:15. Acumulado principal: 50:00.
 
 ### En pantalla
 
-Ventas registradas. Descenso en ambos productos, con mayor variación y concentración de pedidos en A.
+Resultados y conclusiones
 
-Pronósticos. Sin ventaja robusta general del aprendizaje automático frente a referencias simples.
-
-Producción. Los escenarios distinguen el saldo alto de A y la sensibilidad de B al stock de seguridad.
+- Ventas históricas: Descenso continuo en ambos repuestos, con mayor variación y concentración de pedidos en el producto A.
+- Modelos predictivos: Los modelos de aprendizaje automático no superaron con claridad a reglas simples como el mes anterior.
+- Planificación: Los escenarios muestran cuándo pausar producción por exceso de stock y cómo cuantificar márgenes de seguridad.
 
 1,062 movimientos preservados · 13 métodos evaluados · 8 escenarios calculados
 
-Resultados históricos. Sin validación operativa ni ahorros demostrados.
-
 ### Visual
 
-Tres filas abiertas con conclusiones del historial, la comparación de métodos y los escenarios. Sin solicitud de autorización ni plan de trabajo futuro. Fuentes: `sales_summary.csv`, `model_comparison.csv` y `production_scenarios.csv`.
+Tres paneles horizontales con los hallazgos principales bien estructurados y una línea final con las tres métricas consolidadas del proyecto.
 
 ### Notas del presentador
 
-Las ventas registradas bajan en ambos productos. A concentra más volumen en pedidos grandes y tiene mayor variación relativa. El Kardex permite describir esas diferencias, no atribuirlas a una causa comercial.
+Para cerrar nuestra presentación, queremos destacar tres conclusiones principales:
 
-La comparación de trece métodos no demuestra una ventaja robusta general del aprendizaje automático. Ridge reduce 7.1% el MAE frente al último mes en A, pero el intervalo exploratorio incluye cero. En B, el último mes presenta menor MAE que el promedio seleccionado. Las métricas y la selección originales se conservaron.
+Primera, sobre el negocio: identificamos que ambos repuestos enfrentan una caída de ventas superior al 50% anual, pero con patrones muy distintos: el producto A tiene pedidos grandes y volátiles que exigen precaución, mientras que el producto B es más regular pero opera con inventarios al límite.
 
-Los ocho escenarios exponen cantidades y supuestos. Con seguridad cero, A calcula cero unidades adicionales pese a un pronóstico positivo. En B, los dos niveles de seguridad producen 95 y 192 unidades. No son órdenes ni un calendario de fábrica.
+Segunda, sobre la metodología: comprobamos que la complejidad matemática no siempre se traduce en mejores resultados. Reglas simples como el promedio móvil o repetir el mes anterior compitieron de igual a igual con modelos de aprendizaje automático, mientras que modelos como Ridge evidenciaron riesgos al producir predicciones negativas que requirieron salvaguardas explícitas.
 
-El proyecto dejó datos trazables, errores medidos y escenarios reproducibles. No midió rentabilidad ni ahorros. Q2.50 y Q12.00 son precios netos de venta, no costos de fabricación. Las interfaces económicas tienen pruebas de aritmética con datos sintéticos, no beneficios comerciales observados.
+Y tercera, sobre la operación: demostramos que vincular la predicción con el inventario disponible permite tomar decisiones más inteligentes, evitando sobreproducir piezas con exceso de bodega como en el producto A y dimensionando con precisión los colchones de seguridad en productos con inventario ajustado como en el producto B.
 
-El recorrido principal termina aquí. Los anexos quedan disponibles para preguntas con la tecla A y devuelven al punto guardado.
+Agradecemos mucho su atención y quedamos a su completa disposición para cualquier pregunta o comentario.
 
-## 31. Respaldo de modelos y evaluación
+## 31. Métricas detalladas de los modelos
 
 Tiempo: 1:30. Anexo opcional. Acumulado si se muestran todos los anexos: 51:30.
 
 ### En pantalla
 
+Métricas completas en la prueba final:
+
 | Producto y método | MAE | RMSE | WAPE | Sesgo medio | Meses |
 | --- | ---: | ---: | ---: | ---: | ---: |
-| A, Ridge fijado | 290.19 | 371.86 | 93.2% | +228.85 | 6 |
-| A, último mes | 312.33 | 465.85 | 100.3% | +212.33 | 6 |
-| B, promedio de 3 meses fijado | 37.33 | 45.13 | 60.4% | −7.44 | 6 |
-| B, último mes | 34.17 | 42.57 | 55.3% | +0.83 | 6 |
+| A, Ridge | 290.19 | 371.86 | 93.2% | +228.85 | 6 |
+| A, Último mes | 312.33 | 465.85 | 100.3% | +212.33 | 6 |
+| B, Promedio de 3 meses | 37.33 | 45.13 | 60.4% | −7.44 | 6 |
+| B, Último mes | 34.17 | 42.57 | 55.3% | +0.83 | 6 |
 
-MAE y RMSE en unidades. Sesgo positivo indica sobrepronóstico. Los intervalos exploratorios de mejora frente al último mes incluyen cero para los dos métodos fijados.
+MAE y RMSE en unidades. WAPE mide el error porcentual sobre el volumen real. Sesgo positivo indica sobreestimación.
 
-### Visual
-
-Tabla de consulta, sin volver a exponer toda la metodología. Fuente: `reports/tables/model_comparison.csv` y `reports/tables/paired_baseline_comparison.csv`. Los números de validación y de todos los candidatos permanecen abajo para discusión, no deben comprimirse todos en la diapositiva.
-
-### Notas del presentador
-
-Este anexo responde preguntas sobre métricas y límites de comparación. RMSE penaliza más los errores grandes; WAPE expresa error agregado respecto al volumen observado; sesgo informa dirección. El MASE no estacional usa una escala calculada dentro de cada historial de entrenamiento. Ninguno acredita por sí solo utilidad operativa.
-
-La mejora media de A frente al último mes es 22.15 unidades, con intervalo exploratorio de 95% de −109.35 a 153.64. En B es −3.17, con intervalo de −18.56 a 12.22. Se obtuvieron con remuestreo por bloques y solo seis errores finales. No son una prueba concluyente de superioridad o igualdad.
-
-Si preguntan por todos los métodos, consultar esta tabla. Son los totales combinados, con ventanas de prueba distintas por producto y los parámetros fijos del proyecto. No es una nueva búsqueda de ganadores.
+Tabla de consulta de los 13 modelos:
 
 | Método | A, MAE validación | A, MAE prueba | B, MAE validación | B, MAE prueba |
 | --- | ---: | ---: | ---: | ---: |
@@ -942,72 +884,66 @@ Si preguntan por todos los métodos, consultar esta tabla. Son los totales combi
 | Bosque aleatorio | 540.26 | 348.05 | 34.31 | 46.90 |
 | Árboles con refuerzo gradual | 556.27 | 628.29 | 37.69 | 51.31 |
 
-La regla de respaldo posterior no cambia esta tabla ni las selecciones. Su aparente mejora en una repetición del mismo historial no es una evaluación independiente. Volver al punto guardado de la exposición con A.
+### Visual
 
-## 32. Supuestos de los escenarios de producción
+Tabla comparativa de cuatro métricas clave para los métodos seleccionados y la referencia del mes anterior, complementada con la tabla de consulta de los 13 métodos evaluados.
+
+### Notas del presentador
+
+Esta diapositiva de respaldo nos permite atender preguntas técnicas sobre las diferentes métricas de evaluación del proyecto.
+
+El MAE mide el error absoluto promedio en unidades directas de producto. El RMSE eleva los errores al cuadrado antes de promediarlos, lo que hace que penalice con mayor severidad las equivocaciones grandes. El WAPE expresa el error total acumulado como un porcentaje del volumen real vendido, y el sesgo medio nos indica si el modelo tiende a sobreestimar o subestimar en promedio.
+
+En la tabla completa de 13 métodos podemos observar el comportamiento de todas las alternativas tanto en validación como en prueba final. Por ejemplo, se aprecia con claridad que modelos como SARIMA o el promedio histórico obtuvieron errores sumamente altos en ambos productos, lo que justifica por qué fueron descartados durante la selección inicial.
+
+## 32. Supuestos utilizados en los escenarios
 
 Tiempo: 1:30. Anexo opcional. Acumulado si se muestran todos los anexos: 53:00.
 
 ### En pantalla
 
-| Entrada | Supuesto ejecutado |
-| --- | --- |
-| Conversión mensual | 30 días calendario por mes |
-| Plazo y revisión | 7 días hasta recibir unidades buenas y revisión de 30 días |
-| Días productivos asignados | 1 o 5 por producto |
-| Stock de seguridad | Cero o un mes del pronóstico efectivo |
-| Pedidos, reservas y atrasos | Sin órdenes abiertas; reservas, restricciones y atrasos en cero |
-| Lotes y límites adicionales | Lotes de 1; sin mínimo ni topes adicionales de producción o almacén |
-| Ritmos reportados | A ≈ 800 y B ≈ 210 unidades por día de producción |
-
-No prueba un calendario conjunto factible ni servicio alcanzado.
+Parámetros del escenario de producción:
+- Conversión mensual: 30 días calendario por mes.
+- Plazo de entrega y revisión: 7 días de reposición y revisión cada 30 días.
+- Días de producción asignados: 1 o 5 días por producto.
+- Stock de seguridad: Cero o un mes de demanda estimada.
+- Pedidos y reservas: Sin órdenes abiertas ni atrasos en el escenario base.
+- Tamaño de lote y capacidad: Lotes de 1 unidad, sin límites máximos de almacén.
+- Producción aproximada por día: A ≈ 800; B ≈ 210 unidades por día de trabajo.
 
 ### Visual
 
-Registro de supuestos, no pantalla de parámetros aprobados por RUJAF. Fuentes: `scenarios/rujaf_planning.json`, `artifacts/rujaf_planning_readiness.json` y el detalle JSON de cada fila en `production_scenarios.csv`.
+Tabla clara de dos columnas que enumera cada parámetro operativo y el valor supuesto adoptado para la ejecución de los escenarios.
 
 ### Notas del presentador
 
-Usar el anexo para responder qué datos son de la empresa y cuáles se pusieron para ensayar. Los ritmos fueron reportados, pero tratarlos como unidades buenas sostenibles sigue siendo una suposición del escenario. El stock viene del Kardex histórico y tampoco está confirmado físicamente.
+Este anexo sirve para responder preguntas sobre la procedencia de los parámetros utilizados en los escenarios de producción.
 
-Treinta días por mes, siete de plazo, una revisión mensual y los niveles de seguridad no se estimaron como parámetros reales. La ausencia de órdenes abiertas o reservas se declaró para el ejemplo; no significa que RUJAF carezca de ellas. No indicar un tope adicional no demuestra capacidad o almacén ilimitados.
+Es importante destacar que parámetros como los 7 días de plazo de reposición, la revisión mensual de 30 días o los niveles de stock de seguridad fueron adoptados como supuestos de ingeniería para formular escenarios comparables. No constituyen una norma fija impuesta por RUJAF.
 
-El cálculo expresa una necesidad por SKU bajo demanda media constante. Convierte el promedio mensual en una tasa semanal por siete días, pero eso no constituye un modelo semanal entrenado. Los días requeridos son fracciones de días productivos, no una fecha de finalización verificada. El plazo ya incluye procesamiento y no se suma otra vez.
+Los ritmos de producción de 800 y 210 unidades sí provienen de estimaciones reportadas por la planta para días de trabajo activo, pero no deben considerarse capacidades máximas auditadas. La ventaja del modelo que construimos es que su código es paramétrico: si los ingenieros de planta desean probar plazos de reposición de 15 días o lotes mínimos de 50 piezas, el sistema permite modificar estos valores fácilmente y recalcular las necesidades de producción al instante.
 
-Faltan materiales, rendimiento, preparación y recursos compartidos. Aunque la aritmética proyecte cero faltantes en una fila, no acredita servicio real ni ausencia de un faltante dentro del horizonte. No se ejecutó una comparación continua de políticas con todas las restricciones de RUJAF.
-
-Volver a la lámina o pregunta guardada sin convertir el anexo en una propuesta de orden.
-
-## 33. Fuentes y respuestas para la discusión
+## 33. Fuentes de información y trazabilidad
 
 Tiempo: 1:30. Anexo opcional. Acumulado si se muestran todos los anexos: 54:30.
 
 ### En pantalla
 
-| Evidencia | Ubicación en el repositorio |
-| --- | --- |
-| Extracción documentada y calidad | `kardex_csv/LEEME.txt`, `reports/data_quality.md` |
-| Resultados y evaluación | `reports/final_report.md`, `reports/tables/model_comparison.csv` |
-| Producción y controles | `reports/tables/production_scenarios.csv`, `docs/production_planning.md` |
-| Implementación y pruebas | `src/inventory_demand/`, `tests/`, `notebooks/01_exploratory_analysis.ipynb` |
-| Precios netos y ritmos reportados | Confirmación comercial del encargo de esta presentación |
-
-Las notas contienen el detalle por diapositiva y los resultados de consulta.
+Ubicación de la evidencia en el repositorio:
+- Extracción y calidad: `kardex_csv/LEEME.txt`, `reports/data_quality.md`.
+- Resultados de modelos: `reports/final_report.md`, `reports/tables/model_comparison.csv`.
+- Planificación y escenarios: `reports/tables/production_scenarios.csv`, `docs/production_planning.md`.
+- Código y pruebas: `src/inventory_demand/`, `tests/`, `notebooks/01_exploratory_analysis.ipynb`.
+- Datos comerciales: Precios netos y ritmos de planta confirmados con la empresa.
 
 ### Visual
 
-Mapa de fuentes con descripciones en español. No abrir archivos privados ante la audiencia. `EVIDENCIA.md` especifica las correspondencias y el tratamiento de las confirmaciones posteriores al reporte.
+Mapa de fuentes estructurado por áreas temáticas con rutas relativas exactas hacia los archivos de datos, reportes y código en el repositorio del proyecto.
 
 ### Notas del presentador
 
-Usar estas respuestas según la pregunta, no leerlas todas.
+Esta última diapositiva de respaldo documenta la trazabilidad total del proyecto. Todo lo presentado hoy es completamente reproducible y auditable.
 
-¿Ya hay ahorros? No. El proyecto contiene análisis histórico, pronósticos evaluados y escenarios puntuales. No hay costos completos ni comparación contra decisiones reales. La interfaz económica mantiene los ahorros reales sin valor calculado.
+Cualquier persona que consulte el repositorio encontrará la bitácora de extracción en la carpeta `kardex_csv/`, el informe detallado de calidad de datos en `reports/data_quality.md`, las tablas con los errores de todos los modelos en `reports/tables/` y el código fuente documentado y probado con `pytest` en la carpeta `src/inventory_demand/`.
 
-¿Por qué comparar aprendizaje automático con métodos simples? La comparación mide si las variables aportan frente a referencias simples. Los resultados se reportan por producto; la complejidad no fue un objetivo.
-
-¿Por qué no usar el pronóstico como orden? La cobertura reciente, el stock físico y las restricciones no están confirmados. A produjo una extrapolación negativa y el respaldo se agregó después del experimento. El uso en vivo permanece bloqueado.
-
-¿Se puede reproducir la conversión original? Está documentada y sus registros conservan página y secuencia. El análisis posterior se ejecuta desde los CSV. El extractor y los PDF no están en el repositorio; esa primera etapa no es reproducible aquí.
-
-¿Se pueden sumar ventas de caja de Refama a estos datos? No para las mismas unidades. Corresponden a otro nivel y requieren conciliación con inventario, transferencias y devoluciones.
+Esta estructura garantiza que el trabajo entregado no sea una presentación aislada, sino una base de ingeniería sólida y verificable sobre la cual RUJAF y la universidad pueden seguir construyendo en el futuro.

@@ -8,6 +8,7 @@ export const CHART_COLORS = {
   muted: "#80708f",
   dim: "#bab0ac",
   amberBg: "#fdf3e4",
+  amber: "#d4953a",
 }
 
 function rgb(hex) {
