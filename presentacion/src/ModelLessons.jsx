@@ -17,7 +17,7 @@ function Tabs({ options, value, onChange }) {
 function Frame({ id, model, children, footer = "Ejemplo didáctico" }) {
   return <Slide className="model-lesson">
     <div className="lesson-body" data-lesson={id} data-model={model}>{children}</div>
-    <p className="lesson-footer">{footer}</p>
+    {footer ? <p className="lesson-footer">{footer}</p> : null}
   </Slide>
 }
 
@@ -42,7 +42,7 @@ export function BaselineLesson() {
   const x = (i) => 60 + i * 68
   const y = (value) => 286 - value / max * 220
   const first = data.selected.findIndex(Boolean)
-  return <Frame id={id} model={method} footer={`Ejemplo con ventas de B hasta ${month(data.history.at(-1).month)}. Unidades por mes.`}>
+  return <Frame id={id} model={method} footer="">
     <Tabs options={lesson(id).models.map((model) => [model, BASELINE_LABELS[model].tab])} value={method} onChange={setMethod} />
     <div className="lesson-visual" key={`${method}:${monthsBack}`}>
       <Diagram label={`${copy.tab}: ${data.used} meses usados y previsión de ${number(data.prediction, 1)} unidades. Las barras resaltadas aportan a la referencia.`}>
