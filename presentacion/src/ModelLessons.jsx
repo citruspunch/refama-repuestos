@@ -23,7 +23,7 @@ function Frame({ id, model, children, footer = "Ejemplo didáctico" }) {
 
 function Diagram({ label, wide = false, children }) {
   return <svg className={`lesson-diagram${wide ? " wide" : ""}`} viewBox={`0 0 ${wide ? 1360 : 1000} 360`} role="img" aria-label={label}>
-    <title>{label}</title>{children}
+    {children}
   </svg>
 }
 
@@ -70,7 +70,7 @@ export function RegressionLesson() {
   const [method, setMethod] = useCueState("method", "linear_regression")
   const ridge = method === "ridge", ordinary = regressionLesson(), fitted = regressionLesson(ridge)
   const x = (value) => 70 + value * 84, y = (value) => 285 - value * 1.85
-  return <Frame id="regresion" model={method} footer="Ejemplo didáctico con una variable. El modelo del proyecto combina varias entradas.">
+  return <Frame id="regresion" model={method} footer="Ejemplo con una variable. Nuestro modelo combina varias entradas.">
     <Tabs options={[["linear_regression", "Regresión lineal"], ["ridge", "Ridge"]]} value={method} onChange={setMethod} />
     <div className="lesson-visual regression-visual" key={method}>
       <Diagram label={`${ridge ? "Ridge" : "Regresión lineal"}: puntos didácticos y recta de un predictor. Ridge reduce el peso en este ejemplo estandarizado, sin garantizar una mejor predicción.`}>
