@@ -1,3 +1,6 @@
 codigo_producto,net_unit_value,units_per_production_day,currency,value_classification,rate_status
-UAH-90385-18025,2.5,800,GTQ,unconfirmed,reported_operating_rate_NOT_verified_capacity
-48815-14050,12.0,210,GTQ,unconfirmed,reported_operating_rate_NOT_verified_capacity
+UAH-90385-18025,2.5,800,GTQ,precio_venta_neto_tras_descuento,reported_operating_rate_NOT_verified_capacity
+48815-14050,12.0,210,GTQ,precio_venta_neto_tras_descuento,reported_operating_rate_NOT_verified_capacity
+UAH-33505-35020,15.0,300,GTQ,precio_venta_neto_tras_descuento,reported_operating_rate_NOT_verified_capacity
+90385-18046,2.5,480,GTQ,precio_venta_neto_tras_descuento,reported_operating_rate_NOT_verified_capacity
+17881-54820,100.0,30,GTQ,precio_venta_neto_tras_descuento,reported_operating_rate_NOT_verified_capacity

@@ -7,8 +7,9 @@
    numerical scores are preserved. Both products decline; stable seasonality and a robust ML advantage
    remain unproven. A's Ridge forecast fails; naive beats B's locked method on the final holdout.
 3. **Changed assumptions:** entity identity is no longer unknown. Combined sales are RUJAF's recorded
-   shipment target, not retail consumption. Q2.50/Q12.00 are unclassified net values; 800/210 units per
+   shipment target, not retail consumption. Q2.50/Q12.00/Q15.00/Q2.50/Q100.00 are confirmed net selling prices after discounts (`precio_venta_neto_tras_descuento`); 800/210 units per
    production day are reported rates, neither manufacturing costs nor confirmed factory capacity.
+   Estimated revenue (units × net price) remains a scenario only, not historical real revenue.
    Non-fiscal dispatch legality/accounting remains unverified; tax avoidance is not an objective.
 4. **Implemented now:** configurable forecast checks, a fixed provisional MA3 fallback, and a separately
    labeled post-hoc replay on the original validation framework; production quantity/runtime, coverage,

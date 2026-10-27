@@ -1,5 +1,10 @@
 # Production and economic interfaces
 
+The [five-product expansion](five_product_expansion.md) reuses the typed API below with discovered
+products, both endpoints of reported production-rate ranges, 48 point scenarios and timed daily replay.
+Run it with `--expand-products` and `scenarios/five_products.json`. Its outputs are isolated under
+`experiments/five_products_v1/`; the business-only path below retains its original two-product scope.
+
 ## Reproducible scenarios
 
 ```bash
@@ -65,15 +70,15 @@ The preserved `recommend(PolicyInputs)` purchasing arithmetic remains a legacy d
 
 ## Unclassified-value boundary
 
-`financial.unclassified_value_scenario(units, ReportedProductInputs(...))` returns only a labeled reference
-multiplication. Q2.50/Q12.00 are never automatically copied into a manufacturing cost, sale price, terminal
-value, margin or profit. Historical reference amounts are not valuations of current stock.
+`financial.unclassified_value_scenario(units, ReportedProductInputs(...))` returns only a labeled estimated-revenue
+multiplication from `precio_venta_neto_tras_descuento`. Q2.50/Q12.00/Q15.00/Q2.50/Q100.00 are confirmed net selling prices after discounts and are never automatically copied into a manufacturing cost, sale-value certification, terminal
+value, margin or profit. Multiplying sold or forecast units by the net price is an estimated scenario only, not historical real revenue, because price variations over the whole period are unknown. Historical reference amounts are not valuations of current stock.
 
 ## Manufacturing economics and alternative schedules
 
 `ManufacturingCostInputs` requires dated, confirmed manufacturing cost, holding cost/unit/month, setup cost/batch,
 unmet-demand cost/unit, terminal value/unit and currency. `manufacturing_cost_confirmed` is an explicit caller
-assertion, not independently verified by code; an unclassified net value cannot justify it. All must be supplied.
+assertion, not independently verified by code; a net selling price can never justify it. All must be supplied.
 Alternatively set `hypothetical=True` with explicitly synthetic/scenario costs, never label them actual RUJAF costs.
 Absent inputs return `blocked_missing_manufacturing_cost_inputs`; real savings remain unavailable.
 

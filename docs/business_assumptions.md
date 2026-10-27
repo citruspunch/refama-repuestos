@@ -1,5 +1,12 @@
 # RUJAF business facts and assumption register
 
+This register retains the previous business update. The [five-product expansion](five_product_expansion.md)
+records that all five reported amounts are confirmed net selling prices after discounts
+(`precio_venta_neto_tras_descuento`) without rewriting the
+historical outputs: A Q2.50, B Q12.00, C Q15.00, D Q2.50 and E Q100.00. None is a manufacturing cost,
+margin or saving. C's REFAMA document header is retained as provenance; all five
+ledgers belong to the RUJAF analytical set as instructed, not as a claim of verified ownership.
+
 ## Confirmed scope
 
 - RUJAF manufactures automotive components and distributes finished goods to Refama and other customers.
@@ -12,12 +19,16 @@
 
 | SKU | Net unit value | Units per production day | Permitted use now |
 |---|---:|---:|---|
-| UAH-90385-18025 | Q2.50 | approximately 800 | Explicit scenario reference only |
-| 48815-14050 | Q12.00 | approximately 210 | Explicit scenario reference only |
+| UAH-90385-18025 | Q2.50 | approximately 800 | Explicit scenario reference only; estimated revenue, not historical real revenue |
+| 48815-14050 | Q12.00 | approximately 210 | Explicit scenario reference only; estimated revenue, not historical real revenue |
+| UAH-33505-35020 | Q15.00 | approximately 300 | Explicit scenario reference only; estimated revenue, not historical real revenue |
+| 90385-18046 | Q2.50 | approximately 480 | Explicit scenario reference only; estimated revenue, not historical real revenue |
+| 17881-54820 | Q100.00 | approximately 30–35 | Explicit scenario reference only; estimated revenue, not historical real revenue |
 
-"Net unit value" is unclassified. Do not interpret it as manufacturing cost, sale price, contribution,
-profit or terminal inventory value. Currency is quetzales (GTQ); the value's effective date and components
-are unknown. The production figures are reported operating rates, not observations for every calendar day,
+All five amounts share classification `precio_venta_neto_tras_descuento` (net selling price after discounts, GTQ).
+Do not interpret them as manufacturing cost, contribution,
+profit, margin, savings or terminal inventory value. Currency is quetzales (GTQ); the value's effective date and components
+are unknown, and price variations over the whole period are unknown, so units × net price is only an estimated-revenue scenario, never historical real revenue. The production figures are reported operating rates, not observations for every calendar day,
 maximum capacity or guarantees. Actual production days, yield, materials, shared machines, setups and
 sustainable throughput are unconfirmed. Never multiply by all calendar days and call that actual output.
 
@@ -69,7 +80,7 @@ The original validation-locked models remain the historical choices. New validit
 are a **post-hoc scenario safeguard**, not a test-selected replacement. See [forecasting](demand_forecasting.md).
 No additional accuracy is asserted. New months are required for prospective assessment.
 
-Unclassified-value multiplication is not inventory valuation. Confirmed manufacturing costs (or separately
+Unclassified-value multiplication is not inventory valuation. Confirmed net selling prices (`precio_venta_neto_tras_descuento`) support only estimated-revenue scenarios, never historical real revenue, manufacturing cost, margin or savings. Confirmed manufacturing costs (or separately
 labeled synthetic costs) are required for cost accounting. Compare schedules on identical demand, horizon,
 opening stock/pipeline and terminal basis; consider unmet demand, eventual sales and fixed-cost avoidability.
 Less production or cash spent is not automatically savings. Hypothetical benefits are never verified outcomes.

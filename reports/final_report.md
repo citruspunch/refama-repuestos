@@ -1,7 +1,7 @@
 # RUJAF manufacturing, finished-goods inventory and wholesale forecasting
 
 Reproducible historical analysis as of **2026-10-26**, with a business-context update.
-Historical quantities and errors remain in units; the explicitly unclassified reference amounts in section 13 are GTQ.
+Historical quantities and errors remain in units; the estimated-revenue scenario amounts in section 13 (units x precio_venta_neto_tras_descuento) are GTQ and are not historical real revenue.
 
 ## Scope and evidence
 
@@ -354,8 +354,8 @@ Falling recorded sales can combine market changes, customer ordering changes, su
 changes. The data cannot identify which explanation is correct.
 
 The legacy purchasing financial interface still returns `blocked_missing_cost_inputs`. The manufacturing
-interface separately returns `blocked_missing_manufacturing_cost_inputs`. Reported Q2.50/Q12.00 values
-are unclassified and do not clear either gate. Synthetic tests verify arithmetic, not business savings.
+interface separately returns `blocked_missing_manufacturing_cost_inputs`. Reported Q2.50/Q12.00/Q15.00/Q2.50/Q100.00 values
+are confirmed `precio_venta_neto_tras_descuento` (net selling prices after discounts) and do not clear either gate. Synthetic tests verify arithmetic, not business savings.
 
 ## 12. Additional data and next steps (in priority order)
 
@@ -378,10 +378,13 @@ are unclassified and do not clear either gate. Synthetic tests verify arithmetic
 5. **Policy and constraints:** current decision rules and order history, physical on-hand at a common cutoff,
    reserved stock/backorders, desired cycle-service or fill-rate definition, budget/storage constraints, and
    promotions/customer contracts or exceptional bulk orders known at forecast issuance.
-6. **Costs and financial comparison:** first classify the reported net unit values; obtain dated actual
-   manufacturing (including avoidable versus fixed components), purchase and landed costs in GTQ (or specified
+6. **Costs and financial comparison:** the five reported amounts are classified `precio_venta_neto_tras_descuento`
+   (A Q2.50, B Q12.00, C Q15.00, D Q2.50, E Q100.00); they are not manufacturing costs, margins or savings.
+   Obtain dated actual manufacturing (including avoidable versus fixed components), purchase and landed costs in GTQ (or specified
    currency), storage/capital/insurance/obsolescence costs with time units, ordering/setup costs, defensible
-   shortage/lost-margin costs, and terminal stock values. Compare policies on identical horizons, initial
+   shortage/lost-margin costs, and terminal stock values. A complementary estimated-revenue scenario may multiply
+   sold or forecast units by the net price, but it is not historical real revenue because price variations over
+   the whole period are unknown. Compare policies on identical horizons, initial
    inventories/pipelines, service assumptions, and demand paths. Reduced production is not savings without
    accounting for unmet demand, eventual sales and ending inventory; timing/spend differences are not verified benefits.
 7. After corrections, rerun the unchanged temporal split, audit segment/combined coherence, gather new months
@@ -413,12 +416,15 @@ The same declining trajectories, uncertain seasonality, availability caveats and
 results remain valid. Product A's Ridge extrapolation fails; B's locked moving average loses to naive on the
 holdout. Neither fact justifies a hidden test-based model replacement or a claim of a robust ML advantage.
 
-| codigo_producto   |   net_unit_value |   units_per_production_day | currency   | value_classification   | rate_status                                   |
-|:------------------|-----------------:|---------------------------:|:-----------|:-----------------------|:----------------------------------------------|
-| UAH-90385-18025   |            2.500 |                        800 | GTQ        | unconfirmed            | reported_operating_rate_NOT_verified_capacity |
-| 48815-14050       |           12.000 |                        210 | GTQ        | unconfirmed            | reported_operating_rate_NOT_verified_capacity |
+| codigo_producto   |   net_unit_value |   units_per_production_day | currency   | value_classification             | rate_status                                   |
+|:------------------|-----------------:|---------------------------:|:-----------|:---------------------------------|:----------------------------------------------|
+| UAH-90385-18025   |            2.500 |                        800 | GTQ        | precio_venta_neto_tras_descuento | reported_operating_rate_NOT_verified_capacity |
+| 48815-14050       |           12.000 |                        210 | GTQ        | precio_venta_neto_tras_descuento | reported_operating_rate_NOT_verified_capacity |
+| UAH-33505-35020   |           15.000 |                        300 | GTQ        | precio_venta_neto_tras_descuento | reported_operating_rate_NOT_verified_capacity |
+| 90385-18046       |            2.500 |                        480 | GTQ        | precio_venta_neto_tras_descuento | reported_operating_rate_NOT_verified_capacity |
+| 17881-54820       |          100.000 |                         30 | GTQ        | precio_venta_neto_tras_descuento | reported_operating_rate_NOT_verified_capacity |
 
-The values are reported, not cost/price/margin/profit. Rates are approximate **per production day**, not daily
+The values are confirmed net selling prices after discounts (`precio_venta_neto_tras_descuento` in GTQ), not manufacturing costs, margins or profits. They support only complementary estimated-revenue scenarios (units × net price); those estimates are not historical real revenue because price variations over the whole period are unknown. Rates are approximate **per production day**, not daily
 production, maximum sustainable capacity, or proof of a feasible joint factory schedule.
 
 ### Explicit forecast safeguards and provisional fallback
@@ -517,8 +523,8 @@ See [business assumptions](../docs/business_assumptions.md), [methods](../docs/m
 | 48815-14050       | 2026-09-30       |   24.000 |                    12.000 |                    12.000 |                         288.000 | GTQ        | unclassified_reference_only |
 | UAH-90385-18025   | 2026-08-31       | 5892.000 |                     2.500 |                     2.500 |                       14730.000 | GTQ        | unclassified_reference_only |
 
-These multiplications are **not inventory cost valuations, sales values or savings**. They refer to the aligned
-historical stocks above, not current stock. Confirmed manufacturing cost inputs are still missing.
+These multiplications are **estimated-revenue scenarios from net selling prices, not historical real revenue, inventory cost valuations, manufacturing costs, margins or savings**. They refer to the aligned
+historical stocks above, not current stock, and price variations over the whole period are unknown. Confirmed manufacturing cost inputs are still missing.
 Scenario value overrides are recorded separately and never relabeled as new reported business values.
 `ManufacturingCostInputs` and reconciled per-period production ledgers can evaluate manufacturing inventory
 value, holding/setup/unmet-demand costs and alternative schedules. Caller-supplied unnecessary-production units

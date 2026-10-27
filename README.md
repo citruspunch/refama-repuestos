@@ -1,12 +1,43 @@
 # RUJAF manufacturing and finished-goods inventory analysis
 
-Implemented and executed university ML project for two automotive components in Guatemala.
-It validates the transaction ledger, reconstructs three sales scenarios, performs exploratory
-analysis, compares 13 forecasting methods with temporal backtests, and demonstrates **hypothetical**
-inventory policies. The confirmed business context is **RUJAF manufacturing/wholesale → Refama retail**
-and other customers; the Kardex belongs to RUJAF. New scenario-only production planning extends the
-existing implementation without replacing the historical models or metrics. It does **not** establish
-retail consumer demand, verified factory capacity, manufacturing costs, or actual financial savings.
+Sistema de predicción de ventas registradas y apoyo a la planificación de inventarios de RUJAF,
+ampliado de dos a **cinco productos** sobre la implementación existente. Descubre productos desde
+el consolidado, verifica sus movimientos y procedencia, compara métodos por serie con validación
+temporal y calcula escenarios de producción. No establece demanda final, capacidad máxima verificada,
+costos completos, optimalidad económica ni ahorros reales.
+
+## Ampliación actual a cinco productos
+
+- [Resumen de resultados nuevos](reports/experiments/five_products_v1/summary.md).
+- [Informe ejecutado](reports/experiments/five_products_v1/final_report.md), con análisis histórico,
+  comparaciones de modelos, inventario, producción y simulación diaria.
+- [Método, reproducción y diferencias respecto a la referencia](docs/five_product_expansion.md).
+- [Presentación en español](presentacion/README.md), 30 diapositivas principales, tres anexos y
+  50 minutos estimados. A y B siguen como ejemplos principales; las nuevas comparaciones no añaden diapositivas.
+
+El experimento `five_products_v1` procesó **2,108 movimientos**, concilió **258 combinaciones producto/mes**,
+entrenó y comparó métodos para 15 series, y calculó **48 escenarios puntuales** y replays diarios
+de seis meses. Los 13 métodos anteriores siguen disponibles; se añade referencia cero y, cuando la
+historia inicial lo permite, Croston-SBA y TSB. La elección no se fuerza a un único algoritmo.
+
+Los resultados anteriores, sus modelos, pruebas y cuaderno ejecutado permanecen en sus rutas originales.
+La ampliación escribe únicamente en `data/experiments/five_products_v1/`,
+`reports/experiments/five_products_v1/` y `artifacts/experiments/five_products_v1/`.
+Los originales privados tampoco se modifican. Los apartados inferiores describen la referencia histórica.
+
+```sh
+uv pip install --python .venv/bin/python -r requirements-expansion-lock.txt
+.venv/bin/python scripts/run_pipeline.py --expand-products
+.venv/bin/python -m pytest -q --junitxml=reports/expansion_tests.xml
+```
+
+Para otro conjunto, especificar `--source-bundle`, `--ledger`, `--experiment` y, si corresponde,
+`--planning-scenarios`. La cantidad de SKU se deriva de los datos. No sumar los CSV individuales
+con sus consolidados. Los cinco montos son precios de venta netos tras descuentos confirmados
+(`precio_venta_neto_tras_descuento`: A Q2.50, B Q12.00, C Q15.00, D Q2.50, E Q100.00); no son costos,
+márgenes ni ahorros.
+El ritmo de E mantiene el rango aproximado de 30 a 35 u./día productivo. C conserva su encabezado
+REFAMA como procedencia y se incluye en el conjunto de análisis de RUJAF.
 
 ## Results and deliverables
 
@@ -22,7 +53,7 @@ retail consumer demand, verified factory capacity, manufacturing costs, or actua
 - [`artifacts/`](artifacts/) — selected models, source SHA-256 manifest, environment metadata,
   and financial-readiness status. Pickle artifacts are local trusted files; never load untrusted pickles.
 
-### Main findings
+### Main findings of the preserved two-product reference
 
 | | Product A: UAH-90385-18025 | Product B: 48815-14050 |
 |---|---:|---:|
@@ -56,12 +87,15 @@ demand. Future retail POS sales must not be added to these shipments for the sam
 
 ### Reported inputs and new planning layer
 
-| Product | Reported net unit value (unclassified) | Reported units per production day |
+| Product | Net selling price after discounts (`precio_venta_neto_tras_descuento`) | Reported units per production day |
 |---|---:|---:|
 | A — UAH-90385-18025 | Q2.50 | approximately 800 |
 | B — 48815-14050 | Q12.00 | approximately 210 |
+| C — UAH-33505-35020 | Q15.00 | approximately 300 |
+| D — 90385-18046 | Q2.50 | approximately 480 |
+| E — 17881-54820 | Q100.00 | approximately 30–35 |
 
-Neither value is confirmed cost, price, margin or profit. Neither rate is actual daily output or sustainable
+None of the five values is a manufacturing cost, margin, saving or profit. Multiplying sold or forecast units by the net price yields only an estimated-revenue scenario, not historical real revenue, because price variations over the whole period are unknown. Neither rate is actual daily output or sustainable
 capacity. [`scenarios/rujaf_planning.json`](scenarios/rujaf_planning.json) explicitly assumes production days,
 lead time, batches, safety stock, open orders and inventory restrictions for sensitivity analysis only.
 Production scenarios show monthly/weekly mean-rate demand, uncertainty, coverage, surplus/shortage,
@@ -81,7 +115,8 @@ not an optimization objective.
 Tested with **Python 3.12.14**. The raw files must remain in `kardex_csv/` under their original names.
 No source file is overwritten. Run from the repository root:
 
-**For this existing checkout, use `--business-update-only` (below) to preserve the frozen outputs.**
+**For this checkout, use `--expand-products` above for the five-product experiment, or
+`--business-update-only` below for the previous two-product planning update. Both preserve the frozen outputs.**
 The full regeneration/notebook commands are retained for independent reproduction in a separate checkout/root
 with the raw files, scenario JSON and notebook available. They rewrite generated files (including notebook
 execution timestamps); byte-preservation tests intentionally detect such changes to the frozen baseline.
@@ -158,7 +193,7 @@ An EDA-only run does not refresh previously generated model outputs; use a full 
 10. Legacy purchasing examples remain historical demonstrations. Production planning requires explicit
     lead time, available days, good-unit rate, batches, safety stock, pipeline and stock restrictions.
     Missing/failed inputs block calculations; stale stock and unconfirmed constraints block live use.
-    Manufacturing costs remain missing; unclassified net values do not unlock financial evaluation.
+    Manufacturing costs remain missing; confirmed net selling prices support only estimated-revenue scenarios and do not unlock financial evaluation.
 
 ## Project structure
 
@@ -174,10 +209,10 @@ src/inventory_demand/
   forecasting.py                   baselines, regression, ETS/SARIMA, shallow trees
   evaluation.py                    expanding origins, selection, holdout, diagnostics
   forecast_validity.py             provisional validity checks and separate diagnostic replay
-  business.py                      RUJAF demand streams and reported unclassified inputs
+  business.py                      RUJAF demand streams and reported net selling prices
   business_update.py               additive planning outputs; historical preservation
   inventory.py                     legacy purchasing + periodic-review production scenarios
-  financial.py                     purchasing/manufacturing cost and comparison gates
+  financial.py                     purchasing/manufacturing cost and comparison gates; net prices never auto-feed manufacturing costs
   reporting.py                     evidence-generated Markdown reports
   pipeline.py                      raw-to-output orchestration and CLI
 scripts/run_pipeline.py
@@ -195,7 +230,7 @@ scenarios/rujaf_planning.json        explicit, configurable historical assumptio
 See [data dictionary](docs/data_dictionary.md), [methods](docs/methodology.md), and
 [production/economic interfaces](docs/production_planning.md). New `ProductionInputs`, `ProductionConstraints`,
 and `OpenProductionOrder` contracts require explicit planning inputs; `ManufacturingCostInputs` never
-automatically consumes reported net values. Legacy `PolicyInputs`/`CostInputs` remain compatible.
+automatically consumes reported net selling prices. Legacy `PolicyInputs`/`CostInputs` remain compatible.
 
 Next priorities: refresh/verify stock and coverage, reconcile dispatches/adjustments, confirm the production
 calendar, capacity, yield and linked order-to-receipt lead times; collect unfilled demand, current decisions

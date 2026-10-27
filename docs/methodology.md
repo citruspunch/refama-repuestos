@@ -123,7 +123,7 @@ inputs block calculation; reported rates and unverified stocks require named sce
 `plan_production` never authorizes live use. [Interface details](production_planning.md) define the arithmetic
 and limitations, including pre-receipt shortages and inability to establish a joint factory schedule.
 
-Reported Q2.50/Q12.00 stay unclassified reference values, not manufacturing cost, sale price or margin.
+Reported Q2.50/Q12.00/Q15.00/Q2.50/Q100.00 are confirmed net selling prices after discounts (`precio_venta_neto_tras_descuento`), never manufacturing cost, margin or savings. `ManufacturingCostInputs` gates real cost accounting, with separately marked hypothetical fixtures allowed. Multiplying sold or forecast units by the net price yields only an estimated-revenue scenario, not historical real revenue, because price variations over the whole period are unknown.
 `ManufacturingCostInputs` gates real cost accounting, with separately marked hypothetical fixtures allowed.
 Reconciled schedule ledgers support manufacturing inventory value, holding/setup/unmet-demand costs and
 terminal-adjusted comparisons. Reduced production/spend is not savings: account for unmet demand, eventual

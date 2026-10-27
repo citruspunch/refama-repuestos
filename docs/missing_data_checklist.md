@@ -3,8 +3,9 @@
 ## Resolved or reported (do not request as if still unknown)
 
 - [x] RUJAF manufacturing/wholesale versus Refama retail relationship; Kardex scope is RUJAF.
-- [x] Reported A/B net values Q2.50/Q12.00 and operating rates approximately 800/210 per production day.
+- [x] Reported net selling prices after discounts Q2.50/Q12.00/Q15.00/Q2.50/Q100.00 (`precio_venta_neto_tras_descuento`) and operating rates approximately 800/210/300/480/30–35 per production day.
 - [x] Existence of some non-fiscal dispatch documents is reported, **not** legal/accounting validation.
+- [x] Commercial confirmation: the five amounts are NOT manufacturing costs, margins or savings; estimated revenue (units × net price) is a scenario only, not historical real revenue.
 
 ## Priority 1 — safe stock and demand interpretation
 
@@ -34,8 +35,8 @@
 
 - [ ] New complete months beyond the already-inspected holdout; prospective evaluation of safeguard rules.
 - [ ] Check current forecasts, regime change and channel coherence; calibrate uncertainty for decision horizons.
-- [ ] Define "net unit value": cost/price/other basis, currency, effective date and components. Until then it
-  cannot clear the manufacturing-cost gate or support profit/savings claims.
+- [ ] Define net-unit-price effective date, components and historical variations. Until then, units × net price
+  remains an estimated-revenue scenario only and cannot clear the manufacturing-cost gate or support profit/savings claims.
 - [ ] Dated actual manufacturing costs, separating avoidable variable costs from fixed/allocated costs.
 - [ ] Holding costs per unit/time, capital/space/insurance/obsolescence, setup costs and defensible unmet-demand costs.
 - [ ] Eventual-sale/obsolescence assumptions, terminal inventory valuation and actual realized service/outcomes.

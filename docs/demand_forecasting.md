@@ -1,5 +1,10 @@
 # RUJAF demand forecasting and validity safeguards
 
+This page retains the original two-product protocol and default safeguards. The executed
+[five-product expansion](five_product_expansion.md) adds data-driven candidate screening, intermittent
+methods and a separately recorded allowance for positive rates after recent zero months. Its files
+and new experiments do not replace the historical evidence described below.
+
 ## Target and unchanged evidence
 
 The target is monthly **RUJAF gross outgoing VENTA units**, separately for Refama shipments, other

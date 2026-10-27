@@ -1,5 +1,9 @@
 # Dataset dictionary
 
+The sections below describe the preserved two-product reference. The active five-product experiment
+uses the same movement and monthly contracts in `data/experiments/five_products_v1/`. See
+[the expansion contract](five_product_expansion.md) for its distinct outputs and interpretation.
+
 ## Source files
 
 `kardex_csv/kardex_consolidado.csv` (1,062 rows) is cross-checked against the 583-row Product A
@@ -96,7 +100,7 @@ assumed lead time, service level, review coverage, pending orders/backorders; no
 
 ## Additive RUJAF outputs (original files above are not replaced)
 
-- `reported_product_inputs.csv`: Q2.50/Q12.00 in `net_unit_value`, classification **unconfirmed**;
+- `reported_product_inputs.csv`: Q2.50/Q12.00/Q15.00/Q2.50/Q100.00 in `net_unit_value`, classification **precio_venta_neto_tras_descuento** (net selling prices after discounts, not costs/margins/savings);
   800/210 `units_per_production_day` as reported operating rates, **not verified capacity**.
 - `rujaf_demand_streams.csv`: historical metrics joined to explicit wholesale-stream definitions;
   no new sales observations or modified totals.
@@ -112,10 +116,31 @@ assumed lead time, service level, review coverage, pending orders/backorders; no
   due-dated pipeline, shortage/surplus, batch/capacity-constrained units and estimated runtime. Undefined zero-
   demand coverage is blank, not infinite guaranteed coverage. `scenario_inputs_json` contains exact inputs;
   all quantities are units or stated calendar/production days. Rows are alternatives, **not quantities to sum**.
-- `unclassified_value_scenarios.csv`: aligned historical stock × unclassified scenario reference value in GTQ,
-  labeled `unclassified_reference_only`. Original reported values, scenario overrides and override flags remain
-  distinct; manufacturing inventory value and actual savings remain unavailable.
+- `unclassified_value_scenarios.csv`: aligned historical stock × net selling price (`precio_venta_neto_tras_descuento`) in GTQ,
+  labeled estimated-revenue scenario only, never historical real revenue. Original reported values, scenario overrides and override flags remain
+  distinct; manufacturing inventory value and actual savings remain unavailable. Price variations over the whole period are unknown.
 
 `artifacts/rujaf_planning_readiness.json` records scenario configuration, validity rules, missing manufacturing
 cost inputs and false live-approval status. `artifacts/historical_results_manifest.json` hashes retained
 pre-update files; original report prose is archived in `reports/history/pre_rujaf_update/`.
+
+## Five-product additions
+
+- `empresa_documento`, `empresa_kardex`, `pdf_origen`: original provenance, retained in public
+  transactions; `empresa_para_el_analisis=RUJAF` in the catalog is an analytical assignment only.
+- `TRASLADO`: preserved movement type, excluded from gross VENTA. Monthly
+  `transfer_incoming/outgoing` remain separate from production, purchases and sales.
+- `zero_quantity_sale`: retained VENTA row with zero `salida`, not an invalid direction or positive sale.
+- `product_catalog.csv`: discovered codes, presentation aliases, provenance, reported amount classification,
+  minimum/maximum approximate production rate and false manufacturing-cost verification status.
+- `demand_profiles.csv`: provisional monthly ADI/CV², zero fraction, zero runs and positive-sale counts.
+- `candidate_eligibility.csv`: initial-window cutoff, positive-month count, zero fraction and fixed eligibility.
+- `model_readiness.csv`: evaluated or blocked for insufficient temporal history, separately for each stream.
+- `model_artifacts.csv`: exact selected artifact filename, method, stream and training cutoff.
+- `historical_model_comparison.csv`: old/new common metrics and deltas; not an independent experiment.
+- `production_scenarios.csv`: extends the production contract with `variant_id`, `demand_factor`
+  and both endpoints when a reported rate is a range. Alternatives are never added together.
+- `production_replay.csv`: monthly simulated starting/ending stock, decisions, receipts, served/unserved
+  recorded sales and pre-target training cutoff. No actual loss/service/savings claim.
+- `production_replay_daily.csv`: daily receipts before withdrawals, simulated EOD stock and unserved
+  recorded VENTA. This is another policy, not the observed ledger or latent customer demand.
