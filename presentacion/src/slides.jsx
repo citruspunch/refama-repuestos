@@ -156,33 +156,11 @@ function Variability() {
 
 function Demand() {
   return <Slide>
-    <div className="demand-flow">
-      <div className="demand-card latent">
-        <h3>Pedidos de clientes</h3>
-        <p>Lo que los clientes quieren comprar.</p>
-      </div>
-      <div className="demand-arrow" aria-hidden="true">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-          <line x1="5" y1="12" x2="19" y2="12" />
-          <polyline points="12 5 19 12 12 19" />
-        </svg>
-      </div>
-      <div className="demand-card filter">
-        <h3>Disponibilidad</h3>
-        <p>Lo que la bodega puede entregar.</p>
-      </div>
-      <div className="demand-arrow" aria-hidden="true">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-          <line x1="5" y1="12" x2="19" y2="12" />
-          <polyline points="12 5 19 12 12 19" />
-        </svg>
-      </div>
-      <div className="demand-card target">
-        <h3>Ventas en Kardex</h3>
-        <p>Lo que observamos y buscamos predecir.</p>
-      </div>
-    </div>
-    <p className="small-explanation">No contamos con un registro de pedidos no atendidos. Las ventas no muestran toda la demanda si hubo faltantes.</p>
+    <Flow items={[
+      { title: "Pedidos de clientes", text: "Lo que los clientes quieren comprar." },
+      { title: "Disponibilidad", text: "Lo que la bodega puede entregar." },
+      { title: "Ventas en Kardex", text: "Lo que observamos y buscamos predecir." },
+    ]} />
   </Slide>
 }
 

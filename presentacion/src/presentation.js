@@ -13,7 +13,7 @@ export const STORY = [
   { id: "tendencia", title: "Cómo cambiaron las ventas", seconds: 180, cues: [cue("Leer las curvas históricas con sus propias escalas")] },
   { id: "variabilidad", title: "Los productos no se venden de la misma forma", seconds: 120, cues: [cue("Comparar cambios mensuales y períodos sin ventas")] },
   { id: "demanda", title: "Lo que las ventas permiten conocer", seconds: 90, cues: [cue("Distinguir ventas registradas de pedidos no atendidos")] },
-  { id: "variables", title: "Qué información entra al modelo", seconds: 150, cues: [cue("Construir un ejemplo con los meses anteriores de A")] },
+  { id: "variables", title: "Qué información le damos al modelo", seconds: 150, cues: [cue("Construir un ejemplo con los meses anteriores de A")] },
   ...LESSON_STORY,
   { id: "validacion", title: "Cómo entrenamos y probamos los modelos", seconds: 180, cues: [
     cue("Avanzar mes a mes sin usar datos futuros", { prueba: false }),

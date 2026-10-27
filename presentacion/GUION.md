@@ -109,7 +109,7 @@ Tiempo: 1:30. Acumulado principal: 17:30.
 - El Kardex muestra lo que salió como venta, pero no permite recuperar los pedidos que no se atendieron. Tampoco muestra el consumo final de las tiendas.
 - Por eso la predicción corresponde a ventas registradas, no a toda la demanda potencial. Esta limitación afecta tanto la interpretación de un cero como la simulación posterior.
 
-## 11. Qué información entra al modelo
+## 11. Qué información le damos al modelo
 
 Tiempo: 2:30. Acumulado principal: 20:00.
 
