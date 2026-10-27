@@ -62,6 +62,9 @@ h2 { font-size: 52px; font-weight: 680; line-height: 1.08; max-width: 1330px; le
 h3 { font-size: 29px; line-height: 1.18; font-weight: 700; }
 p { font-size: 27px; line-height: 1.42; }
 strong, b { font-variant-numeric: tabular-nums; }
+.number-ticker { display: inline-grid; vertical-align: baseline; font: inherit; letter-spacing: inherit; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.number-ticker::before { content: attr(data-value); visibility: hidden; grid-area: 1 / 1; }
+.number-ticker > span { grid-area: 1 / 1; font: inherit; }
 .viewport { position: fixed; inset: 0; overflow: hidden; background: var(--paper); }
 .stage { position: absolute; left: 50%; top: 50%; width: 1600px; height: 900px; transform: translate(-50%, -50%) scale(var(--s, 1)); transform-origin: center; background: var(--paper); }
 .slide-frame { position: absolute; inset: 0; animation: scene-in .48s var(--ease) both; }
@@ -362,7 +365,7 @@ strong, b { font-variant-numeric: tabular-nums; }
 .baseline-bars { height: 390px; }
 .result-layout { grid-template-columns: minmax(0, .75fr) minmax(0, 1.5fr); gap: 50px; }
 .result-layout .metric strong { font-size: 94px; margin-top: 20px; }
-.result-layout .metric span { font-size: 27px; }
+.result-layout .metric > span { font-size: 27px; }
 .result-layout > div > p { font-size: 26px; color: var(--text-2); margin-top: 14px; }
 .result-layout .result-delta { font-size: 29px; color: var(--ink); margin-top: 25px; }
 .comparison-figure { padding: 20px 0 0; border-top: 1px solid var(--line); }
@@ -481,10 +484,10 @@ strong, b { font-variant-numeric: tabular-nums; }
 .nav:hover, .nav:focus-within { opacity: 1; }
 .nav button { width: 44px; height: 44px; border: 1px solid transparent; background: transparent; border-radius: 50%; display: grid; place-items: center; font-size: 21px; flex: none; transition: background .2s ease, color .2s ease; }
 .nav button:hover { background: var(--purple-bg); color: var(--purple); }
-.nav button[aria-label="Paso siguiente"] { background: var(--purple); color: var(--ink); box-shadow: 0 3px 10px #d4953a20; }
+
 .nav button:disabled { opacity: .35; }
 .nav .nav-text { width: auto; border-radius: 24px; padding: 0 17px; font-size: 15px; font-weight: 550; }
-.nav .mode-toggle { border-color: var(--line); color: var(--purple); background: var(--card); }
+
 .nav button[aria-pressed="true"] { color: var(--warning); background: var(--warning-bg); border-color: var(--warning); }
 .nav-tools { display: flex; gap: 9px; padding-left: 13px; border-left: 1px solid var(--line); }
 .count { font: 100 15px var(--label); text-transform: uppercase; letter-spacing: .08em; min-width: 75px; text-align: center; white-space: nowrap; }

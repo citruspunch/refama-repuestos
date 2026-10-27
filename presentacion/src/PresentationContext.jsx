@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react"
 
-export const PresentationContext = createContext({ guided: true, paused: false, cue: { values: {} }, title: "" })
+export const PresentationContext = createContext({ guided: true, replayToken: 0, cue: { values: {} }, title: "" })
 export const usePresentation = () => useContext(PresentationContext)
 const readOnly = () => {}
 

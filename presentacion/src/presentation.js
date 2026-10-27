@@ -106,18 +106,18 @@ export function lastMainSlide(slides = STORY) {
 }
 export function normalizePosition(position = {}, slides = STORY) {
   const slide = boundedInteger(position?.slide, slides.length - 1)
-  return { slide, step: boundedInteger(position?.step, slides[slide].cues.length - 1), mode: position?.mode === "explore" ? "explore" : "present" }
+  return { slide, step: boundedInteger(position?.step, slides[slide].cues.length - 1) }
 }
 export function positionFromLocation(location, slides = STORY) {
   const match = (location.hash || "").match(/^#(\d+)(?:\/(\d+))?$/)
-  return normalizePosition({ slide: match ? Number(match[1]) : 0, step: match?.[2] ? Number(match[2]) : 0, mode: new URLSearchParams(location.search).get("mode") }, slides)
+  return normalizePosition({ slide: match ? Number(match[1]) : 0, step: match?.[2] ? Number(match[2]) : 0 }, slides)
 }
 export const positionHash = ({ slide, step }) => `#${slide}/${step}`
 export function movePosition(position, delta, { bySlide = false, slides = STORY } = {}) {
   const current = normalizePosition(position, slides)
   if (delta !== 1 && delta !== -1) return current
-  const end = current.mode === "present" && current.slide <= lastMainSlide(slides) ? lastMainSlide(slides) : slides.length - 1
-  if (current.mode === "present" && !bySlide) {
+  const end = lastMainSlide(slides)
+  if (!bySlide) {
     const step = current.step + delta
     if (step >= 0 && step < slides[current.slide].cues.length) return { ...current, step }
     if (delta < 0 && current.slide > 0) return { ...current, slide: current.slide - 1, step: slides[current.slide - 1].cues.length - 1 }
@@ -131,7 +131,6 @@ export function presentationProgress(position, slides = STORY) {
   const current = normalizePosition(position, slides)
   const end = lastMainSlide(slides)
   if (current.slide > end) return 1
-  if (current.mode === "explore") return (current.slide + 1) / (end + 1)
   const main = slides.slice(0, end + 1)
   const total = main.reduce((sum, scene) => sum + scene.cues.length, 0)
   const before = main.slice(0, current.slide).reduce((sum, scene) => sum + scene.cues.length, 0)

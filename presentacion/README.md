@@ -24,8 +24,7 @@ C conserva su procedencia documental REFAMA dentro del conjunto de análisis RUJ
 | Mayús + flecha | Saltar una diapositiva |
 | Inicio y Fin | Ir al inicio o al cierre principal |
 | F | Pantalla completa |
-| G | Cambiar entre Presentar y Explorar |
-| R y P | Repetir o pausar las entradas visuales |
+| R | Repetir las entradas visuales |
 | ? o H | Abrir ayuda |
 
 No hay avance automático. La posición queda en `#diapositiva/paso`, con índices desde cero. `?mode=explore` conserva el modo Explorar y no elimina otros parámetros de la URL.

@@ -5,7 +5,7 @@ import { STORY, assembleSlides, lastMainSlide, movePosition, normalizePosition, 
 
 const end = lastMainSlide()
 const scenario = STORY.findIndex((scene) => scene.id === "escenario-b")
-const route = STORY.slice(0, end + 1).flatMap((scene, slide) => scene.cues.map((_, step) => ({ slide, step, mode: "present" })))
+const route = STORY.slice(0, end + 1).flatMap((scene, slide) => scene.cues.map((_, step) => ({ slide, step })))
 const definitions = () => STORY.map((scene) => ({ id: scene.id, C: () => null, ch: "Capítulo de prueba" }))
 
 test("el registro tiene 33 diapositivas, introducción visual de modelos y cierre de resultados", () => {
@@ -54,14 +54,14 @@ test("se recorre cada paso y se detiene antes de los anexos", () => {
 
 test("URL, modos y límites externos se normalizan sin perder pasos", () => {
   for (const position of route) assert.deepEqual(positionFromLocation({ hash: positionHash(position), search: "" }), position)
-  assert.deepEqual(positionFromLocation({ hash: `#${scenario}`, search: "" }), { slide: scenario, step: 0, mode: "present" })
-  assert.deepEqual(positionFromLocation({ hash: `#${scenario}/1`, search: "?mode=explore" }), { slide: scenario, step: 1, mode: "explore" })
+  assert.deepEqual(positionFromLocation({ hash: `#${scenario}`, search: "" }), { slide: scenario, step: 0 })
+  assert.deepEqual(positionFromLocation({ hash: `#${scenario}/1`, search: "?mode=explore" }), { slide: scenario, step: 1 })
   for (const hash of ["#nonsense", "#-1/3", "#NaN", "#1.5", `#${"9".repeat(400)}`]) assert.deepEqual(positionFromLocation({ hash, search: "?mode=invalid" }), route[0])
   assert.deepEqual(normalizePosition(null), route[0])
   assert.equal(normalizePosition({ slide: scenario, step: 999 }).step, 1)
   assert.equal(normalizePosition({ slide: 999 }).slide, STORY.length - 1)
   assert.equal(movePosition({ slide: scenario, step: 1 }, 1, { bySlide: true }).slide, scenario + 1)
-  assert.equal(movePosition({ slide: end, mode: "explore" }, 1).slide, end)
+  assert.equal(movePosition({ slide: end }, 1).slide, end)
 })
 
 test("el progreso mide los pasos principales sin aumentar por los anexos", () => {
