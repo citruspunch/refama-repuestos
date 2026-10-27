@@ -4,21 +4,28 @@ import { fileURLToPath } from "node:url"
 import { csvParse } from "d3-dsv"
 
 const sources = {
-  monthly: "data/processed/monthly_demand.csv",
-  summary: "reports/tables/sales_summary.csv",
-  streams: "reports/tables/rujaf_demand_streams.csv",
-  ytd: "reports/tables/comparable_ytd.csv",
-  inventory: "reports/tables/inventory_pressure.csv",
-  seasonality: "reports/tables/seasonality.csv",
-  selection: "reports/tables/selected_models.csv",
-  comparison: "reports/tables/model_comparison.csv",
-  predictions: "reports/tables/backtest_predictions.csv",
-  forecast: "reports/tables/next_history_month_forecasts.csv",
-  guard: "reports/tables/forecast_validity.csv",
-  replay: "reports/tables/forecast_safeguard_comparison.csv",
-  production: "reports/tables/production_scenarios.csv",
-  paired: "reports/tables/paired_baseline_comparison.csv",
-  quality: "reports/tables/quality_checks.csv",
+  monthly: "data/experiments/five_products_v1/monthly_demand.csv",
+  summary: "reports/experiments/five_products_v1/tables/sales_summary.csv",
+  streams: "reports/experiments/five_products_v1/tables/rujaf_demand_streams.csv",
+  ytd: "reports/experiments/five_products_v1/tables/comparable_ytd.csv",
+  inventory: "reports/experiments/five_products_v1/tables/inventory_pressure.csv",
+  seasonality: "reports/experiments/five_products_v1/tables/seasonality.csv",
+  selection: "reports/experiments/five_products_v1/tables/selected_models.csv",
+  comparison: "reports/experiments/five_products_v1/tables/model_comparison.csv",
+  predictions: "reports/experiments/five_products_v1/tables/backtest_predictions.csv",
+  forecast: "reports/experiments/five_products_v1/tables/next_history_month_forecasts.csv",
+  guard: "reports/experiments/five_products_v1/tables/forecast_validity.csv",
+  replay: "reports/experiments/five_products_v1/tables/forecast_safeguard_comparison.csv",
+  production: "reports/experiments/five_products_v1/tables/production_scenarios.csv",
+  paired: "reports/experiments/five_products_v1/tables/paired_baseline_comparison.csv",
+  quality: "reports/experiments/five_products_v1/tables/quality_checks.csv",
+  catalog: "reports/experiments/five_products_v1/tables/product_catalog.csv",
+  profiles: "reports/experiments/five_products_v1/tables/demand_profiles.csv",
+  movements: "reports/experiments/five_products_v1/tables/movement_totals.csv",
+  coverage: "reports/experiments/five_products_v1/tables/coverage.csv",
+  eligibility: "reports/experiments/five_products_v1/tables/candidate_eligibility.csv",
+  productionReplay: "reports/experiments/five_products_v1/tables/production_replay.csv",
+  historicalComparison: "reports/experiments/five_products_v1/tables/historical_model_comparison.csv",
 }
 
 const sourceURL = (path) => new URL(`../${path}`, import.meta.url)
@@ -42,11 +49,14 @@ export function loadEvidence() {
     provenance.push({ path, rows: tables[key].length, sha256: createHash("sha256").update(bytes).digest("hex") })
   }
   const products = {}
-  for (const [id, code] of [["A", "UAH-90385-18025"], ["B", "48815-14050"]]) {
+  for (const entry of tables.catalog) {
+    const { product_id: id, codigo_producto: code } = entry
     const combined = (row) => row.codigo_producto === code && row.scenario === "combined"
     const selection = tables.selection.find(combined)
     products[id] = {
       code,
+      catalog: entry,
+      profile: tables.profiles.find(combined),
       summary: tables.summary.find(combined),
       channels: tables.summary.filter((row) => row.codigo_producto === code && row.scenario !== "combined"),
       streams: tables.streams.filter((row) => row.codigo_producto === code),
@@ -64,6 +74,7 @@ export function loadEvidence() {
       guard: tables.guard.find(combined),
       replay: tables.replay.filter(combined),
       paired: tables.paired.filter(combined),
+      productionReplay: tables.productionReplay.filter((row) => row.codigo_producto === code),
       production: tables.production.filter((row) => row.codigo_producto === code).map((row) => {
         const { scenario_inputs_json, assumed_fields, warning, ...publicValues } = row
         const assumptions = JSON.parse(scenario_inputs_json)
@@ -71,5 +82,9 @@ export function loadEvidence() {
       }),
     }
   }
-  return { analysisDate: "2026-10-26", products, quality: tables.quality, provenance }
+  return { analysisDate: "2026-10-26", experiment: "five_products_v1", products,
+    movementCount: tables.catalog.reduce((sum, row) => sum + row.movements, 0),
+    monthCount: tables.coverage.length, scenarioCount: tables.production.length,
+    modelCount: new Set(tables.eligibility.filter((row) => row.eligible).map((row) => row.model)).size,
+    quality: tables.quality, historicalComparison: tables.historicalComparison, provenance }
 }

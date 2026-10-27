@@ -2,13 +2,24 @@ import { BUSINESS } from "./business.js"
 
 // Equivalentes SVG de la paleta canónica documentada en App.css.
 export const CHART_COLORS = {
+  paper: "#faf9fb",
   ink: "#1c1028",
   text: "#3d314a",
-  grid: "#dbd6e1",
+  grid: "#e7e2eb",
   muted: "#80708f",
   dim: "#bab0ac",
   amberBg: "#fdf3e4",
   amber: "#d4953a",
+}
+
+// Tonos de trazo con contraste propio: no necesitan un contorno oscuro.
+// Los rellenos y distintivos conservan los colores originales de BUSINESS.
+export const PRODUCT_STROKES = {
+  A: "#a88612",
+  B: "#ba7d04",
+  C: "#cf6903",
+  D: BUSINESS.D.color,
+  E: BUSINESS.E.color,
 }
 
 function rgb(hex) {
@@ -29,9 +40,9 @@ export function contrast(a, b) {
 }
 
 export function heatmapColor(id, value, max) {
-  const weight = 0.18 + 0.82 * value / max
+  const weight = 0.18 + (max > 0 ? 0.82 * value / max : 0)
   const channels = rgb(BUSINESS[id].color).map((channel) => Math.round(channel * weight + 255 * (1 - weight)))
   const background = `#${channels.map((channel) => channel.toString(16).padStart(2, "0")).join("")}`
-  const color = [CHART_COLORS.ink, "#ffffff"].find((text) => contrast(text, background) >= 4.5)
+  const color = [CHART_COLORS.ink, "#ffffff", "#000000"].find((text) => contrast(text, background) >= 4.5)
   return { background, color }
 }

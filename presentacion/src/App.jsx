@@ -37,19 +37,18 @@ function Modal({ open, onClose, title, id, children, className = "" }) {
   </dialog>
 }
 
-function Nav({ position, go, fullscreen, toggleFullscreen, idle, paused, replay, togglePause, toggleMode, toggleAppendix, showHelp }) {
+function Nav({ position, go, fullscreen, toggleFullscreen, idle, paused, replay, togglePause, toggleMode, showHelp }) {
   const previous = movePosition(position, -1, { slides: ALL_SLIDES })
   const next = movePosition(position, 1, { slides: ALL_SLIDES })
   return <nav className={`nav${idle ? " idle" : ""}`} aria-label="Controles de presentación">
     <button onClick={toggleFullscreen} aria-label={fullscreen ? "Salir de pantalla completa" : "Pantalla completa"} title="Pantalla completa · F"><Icon name={fullscreen ? "exit-fullscreen" : "fullscreen"} /></button>
     <button onClick={() => go(-1)} disabled={samePosition(previous, position)} aria-label="Paso anterior" title="Anterior · Flecha izquierda"><Icon name="arrow-left" /></button>
-    <span className="count">{position.slide > MAIN_END ? `Anexo ${position.slide - MAIN_END}` : `${String(position.slide + 1).padStart(2, "0")} / ${MAIN_END + 1}`}</span>
+    <span className="count">{String(position.slide + 1).padStart(2, "0")} / {ALL_SLIDES.length}</span>
     <button onClick={() => go(1)} disabled={samePosition(next, position)} aria-label="Paso siguiente" title="Siguiente · Flecha derecha"><Icon name="arrow-right" /></button>
     <div className="nav-tools">
       <button onClick={replay} aria-label="Repetir entrada" title="Repetir · R"><Icon name="rotate-left" /></button>
       <button onClick={togglePause} aria-label={paused ? "Reanudar entradas" : "Pausar entradas"} aria-pressed={paused} title="Pausar o reanudar · P"><Icon name="timer" /></button>
       <button className="nav-text mode-toggle" onClick={toggleMode} aria-label={position.mode === "present" ? "Cambiar a Explorar" : "Cambiar a Presentar"}>{position.mode === "present" ? "Presentar" : "Explorar"}</button>
-      <button className="nav-text" onClick={toggleAppendix} aria-label={position.slide > MAIN_END ? "Volver a la exposición" : "Consultar anexos"}>{position.slide > MAIN_END ? "Volver" : "Anexos"}</button>
       <button onClick={showHelp} aria-label="Atajos de teclado" title="Ayuda · ?"><Icon name="note" /></button>
     </div>
   </nav>
@@ -64,7 +63,6 @@ export default function App() {
   const [replayToken, setReplayToken] = useState(0)
   const [sceneRevision, setSceneRevision] = useState(0)
   const [direction, setDirection] = useState(1)
-  const appendixReturn = useRef(null)
   const frame = useRef(null)
   const scale = useStageScale()
   const { slide: cur, step, mode } = position
@@ -99,7 +97,6 @@ export default function App() {
   }, [])
 
   const jump = useCallback((slide, targetStep = 0) => {
-    if (slide > MAIN_END && cur <= MAIN_END) appendixReturn.current = { slide: cur, step }
     setDirection(slide >= cur ? 1 : -1)
     setPaused(false)
     setSceneRevision((revision) => revision + 1)
@@ -117,12 +114,6 @@ export default function App() {
     setPosition((current) => ({ ...current, mode: current.mode === "present" ? "explore" : "present" }))
   }, [])
 
-  const toggleAppendix = useCallback(() => {
-    if (cur > MAIN_END) {
-      const back = appendixReturn.current || { slide: MAIN_END, step: ALL_SLIDES[MAIN_END].cues.length - 1 }
-      jump(back.slide, back.step)
-    } else jump(MAIN_END + 1)
-  }, [cur, jump])
 
   const toggleFullscreen = useCallback(() => {
     if (!document.fullscreenElement) document.documentElement.requestFullscreen?.().catch(() => {})
@@ -166,13 +157,12 @@ export default function App() {
       else if (key === "r") action = replay
       else if (key === "p") action = () => setPaused((value) => !value)
       else if (key === "g") action = toggleMode
-      else if (key === "a") action = toggleAppendix
       else if (key === "?" || key === "h") action = () => setHelpOpen(true)
       if (action) { event.preventDefault(); action() }
     }
     window.addEventListener("keydown", onKey)
     return () => window.removeEventListener("keydown", onKey)
-  }, [helpOpen, go, jump, mode, toggleFullscreen, replay, toggleMode, toggleAppendix])
+  }, [helpOpen, go, jump, mode, toggleFullscreen, replay, toggleMode])
 
   const context = useMemo(() => ({ guided: mode === "present", paused, cue: scene.cues[step], title: scene.title }), [mode, paused, scene, step])
   const CurrentSlide = scene.C
@@ -190,16 +180,15 @@ export default function App() {
           <span>{step + 1} / {scene.cues.length}</span>
         </div>}</div>
       </div>
-      <Nav position={position} go={go} fullscreen={fullscreen} toggleFullscreen={toggleFullscreen} idle={idle} paused={paused} replay={replay} togglePause={() => setPaused((value) => !value)} toggleMode={toggleMode} toggleAppendix={toggleAppendix} showHelp={() => setHelpOpen(true)} />
+      <Nav position={position} go={go} fullscreen={fullscreen} toggleFullscreen={toggleFullscreen} idle={idle} paused={paused} replay={replay} togglePause={() => setPaused((value) => !value)} toggleMode={toggleMode} showHelp={() => setHelpOpen(true)} />
       <Modal open={helpOpen} onClose={() => setHelpOpen(false)} title="Controles de la presentación" id="shortcut-title">
-        <p>Presentar sigue los pasos del guion. Explorar permite consultar las variantes archivadas del escenario B. No entrena modelos ni calcula un plan en vivo.</p>
+        <p>Presentar sigue los pasos del guion. Explorar permite consultar las variantes archivadas de los cinco productos. No entrena modelos ni calcula un plan en vivo.</p>
         <dl className="shortcut-list">
           <div><dt>Siguiente o anterior</dt><dd>→ / ← · Espacio · Av Pág / Re Pág</dd></div>
           <div><dt>Saltar una diapositiva</dt><dd>Mayús + → / ←</dd></div>
           <div><dt>Repetir o pausar entradas visuales</dt><dd>R / P</dd></div>
           <div><dt>Presentar o Explorar</dt><dd>G</dd></div>
           <div><dt>Pantalla completa</dt><dd>F · Esc para salir</dd></div>
-          <div><dt>Anexos o volver al paso guardado</dt><dd>A</dd></div>
           <div><dt>Inicio o cierre</dt><dd>Inicio / Fin</dd></div>
           <div><dt>Ayuda</dt><dd>? / H</dd></div>
         </dl>

@@ -1,4 +1,4 @@
-// Confirmación del encargo. Corrige la clasificación antigua sin modificar modelos ni costos.
+// Confirmación del encargo. Los cinco montos son precios de venta netos tras descuentos; no modifican modelos ni costos.
 export const BUSINESS = {
   A: {
     name: "Uretano de hoja de resorte Toyota Hilux RN",
@@ -6,7 +6,7 @@ export const BUSINESS = {
     code: "UAH-90385-18025",
     netSellingPrice: 2.5,
     reportedUnitsPerProductionDay: 800,
-    color: "#4e79a7",
+    color: "#ffd22b",
   },
   B: {
     name: "Hule de barra estabilizadora Toyota Hilux 4x4",
@@ -14,7 +14,32 @@ export const BUSINESS = {
     code: "48815-14050",
     netSellingPrice: 12,
     reportedUnitsPerProductionDay: 210,
-    color: "#d4953a",
+    color: "#feb204",
+  },
+  C: {
+    name: "Jgo. rep. palanca velocidades Toyota Hilux 4x4",
+    shortName: "Juego de palanca",
+    code: "UAH-33505-35020",
+    netSellingPrice: 15,
+    reportedUnitsPerProductionDay: 300,
+    color: "#ff8503",
+  },
+  D: {
+    name: "Hule de hoja de resorte Toyota / Nissan corto",
+    shortName: "Hule corto",
+    code: "90385-18046",
+    netSellingPrice: 2.5,
+    reportedUnitsPerProductionDay: 480,
+    color: "#d53600",
+  },
+  E: {
+    name: "Manguera de flujo de aire Toyota 22R 4x4",
+    shortName: "Manguera de aire",
+    code: "17881-54820",
+    netSellingPrice: 100,
+    reportedUnitsPerProductionDayMin: 30,
+    reportedUnitsPerProductionDayMax: 35,
+    color: "#700e01",
   },
 }
 
@@ -26,6 +51,7 @@ export const price = (value) => `Q${number(value, 2)}`
 export const month = (value, short = true) => new Intl.DateTimeFormat("es-GT", {
   month: short ? "short" : "long", year: short ? "2-digit" : "numeric", timeZone: "UTC",
 }).format(new Date(`${value.slice(0, 10)}T00:00:00Z`)).replace(".", "")
+export const monthRange = (start, end) => `${start.slice(0, 4) === end.slice(0, 4) ? month(start).replace(/\s\d{2}$/, "") : month(start)} a ${month(end)}`
 
 export const MODEL_NAMES = {
   naive: "Último mes",
@@ -41,4 +67,7 @@ export const MODEL_NAMES = {
   sarima: "SARIMA",
   random_forest: "Bosque aleatorio",
   gradient_boosting: "Árboles con refuerzo gradual",
+  zero: "Referencia cero",
+  croston_sba: "Croston-SBA",
+  tsb: "TSB",
 }

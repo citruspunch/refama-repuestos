@@ -1,0 +1,55 @@
+.model-lesson .content { gap: 16px; justify-content: center; }
+.lesson-body { display: flex; flex-direction: column; gap: 22px; min-width: 0; }
+.lesson-tabs { display: flex; align-items: stretch; gap: 24px; border-bottom: 1px solid var(--line); }
+.lesson-tabs button { padding: 14px 4px 17px; background: none; border: none; border-bottom: 3px solid transparent; margin-bottom: -1px; font-size: 22px; font-weight: 500; white-space: nowrap; }
+.lesson-tabs button:disabled { color: var(--text-2); opacity: 1; }
+.lesson-tabs button[aria-pressed="true"] { border-bottom-color: var(--accent); color: var(--ink); }
+.lesson-tabs button:enabled:hover { background: var(--paper-2); }
+.lesson-visual { display: grid; grid-template-columns: minmax(0, 1fr) 305px; align-items: center; gap: 42px; min-height: 360px; }
+.lesson-diagram { display: block; width: 100%; height: 360px; overflow: visible; font-family: var(--sans); }
+.lesson-diagram.wide { height: 378px; }
+.lesson-diagram text { fill: var(--text-2); font-variant-numeric: tabular-nums; }
+.lesson-diagram path, .lesson-diagram line { stroke-linecap: round; stroke-linejoin: round; fill: none; }
+.diagram-caption { font-size: 21px; }
+.diagram-tick { font-size: 18px; }
+.diagram-grid { stroke: #e7e2eb; stroke-width: 1; }
+.diagram-window { fill: var(--amber-bg); }
+.diagram-cutoff { stroke: var(--line-2); stroke-width: 1; stroke-dasharray: 3 7; }
+.diagram-bar { fill: #c4bdce; }
+.diagram-bar-selected { fill: #ba7d04; }
+.diagram-bar-forecast, .diagram-forecast-dot { fill: #ba7d04; }
+.diagram-signal { stroke: var(--blue); stroke-width: 3; }
+.diagram-projection { stroke: #ba7d04; stroke-width: 3; stroke-dasharray: 8 6; }
+.diagram-observation { fill: var(--blue); opacity: .65; }
+.diagram-ghost { stroke: var(--muted); stroke-width: 2; stroke-dasharray: 2 7; }
+.diagram-output { fill: var(--amber-bg); }
+.diagram-muted-node { fill: var(--paper-2); }
+.diagram-node-label { font-size: 24px; font-weight: 550; }
+.diagram-tree-wire { stroke: var(--line-2); stroke-width: 2; }
+.diagram-tree-node { fill: var(--blue); }
+.diagram-tree-leaf { fill: #f1d1a2; }
+.diagram-tree-value { font-size: 38px; font-weight: 600; }
+.diagram-result { font-size: 60px; font-weight: 650; }
+.diagram-big-copy { font-size: 35px; font-weight: 600; }
+.lesson-readout { display: flex; flex-direction: column; gap: 21px; min-width: 0; }
+.lesson-readout h3 { font-size: 36px; font-weight: 600; line-height: 1.12; }
+.lesson-readout p { font-size: 25px; color: var(--text-2); line-height: 1.38; }
+.lesson-readout > strong { font-size: 80px; line-height: 1; letter-spacing: -.04em; font-weight: 650; }
+.lesson-readout > strong small { display: block; font-size: 23px; line-height: 1.4; letter-spacing: 0; font-weight: 400; margin-top: 7px; }
+.lesson-detail { border-top: 1px solid var(--line); padding-top: 15px; font-size: 21px; line-height: 1.35; color: var(--text-2); }
+.lesson-footer { font-size: 19px; line-height: 1.4; color: var(--text-2); border-top: 1px solid var(--line); padding-top: 15px; }
+.lesson-inputs { display: flex; align-items: center; justify-content: space-between; gap: 24px; font-size: 20px; color: var(--text-2); }
+.lesson-inputs > span { display: flex; gap: 14px; align-items: center; }
+.lesson-inputs b { display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; background: var(--paper-2); font-size: 20px; font-weight: 500; }
+.lesson-inputs > strong { color: var(--ink); font-weight: 550; }
+.regression-visual { min-height: 300px; }
+.regression-visual .lesson-diagram { height: 310px; }
+.lesson-weight { display: flex; flex-direction: column; gap: 12px; font-size: 20px; margin-top: 24px; }
+.lesson-weight > i { display: block; height: 8px; background: var(--paper-2); border-radius: 4px; }
+.lesson-weight b { display: block; height: 100%; background: var(--blue); border-radius: inherit; transform-origin: left; animation: rule-reveal .8s var(--ease) both; }
+.lesson-tree-board { display: flex; flex-direction: column; gap: 20px; }
+.lesson-tree-caption { text-align: center; font-size: 25px; line-height: 1.35; color: var(--text-2); }
+.lesson-trace { animation: chart-reveal 1s var(--ease) .08s both; }
+.lesson-pop { animation: rise-in .6s var(--ease) .08s both; }
+.lesson-bar { transform-box: fill-box; transform-origin: center bottom; animation: lesson-grow .85s var(--ease) .08s both; }
+@keyframes lesson-grow { from { transform: scaleY(0); } to { transform: scaleY(1); } }

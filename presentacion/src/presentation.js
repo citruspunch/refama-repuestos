@@ -1,10 +1,15 @@
+import { LESSON_STORY } from "./model-lessons.js"
+
 const cue = (label, values = {}) => ({ label, values })
 
 export const STORY = [
-  { id: "portada", title: "Ventas e inventario RUJAF", seconds: 60, cues: [cue("Presentación del proyecto universitario y alcance del trabajo")] },
+  { id: "portada", title: "Ventas e inventario", seconds: 60, cues: [cue("Presentación del proyecto universitario y alcance del trabajo")] },
   { id: "negocio", title: "Cómo funciona la operación de RUJAF", seconds: 90, cues: [cue("Estructura de la operación de RUJAF y canales de distribución")] },
-  { id: "decision", title: "La decisión de cuánto producir e inventariar", seconds: 90, cues: [cue("Riesgos de exceso de inventario y pedidos desatendidos")] },
-  { id: "productos", title: "Los dos productos analizados", seconds: 90, cues: [cue("Características, precios netos y ritmo de producción")] },
+  { id: "decision", title: "Decisiones de producción e inventario", seconds: 90, cues: [cue("Riesgos de exceso de inventario y pedidos desatendidos")] },
+  { id: "productos", title: "Productos y datos reportados", seconds: 90, cues: [
+    cue("Los cinco productos con el mismo detalle de monto y ritmo", { ampliados: false }),
+    cue("Clasificación comercial de los montos reportados", { ampliados: true }),
+  ] },
   { id: "propuesta", title: "Qué nos propusimos desarrollar", seconds: 90, cues: [cue("Etapas del proyecto: datos, modelos, inventario y planificación")] },
   { id: "origen", title: "Cómo obtuvimos los datos del Kardex", seconds: 105, cues: [cue("Extracción directa de datos desde los documentos del Kardex")] },
   { id: "trazabilidad", title: "Trazabilidad y conciliación de movimientos", seconds: 105, cues: [cue("Control de integridad y conciliación de movimientos")] },
@@ -12,37 +17,45 @@ export const STORY = [
   { id: "muestra", title: "Definición del objetivo y meses analizados", seconds: 105, cues: [cue("Definición de ventas y período de datos utilizable")] },
   { id: "tendencia", title: "Evolución de las ventas históricas", seconds: 120, cues: [cue("Tendencia histórica y comparación entre períodos anuales")] },
   { id: "canales", title: "Cambios en las ventas por canal", seconds: 90, cues: [cue("Comportamiento de ventas en Refama y clientes mayoristas")] },
-  { id: "variabilidad", title: "Variación de ventas y tamaño de pedidos", seconds: 105, cues: [cue("Variabilidad mensual y concentración en pedidos grandes")] },
+  { id: "variabilidad", title: "Frecuencia y variabilidad en cinco productos", seconds: 105, cues: [cue("Contraste entre ventas frecuentes y meses sin ventas registradas")] },
   { id: "estacionalidad", title: "Búsqueda de patrones estacionales", seconds: 105, cues: [cue("Comprobación de estacionalidad en las series de ventas")] },
-  { id: "inventario", title: "Inventario en bodega frente a ventas recientes", seconds: 120, cues: [cue("Comparación del inventario en bodega frente al ritmo de ventas")] },
+  { id: "inventario", title: "Inventario en bodega frente a ventas recientes", seconds: 120, cues: [
+    cue("Cobertura histórica de los cinco productos en paralelo", { comparar: false }),
+    cue("Comparación de saldos alineados en los cinco productos", { comparar: true }),
+  ] },
   { id: "demanda", title: "Ventas registradas frente a la demanda real", seconds: 75, cues: [cue("Diferencia entre ventas registradas y demanda económica real")] },
   { id: "variables", title: "Variables utilizadas para predecir", seconds: 105, cues: [cue("Construcción de variables predictivas con datos previos")] },
-  { id: "regresion", title: "Regresión lineal y regularización Ridge", seconds: 90, cues: [cue("Funcionamiento de la regresión lineal y penalización Ridge")] },
-  { id: "metodos", title: "Los 13 modelos evaluados", seconds: 90, cues: [cue("Familias de modelos: referencias simples, regresiones, series y árboles")] },
+  ...LESSON_STORY,
   { id: "validacion", title: "Cómo probamos los modelos", seconds: 135, cues: [
     cue("Entrenamiento progresivo mes a mes", { prueba: false }),
     cue("Comprobación final en los últimos seis meses", { prueba: true }),
   ] },
   { id: "seleccion", title: "Criterio de selección con margen del 5%", seconds: 90, cues: [cue("Regla de selección favoreciendo modelos simples dentro del 5%")] },
-  { id: "resultado-a", title: "Resultados de prueba en el producto A", seconds: 120, cues: [cue("Desempeño de Ridge frente a las referencias en el producto A")] },
-  { id: "resultado-b", title: "Resultados de prueba en el producto B", seconds: 105, cues: [cue("Desempeño de los modelos y regla simple en el producto B")] },
-  { id: "errores", title: "Diferencia entre lo previsto y lo vendido", seconds: 105, cues: [cue("Comparación de errores relativos y sesgo en la prueba final")] },
-  { id: "fallo", title: "Un problema en la predicción del producto A", seconds: 105, cues: [
-    cue("Predicción menor a cero del modelo y ajuste a cero", { contraste: false }),
-    cue("Contraste con ventas reales registradas en el mes", { contraste: true }),
+  { id: "resultado-a", title: "Resultados de prueba en cinco productos", seconds: 120, cues: [cue("MAE de cada modelo fijado frente al último mes, en unidades y escala relativa")] },
+  { id: "resultado-b", title: "Cuando el MAE favorece predecir cero", seconds: 105, cues: [cue("El caso intermitente de E y la diferencia entre precisión y disponibilidad")] },
+  { id: "errores", title: "Diferencia entre lo previsto y lo vendido", seconds: 105, cues: [
+    cue("Curvas de prueba final de los cinco productos, con escalas propias", { comparar: false }),
+    cue("Errores y meses positivos con el mismo detalle para cada producto", { comparar: true }),
+  ] },
+  { id: "fallo", title: "Dos ceros que no significan demanda nula", seconds: 105, cues: [
+    cue("Diferenciar el recorte negativo de A de la selección por MAE en E", { contraste: false }),
+    cue("Contrastar cada cero con ventas registradas, sin mezclar sus períodos", { contraste: true }),
   ] },
   { id: "controles", title: "Reglas de control y modelo de respaldo", seconds: 105, cues: [cue("Reglas de validez y uso del promedio móvil como respaldo")] },
   { id: "planificacion", title: "Entradas para planificar la producción", seconds: 90, cues: [cue("Variables necesarias para calcular las necesidades de producción")] },
-  { id: "escenario-b", title: "Escenarios de producción para el producto B", seconds: 150, cues: [
-    cue("Cálculo de producción sin stock de seguridad", { seguridad: 0, dias: 1 }),
-    cue("Cálculo de producción con un mes de stock de seguridad", { seguridad: 1, dias: 1 }),
+  { id: "escenario-b", title: "Escenarios de producción en cinco productos", seconds: 150, cues: [
+    cue("Comparación de producción sin seguridad en los cinco productos", { seguridad: 0, dias: 1 }),
+    cue("Un mes de seguridad y el límite de días asignados en C", { seguridad: 1, dias: 1 }),
   ] },
-  { id: "escenario-a", title: "Escenario de producción para el producto A", seconds: 105, cues: [cue("Interpretación de producción cero con inventario alto en A")] },
+  { id: "escenario-a", title: "Simulación de reposición en cinco productos", seconds: 105, cues: [
+    cue("La política decide por mes y conserva el saldo de cada día", { comparar: false, simular: false }),
+    cue("Retiros registrados no servidos en los cinco productos", { comparar: true, simular: false }),
+    cue("La seguridad cambia C y D, pero no elimina el retiro no servido en E", { comparar: true, simular: true }),
+  ] },
   { id: "estado", title: "Qué logramos implementar y sus limitaciones", seconds: 90, cues: [cue("Entregables desarrollados y condiciones para su uso")] },
+  { id: "respaldo-modelos", title: "Métricas detalladas de los modelos", seconds: 90, cues: [cue("Consulta de métricas completas de todos los modelos evaluados")] },
+  { id: "respaldo-supuestos", title: "Supuestos utilizados en los escenarios", seconds: 90, cues: [cue("Consulta de parámetros y supuestos de los escenarios")] },
   { id: "conclusiones", title: "Resultados y conclusiones", seconds: 75, cues: [cue("Conclusiones principales sobre ventas, modelos y producción")] },
-  { id: "respaldo-modelos", title: "Métricas detalladas de los modelos", seconds: 90, appendix: true, cues: [cue("Consulta de métricas completas de todos los modelos evaluados")] },
-  { id: "respaldo-supuestos", title: "Supuestos utilizados en los escenarios", seconds: 90, appendix: true, cues: [cue("Consulta de parámetros y supuestos de los escenarios")] },
-  { id: "respaldo-fuentes", title: "Fuentes de información y trazabilidad", seconds: 90, appendix: true, cues: [cue("Mapa de archivos del proyecto y respuestas a preguntas clave")] },
 ]
 
 const nonempty = (value) => typeof value === "string" && value.trim().length > 0

@@ -1,6 +1,6 @@
 # Evidencia y decisiones editoriales
 
-Las rutas de esta página se expresan respecto a la raíz del repositorio. Los datos históricos tienen fecha de análisis del 26 de octubre de 2026. `presentacion/evidence-loader.js` solo lee tablas públicas, conserva sus rutas y calcula SHA-256 al construir el HTML. La presentación no consulta archivos privados ni ejecuta el pipeline analítico.
+Las rutas son relativas a la raíz. Fecha de análisis del 26 de octubre de 2026. `presentacion/evidence-loader.js` lee las tablas sin nombres del experimento `five_products_v1`, conserva sus rutas y calcula SHA-256 al construir el HTML. La presentación no consulta archivos privados ni ejecuta el pipeline analítico. La ampliación Python se ejecutó por separado y conservó los resultados anteriores.
 
 ## Jerarquía de fuentes
 
@@ -10,39 +10,41 @@ Las rutas de esta página se expresan respecto a la raíz del repositorio. Los d
 
 ### Confirmación posterior a los reportes
 
-Los documentos actuales del proyecto todavía clasifican Q2.50 y Q12.00 como valores no confirmados. El encargo aclara que son precios netos de venta después de descuentos, respectivamente para A y B. La diapositiva 04 incorpora esa confirmación.
+El informe histórico mantiene Q2.50 y Q12.00 como valores de referencia. El catálogo del experimento nuevo conserva la confirmación comercial de precios netos tras descuentos para los cinco productos (A Q2.50, B Q12.00, C Q15.00, D Q2.50, E Q100.00; clasificación precio_venta_neto_tras_descuento). La diapositiva 04 muestra esa clasificación uniforme.
 
-No se cambió `business.py`, `financial.py`, el JSON de escenarios ni los reportes anteriores. El módulo `presentacion/src/business.js` mantiene los precios como `netSellingPrice`, sin campo de costo. No se inventaron precios de lista, descuentos porcentuales, margen ni rentabilidad. Tampoco se usaron las multiplicaciones de `unclassified_value_scenarios.csv` como valoración o ahorro.
+Se conservan `business.py`, `financial.py`, el JSON antiguo y los reportes históricos. El catálogo y `scenarios/five_products.json` son entradas separadas de la ampliación. `business.js` usa `netSellingPrice` para los cinco productos. No hay un campo de fabricación verificada ni cálculo de margen. Ningún módulo financiero usa los precios netos como costos de producción; `unclassified_value_scenarios.csv` es solo un escenario de ingresos estimados, no ingreso histórico real ni ahorro.
 
-800 y 210 unidades son ritmos aproximados por día de producción reportado. Usarlos como unidades buenas sostenibles en una fila de planificación sigue siendo un supuesto del escenario. No prueban capacidad máxima, producción diaria constante ni un calendario conjunto factible.
+800, 210, 300, 480 y 30 a 35 son ritmos aproximados por día productivo reportado. Usarlos como tasas de unidades buenas sigue siendo un supuesto del escenario. No prueban capacidad máxima, producción constante ni un calendario conjunto factible. El rango de E se conserva y se evalúan ambos extremos.
 
 ## Correspondencia por diapositiva
 
 | Diapositivas | Evidencia principal | Qué respalda y qué no |
 | --- | --- | --- |
-| 01 a 05 | `README.md`, `docs/business_assumptions.md`, confirmación del encargo | Contexto comercial, dos SKU y propuesta. No acredita ahorros ni práctica actual de producción. |
-| 06 | `kardex_csv/LEEME.txt`, `docs/data_dictionary.md` | Dos PDF de 13 y 10 páginas, extracción sin OCR y procedencia por fila. Los PDF y el extractor no están incluidos. |
-| 07 | `reports/data_quality.md`, `source_reconciliation.csv`, `monthly_reconciliation.csv`, `artifacts/source_manifest.json` | 1,062 movimientos, 583 y 479 por producto, 105 coincidencias mensuales. Conciliación entre archivos derivados, no auditoría independiente del negocio. |
-| 08 | `reports/tables/quality_checks.csv`, `reports/data_quality.md` | 1,060 transiciones comprobables, 0 diferencias, 2 negativos, 23 ajustes y 10 eventos cero. No certifica stock físico. |
-| 09 | `reports/tables/coverage.csv`, `data/processed/monthly_demand.csv`, `docs/methodology.md` | Meses interiores de julio de 2022 a agosto o septiembre de 2026. La cobertura interior es provisional. |
-| 10 | `monthly_demand.csv`, `reports/tables/comparable_ytd.csv` | Series y ventanas anuales comparables. A: 3,596/8,100 menos uno; B: 593/1,211 menos uno. No identifica causas. |
-| 11 | `reports/tables/rujaf_demand_streams.csv`, `sales_summary.csv` | Cambios de promedios y participación de Refama. Las ventanas son primeros y últimos 12 meses, no acumulados anuales. |
-| 12 | `reports/tables/sales_summary.csv` | Promedios, CV, rangos y concentración por pedidos. La concentración incluye los extremos observados; los momentos mensuales no. |
-| 13 | `monthly_demand.csv`, `reports/tables/seasonality.csv` | Calendarios, q armónico y ACF detrendida. Un resultado significativo aislado no establece una temporada operativa estable. |
-| 14 | `reports/tables/inventory_pressure.csv` | 5,892/393.25 = 14.9828 y 24/69.8333 = 0.3437. Son cocientes históricos, no pronósticos de cobertura. |
+| 01 a 05 | `README.md`, `product_catalog.csv`, confirmación del encargo | Cinco SKU, montos clasificados y ritmos reportados. No acredita ahorros ni capacidad máxima. |
+| 06 | `kardex_csv/LEEME.txt`, LEEME del paquete nuevo, `docs/data_dictionary.md` | Procedencia documentada inicial y tres CSV adicionales. No se afirma una nueva extracción de PDF ausentes. |
+| 07 | `source_reconciliation.csv`, `monthly_reconciliation.csv`, manifiesto del experimento | 2,108 movimientos y 258 combinaciones producto/mes. Consolidado único, sin concatenar sus copias. |
+| 08 | `quality_checks.csv`, `quality_by_product.csv`, `movement_totals.csv` | 2,103 transiciones, 3 negativos, 80 ajustes, 30 eventos cero, cuatro traslados y una venta en cero. No certifica stock físico. |
+| 09 | `coverage.csv`, `monthly_demand.csv` | 50, 51, 47, 51 y 49 meses interiores para A/B/C/D/E; cobertura provisional y fronteras excluidas. |
+| 10 | `monthly_demand.csv`, `comparable_ytd.csv` | Cinco series con eje temporal común y escalas verticales propias. Cambios anuales sobre meses equivalentes, con período visible por producto. No identifica causas. |
+| 11 | `rujaf_demand_streams.csv`, `sales_summary.csv` | Cambios por canal de los cinco. Ventanas de primeros y últimos doce meses; no consumo final. |
+| 12 | `sales_summary.csv`, `demand_profiles.csv` | Frecuencia, CV y rachas de ceros. E tiene 21/49 meses en cero y racha máxima de cuatro. |
+| 13 | `seasonality.csv` | Correlación anual y q armónico de los cinco. A tiene señal armónica tras FDR, insuficiente para afirmar estacionalidad operativa fiable. No se reemplazan q históricos. |
+| 14 | `inventory_pressure.csv` | Cocientes de los cinco, con cortes propios. A 14.98, B 0.34, C 0.20, D 0.23 y E 0.80. No cobertura garantizada. |
 | 15 | `reports/data_quality.md`, `docs/demand_forecasting.md` | Ventas atendidas frente a demanda no observada. El diagrama es conceptual, no una estimación de ventas perdidas. |
-| 16 | `src/inventory_demand/features.py`, `monthly_demand.csv` | Siete variables de entrenamiento y ejemplo 360, 71 y 184. Promedio 205. El ejemplo no atribuye a Ridge esa predicción. |
-| 17 y 18 | `src/inventory_demand/forecasting.py` | Regresión, Ridge, escalado local y los 13 candidatos fijos. No afirma éxito en todos los ajustes. |
-| 19 y 20 | `src/inventory_demand/evaluation.py`, `validation_splits.csv`, `selected_models.csv` | 24 meses iniciales, orígenes crecientes, selección con banda de 5% y prueba de 6 meses. No es pronóstico de seis pasos desde un origen único. |
-| 21 a 23 | `model_comparison.csv`, `backtest_predictions.csv`, `paired_baseline_comparison.csv` | MAE, RMSE, WAPE, sesgo y límites de la comparación. Se conserva la selección anterior a la prueba. |
-| 24 | `next_history_month_forecasts.csv` | A sin recorte −102.294; recortado cero; 325 ventas de frontera. El mes parcial no es una venta mensual completa ni una variable futura de entrenamiento. |
-| 25 | `src/inventory_demand/forecast_validity.py`, `forecast_validity.csv`, `forecast_safeguard_comparison.csv` | Controles, respaldo fijo MA3 y diagnóstico posterior. No es evidencia independiente de mejora de precisión. |
-| 26 a 28 | `src/inventory_demand/inventory.py`, `production_scenarios.csv`, `scenarios/rujaf_planning.json` | Aritmética de escenarios históricos por SKU con supuestos explícitos. No acredita factibilidad conjunta, servicio ni órdenes reales. |
-| 29 | `tests/`, `notebooks/01_exploratory_analysis.ipynb`, ejecución de pytest en esta revisión | 132 pruebas de Python aprobadas, cuaderno ejecutado y estado de implementación. No valida beneficios comerciales. |
-| 30 | `sales_summary.csv`, `model_comparison.csv`, `production_scenarios.csv` | Conclusiones del historial, los pronósticos y los escenarios. Sin validación operativa ni ahorros demostrados. |
-| 31 a 33 | Las fuentes anteriores y tablas de consulta | Respaldo técnico para preguntas, no resultados adicionales del proyecto. |
+| 16 | `src/inventory_demand/features.py`, `monthly_demand.csv` | Los tres rezagos y su promedio para los cinco, con objetivo propio. Son parte de siete variables; el promedio no se atribuye automáticamente al modelo fijado. |
+| 17 | `monthly_demand.csv`, `forecasting.py`, `presentacion/src/model-lessons.js` | Naive y promedios de 3 y 6 meses recalculados con ventas de B a agosto y septiembre de 2026. La ventana avanza con una observación ya archivada, no una venta inventada. |
+| 18 | `features.py`, `forecasting.py`, `presentacion/src/model-lessons.js` | Siete entradas reales y rectas didácticas de un solo predictor. El efecto de Ridge se calcula con predictor estandarizado y penalización 10; no son los pesos ni el ajuste del proyecto. |
+| 19 | `forecasting.py`, `presentacion/src/model-lessons.js` | Árbol y promedio de tres estimaciones didácticas. El candidato ejecutado es Random forest con 80 árboles; no se evaluó un árbol aislado. |
+| 20 y 21 | `evaluation.py`, `candidate_eligibility.csv`, `validation_splits.csv`, `selected_models.csv` | 24 meses iniciales, orígenes crecientes, selección con banda de 5% y prueba de 6 meses. La elegibilidad usa la historia inicial, no la prueba final. No es pronóstico de seis pasos desde un origen único. |
+| 22 a 24 | `model_comparison.csv`, `backtest_predictions.csv`, `paired_baseline_comparison.csv` | MAE absoluto y relativo al último mes en los cinco, caso intermitente E y cinco curvas finales. E elige cero, con WAPE 100% y dos meses positivos finales. |
+| 25 | `next_history_month_forecasts.csv`, `backtest_predictions.csv` | Recorte negativo de A y selección cero de E. Las 325 ventas de frontera de A y las 13 de prueba de E tienen períodos distintos y no se suman ni se usan para decidir antes del origen. |
+| 26 | `forecast_validity.py`, `forecast_validity.csv`, `forecast_safeguard_comparison.csv` | Controles, respaldo fijo MA3 y diagnóstico posterior. No es evidencia independiente de mejora de precisión. |
+| 27 a 29 | `inventory.py`, `portfolio_planning.py`, `production_scenarios.csv`, `production_replay.csv` | 48 escenarios y replay diario con retiros registrados. No faltantes reales, factibilidad conjunta ni ahorro. |
+| 30 | `tests/`, cuaderno preservado, `reports/expansion_tests.xml` | Pruebas originales y adicionales; procesamiento genérico, conservación histórica y estado de implementación. |
+| 31 y 32 | Las fuentes anteriores y tablas de consulta | Respaldo técnico para preguntas, no resultados adicionales del proyecto. |
+| 33 | `sales_summary.csv`, `model_comparison.csv`, `production_scenarios.csv` | Conclusiones del historial, los pronósticos y los escenarios. Sin validación operativa ni ahorros demostrados. |
 
-Los nombres de CSV sin prefijo adicional en la tabla corresponden a `reports/tables/`, salvo `monthly_demand.csv`, ubicado en `data/processed/`.
+Salvo las referencias históricas indicadas, los CSV corresponden a `reports/experiments/five_products_v1/tables/`; `monthly_demand.csv` está en `data/experiments/five_products_v1/`. Las rutas abreviadas de módulos están bajo `src/inventory_demand/`. El manifiesto del experimento está en `artifacts/experiments/five_products_v1/`.
 
 ## Resultados que se mantienen separados
 
@@ -50,13 +52,23 @@ Los nombres de CSV sin prefijo adicional en la tabla corresponden a `reports/tab
 
 El total VENTA observado es 66,423 unidades en A y 6,437 en B. Incluye meses fronterizos no confirmados. Las estadísticas y los modelos principales usan respectivamente 50 y 51 meses interiores. No se mezclan esos dos alcances.
 
+C añade 16,802 unidades, D 5,578 y E 166. Sus estadísticas usan 47, 51 y 49 meses interiores. Los 2,108 movimientos se procesan una sola vez. C conserva REFAMA como procedencia documental y se incluye en RUJAF por instrucción de la empresa.
+
 Los saldos alineados de 5,892 y 24 son cortes históricos previos a los objetivos de pronóstico. Los últimos saldos observados de los archivos, 5,567 y 44, pertenecen a otros cortes y no los sustituyen.
 
 ### Evaluación de pronóstico ejecutada
 
-Se ejecutaron orígenes mensuales crecientes para seis series, dos productos y tres canales por producto, con 13 candidatos. Se seleccionó usando validación antes de evaluar los seis meses finales. Las métricas originales siguen intactas. Los rangos de prueba son distintos entre productos.
+El experimento nuevo ejecutó quince series con catorce a dieciséis candidatos según su ventana inicial. La selección antecede a los seis orígenes finales. Los rangos de prueba difieren entre productos. Los mismos candidatos originales de A/B reproducen sus métricas archivadas, pero reejecutar esos meses no crea una nueva prueba independiente.
 
 Las bandas de incertidumbre son heurísticas, dependientes de selección y de una muestra con cambio de nivel. No son garantías de 80% o 95% de servicio. El proyecto no demostró ventaja robusta general de aprendizaje automático.
+
+### Introducción visual de modelos
+
+La revisión del 27 de octubre introduce solo naive, promedio móvil de 3 y 6 meses, regresión lineal, Ridge y Random forest. Cada uno tiene métricas finitas sobre seis orígenes de prueba en `model_comparison.csv`. Esta comprobación documenta que se ejecutaron; no cambia la elegibilidad ni selecciona modelos con la prueba final. SARIMA, ETS, boosting y los métodos intermitentes quedan fuera de la explicación introductoria, pero sus resultados permanecen en la consulta completa.
+
+Las referencias de B usan meses marcados `complete_for_modeling`. Al corte de agosto, naive da 114 y el promedio de junio a agosto da 79 unidades. Al incorporar septiembre, el promedio de julio a septiembre da 96.3333; el de abril a septiembre da 61.8333. Son cálculos históricos para enseñar la ventana, no previsiones vigentes.
+
+Los nueve puntos de regresión están declarados como ejemplo didáctico. La recta y el indicador de influencia salen del mismo cálculo. La reducción del peso corresponde a ese ejemplo de un predictor estandarizado; no demuestra mayor precisión ni impide resultados negativos. El bosque ilustrado promedia 60, 90 y 75 para dar 75 unidades. Ninguno de esos valores es un resultado de Random forest en el proyecto. Los modelos fijados siguen siendo Ridge para A y D, promedio móvil de 3 meses para B y C, y cero para E.
 
 ### Diagnóstico posterior de controles
 
@@ -64,21 +76,27 @@ La regla de respaldo se incorporó después de observar el experimento. Se repit
 
 ### Escenarios de inventario y producción ejecutados
 
-Se preservan seis ejemplos antiguos de reposición por compras con plazos supuestos en meses. No se presentan como planes de fabricación de RUJAF. La presentación usa la extensión de producción, con ocho filas puntuales y supuestos en días.
+Se preservan seis ejemplos antiguos de reposición por compras con plazos supuestos en meses. No se presentan como planes de fabricación de RUJAF. La versión anterior de la presentación usaba ocho alternativas de producción con supuestos en días.
+
+Las ocho filas originales permanecen en sus rutas. La presentación ampliada usa las 48 alternativas nuevas, con factores de previsión 1 y 1.5, y ambos extremos del ritmo de E. Los casos base A/B mantienen las cantidades anteriores.
 
 En B sin seguridad, 96.3333/30 × 37 = 118.8111 unidades objetivo. Restar 24 y redondear hacia arriba da 95. Agregar 96.3333 de seguridad al objetivo da 215.1444 y una sugerencia de 192. Dividir por el ritmo supuesto 210 produce 0.4524 y 0.9143 días productivos teóricos.
 
 En A con seguridad cero, 205/30 × 37 = 252.8333. El saldo 5,892 lo supera y la sugerencia es cero. Esa diferencia es un sobrante respecto a un objetivo supuesto, no una clasificación de desperdicio ni una valoración económica.
 
-No se demostró una simulación continua de producción e inventario con todas las restricciones reales, comparación contra decisiones actuales y medición de ahorro. Las interfaces de costos y comparación de programas tienen pruebas sintéticas. `actual_savings` permanece sin valor calculado.
+El replay nuevo usa decisiones mensuales y recepciones a siete días con retiros diarios VENTA. No incorpora como suministro los ingresos reales, ajustes o traslados: simula otra política. Con un día mensual y ritmo inferior, seguridad de cero frente a un mes produce retiros no servidos de 115 frente a 2 en C, 129 frente a 0 en D y 1 frente a 1 en E. Son resultados de simulación, no faltantes reales. No hay restricciones reales completas, comparación contra decisiones actuales ni medición de ahorro. `actual_savings` permanece sin valor calculado.
+
+La comparación incluye también A y B, ambos con cero retiros registrados no servidos bajo las dos variantes. En el escenario puntual, C requiere 439 unidades con seguridad, pero el día asignado a 300 u./día limita el lote a 300. Cinco días permiten la variante de 439. La selección de filas fija factor de previsión 1 y el extremo inferior del ritmo; no mezcla alternativas de estrés ni suma ambos extremos de E.
 
 ## Visualizaciones seleccionadas
 
-Se recrean las ideas útiles de `monthly_sales_scenarios.png`, `calendar_growth.png`, `customer_segment_contributions.png`, `order_concentration.png`, `calendar_heatmap.png`, `inventory_and_supply.png`, `model_comparison.png` y `actual_vs_predicted.png` desde sus tablas numéricas.
+Las visualizaciones se construyen desde las tablas, no desde capturas de los reportes. Ventas y errores usan una cuadrícula con A y B arriba, C, D y E abajo; inventario, cinco lecturas paralelas. La estacionalidad muestra los mismos diagnósticos para cada repuesto.
 
 No se insertan todas las imágenes disponibles. STL, residuos, autocorrelaciones completas, ejemplos de compras y bandas se discuten solo donde aportan contexto o en notas. Esto evita letras pequeñas, etiquetas en inglés y protagonismo excesivo de resultados secundarios.
 
-Los gráficos mensuales tienen ejes en unidades y escalas propias. Las barras de error parten de cero. Las líneas no usan suavizado que invente trayectorias entre meses. Los calendarios usan cifras visibles y escalas separadas, con contraste mínimo de texto de 4.5. Las figuras de documentos son esquemas, no los PDF originales.
+Los gráficos mensuales tienen ejes en unidades y escalas propias. Las barras de error parten de cero. La comparación relativa divide el MAE del modelo fijado entre el MAE del último mes del mismo producto y multiplica por cien. Se declara la referencia 100; no se comparan MAE absolutos entre volúmenes distintos. Las curvas finales contienen solo los seis objetivos propios de cada producto. Las líneas no usan suavizado ni completan meses fuera de cobertura.
+
+La paleta indicada para A a E es `#ffd22b`, `#feb204`, `#ff8503`, `#d53600` y `#700e01`. Los colores identifican productos, no éxito o fallo. Rellenos y etiquetas conservan esa paleta; las líneas de A, B y C usan tonos más profundos con contraste mínimo de 3 frente al fondo, sin contornos superpuestos. La venta usa línea continua con puntos, el modelo fijado usa guiones y la referencia del último mes, una línea punteada. Los valores y las letras siguen disponibles sin color. Las animaciones revelan los datos ya calculados, sin interpolar cifras ni simular observaciones nuevas.
 
 ## Datos todavía necesarios
 

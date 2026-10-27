@@ -22,9 +22,13 @@ const evidencePlugin = {
     return `export default ${JSON.stringify(loadEvidence())}`
   },
   transformIndexHtml() {
+    const { analysisDate, experiment, provenance } = loadEvidence()
     return [{
       tag: "script", attrs: { type: "application/json", id: "licencias-fuentes" },
       children: JSON.stringify(fontLicenses).replaceAll("<", "\\u003c"), injectTo: "head",
+    }, {
+      tag: "script", attrs: { type: "application/json", id: "procedencia-datos" },
+      children: JSON.stringify({ analysisDate, experiment, provenance }).replaceAll("<", "\\u003c"), injectTo: "head",
     }]
   },
 }
