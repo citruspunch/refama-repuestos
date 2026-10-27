@@ -3,10 +3,10 @@ import { readdirSync, readFileSync } from "node:fs"
 import { resolve } from "node:path"
 import { pathToFileURL } from "node:url"
 import { STORY, lastMainSlide } from "../src/presentation.js"
-import { BUSINESS, MODEL_NAMES, month, number } from "../src/business.js"
-import { PRODUCT_STROKES } from "../src/chart-colors.js"
+import { BUSINESS, MODEL_NAMES, number } from "../src/business.js"
+import { PRODUCT_STROKES, contrast } from "../src/chart-colors.js"
 import { loadEvidence } from "../evidence-loader.js"
-import { forecastSeries, productionVariant, replayTotal } from "../src/analysis.js"
+import { evaluationSplit, forecastSeries, productionVariant, replayTotal } from "../src/analysis.js"
 
 const end = lastMainSlide()
 const scenes = Object.fromEntries(STORY.map((scene, index) => [scene.id, index]))
@@ -32,6 +32,10 @@ async function visit(page, id, step = 0) {
   await at(page, id, step)
 }
 
+async function browserMonth(page, value) {
+  return page.evaluate((date) => new Intl.DateTimeFormat("es-GT", { month: "short", year: "2-digit", timeZone: "UTC" }).format(new Date(`${date.slice(0, 10)}T00:00:00Z`)).replace(".", ""), value)
+}
+
 test("todos los pasos avanzan y retroceden con el control de diapositivas", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce" })
   await page.goto("/")
@@ -51,14 +55,14 @@ test("todos los pasos avanzan y retroceden con el control de diapositivas", asyn
 })
 
 test("enlaces, recarga, saltos e inicio y fin conservan el paso", async ({ page }) => {
-  await page.goto(`/?audiencia=universidad${hashFor("escenario-b", 1)}`)
-  await at(page, "escenario-b", 1)
+  await page.goto(`/?audiencia=universidad${hashFor("escenario-a", 1)}`)
+  await at(page, "escenario-a", 1)
   await page.reload()
-  await at(page, "escenario-b", 1)
+  await at(page, "escenario-a", 1)
   await page.keyboard.press("Shift+ArrowRight")
-  await at(page, "escenario-a")
+  await at(page, "estado")
   await page.keyboard.press("ArrowLeft")
-  await at(page, "escenario-b", 1)
+  await at(page, "escenario-a", 1)
   await page.keyboard.press("End")
   await at(page, end)
   await page.keyboard.press("Home")
@@ -82,9 +86,9 @@ test("Espacio no avanza dos veces y la repetición de tecla se ignora", async ({
   await page.goto(`/${hashFor("validacion")}`)
   await page.getByRole("button", { name: "Paso siguiente", exact: true }).focus()
   await page.keyboard.press("Space")
-  await at(page, "validacion", 1)
+  await at(page, "precision")
   await page.evaluate(() => window.dispatchEvent(new KeyboardEvent("keydown", { key: "ArrowRight", repeat: true })))
-  await at(page, "validacion", 1)
+  await at(page, "precision")
 })
 
 test("la ayuda restaura el foco y pantalla completa sigue al navegador", async ({ page }) => {
@@ -137,7 +141,7 @@ test("cada diapositiva es breve y no contiene detalles internos ni cifras decora
       return copy.textContent.replace(/\s+/g, " ").trim()
     })
     expect.soft(text.split(/\s+/).length, `Texto ${slide + 1}/${step + 1}`).toBeLessThanOrEqual(100)
-    expect(text).not.toMatch(/SHA-256|huellas|conciliaci[oó]n|FDR|arm[oó]nic|WAPE|RMSE|salvaguardas|16 m[eé]todos|48 escenarios|pruebas automatizadas|\.py\b|m[oó]dulos|repositorio|;/i)
+    expect(text).not.toMatch(/SHA-256|huellas|conciliaci[oó]n|FDR|arm[oó]nic|WAPE|RMSE|salvaguardas|16 m[eé]todos|48 escenarios|pruebas automatizadas|\.py\b|m[oó]dulos|repositorio|\breserva\b|\bseguridad\b|colch[oó]n|;/i)
     await expect(page.locator(".number-ticker, .takeaway, .caveat")).toHaveCount(0)
     const fontIssues = await page.locator(".slide").evaluate((root) => [...root.querySelectorAll("*")].flatMap((el) => {
       const style = getComputedStyle(el)
@@ -159,7 +163,8 @@ test("las variables, el ejemplo de MAE y los modelos elegidos usan los datos rea
   const meanError = example.reduce((sum, row) => sum + Math.abs(row.selected - row.actual), 0) / 3
   await expect(page.locator(".large-caption")).toContainText(number(meanError, 2))
   await visit(page, "seleccion")
-  await expect(page.locator(".selection-table tbody td")).toHaveText(Object.values(products).map((p) => MODEL_NAMES[p.selection.model]))
+  await expect(page.locator(".selection-table tbody td:first-of-type")).toHaveText(Object.values(products).map((p) => MODEL_NAMES[p.selection.model]))
+  await expect(page.locator(".selection-table tbody td:last-child")).toHaveCount(5)
 })
 
 test("los resultados finales y los meses sin ventas no cambian al simplificar", async ({ page }) => {
@@ -175,31 +180,115 @@ test("los resultados finales y los meses sin ventas no cambian al simplificar", 
   const e = forecastSeries(products.E, true)
   await expect(page.locator(".zero-example tbody tr").nth(0).locator("td")).toHaveText(e.map((row) => number(row.actual)))
   await expect(page.locator(".zero-example tbody tr").nth(1).locator("td")).toHaveText(e.map((row) => number(row.selected)))
-  await expect(page.locator(".large-caption")).toContainText("13 unidades")
+  await expect(page.locator(".large-caption")).toHaveText("Un error bajo no basta para decidir cuánto inventario mantener.")
   await visit(page, "fallo")
-  await expect(page.locator(".rows")).toContainText(number(products.A.forecast.raw_forecast_units, 2))
-  await expect(page.locator(".rows")).toContainText("205 unidades")
+  await expect(page.locator(".failure-steps")).toContainText(number(products.A.forecast.raw_forecast_units, 2))
+  await expect(page.locator(".failure-steps")).toContainText("205 unidades")
 })
 
-test("los escenarios conservan las cantidades, fechas y límites originales", async ({ page }) => {
+test("las diapositivas 15 a 22 muestran las identidades, razones y textos solicitados", async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: "reduce" })
+  await page.goto(`/${hashFor("validacion")}`)
+  await expect(page.locator(".validation-slide .flow-num")).toHaveCount(3)
+  for (const item of await page.locator(".validation-slide .flow-num").all()) expect(Number(await item.evaluate((el) => getComputedStyle(el).fontWeight))).toBeGreaterThanOrEqual(700)
+  await expect(page.locator(".validation-slide .large-caption, .cue-segment")).toHaveCount(0)
+  const split = evaluationSplit(products.A)
+  await expect(page.locator(".validation-distribution figcaption")).toContainText(`Distribución de los ${split.total} meses del producto`)
+  await expect(page.locator(".validation-distribution figcaption .product-a")).toHaveText("A")
+  const segments = page.locator(".validation-bar [role='listitem']")
+  await expect(segments.locator("strong")).toHaveText([`${split.training} meses`, `${split.validation} meses`, `${split.test} meses`])
+  await expect(segments.locator("span")).toHaveText(["Entrenamiento inicial", "Validación", "Prueba final"])
+  for (const [index, label] of ["Entrenamiento inicial", "Validación", "Prueba final"].entries()) await expect(segments.nth(index)).toHaveAttribute("aria-label", `${label}: ${[split.training, split.validation, split.test][index]} meses`)
+  const geometry = await segments.evaluateAll((elements) => elements.map((el) => ({ width: el.getBoundingClientRect().width, color: getComputedStyle(el).color, background: getComputedStyle(el).backgroundColor })))
+  const totalWidth = geometry.reduce((sum, segment) => sum + segment.width, 0)
+  const toHex = (rgb) => `#${rgb.match(/\d+/g).slice(0, 3).map((channel) => Number(channel).toString(16).padStart(2, "0")).join("")}`
+  for (const [index, segment] of geometry.entries()) {
+    expect(Math.abs(segment.width / totalWidth - [split.training, split.validation, split.test][index] / split.total)).toBeLessThan(.005)
+    expect(contrast(toHex(segment.color), toHex(segment.background))).toBeGreaterThanOrEqual(4.5)
+  }
+
+  await visit(page, "precision")
+  await expect(page.locator(".mae-example caption .product-b b")).toHaveText("B")
+  await expect(page.locator(".chart-intro strong")).toHaveText("MAE")
+
+  await visit(page, "seleccion")
+  for (const header of await page.locator(".selection-table thead th").all()) expect(Number(await header.evaluate((el) => getComputedStyle(el).fontWeight))).toBeGreaterThanOrEqual(700)
+  await expect(page.locator(".selection-table tbody td:last-child")).toHaveText([
+    /cercano al mínimo.*regularizar/, /cercano al mínimo.*sencilla/, /Menor error en validación/, /Menor error en validación/, /Menor error en validación.*poco frecuentes/,
+  ])
+
+  await visit(page, "resultado-a")
+  await expect(page.locator(".large-caption .inline-product")).toHaveText(["A", "C", "E", "B", "D"])
+  for (const badge of await page.locator(".large-caption .inline-product").all()) {
+    const id = await badge.textContent()
+    const color = await badge.evaluate((el) => getComputedStyle(el).backgroundColor)
+    const expected = BUSINESS[id].color.match(/[\da-f]{2}/gi).map((part) => parseInt(part, 16))
+    expect(color).toBe(`rgb(${expected.join(", ")})`)
+  }
+
+  await visit(page, "errores")
+  await expect(page.locator(".chart-legend-unit")).toHaveText("Unidades por mes")
+  await expect(page.locator(".chart-legend")).not.toContainText("Escala propia")
+  const positions = await page.locator(".chart-legend > span").evaluateAll((items) => items.map((item) => item.getBoundingClientRect().right))
+  const legendRight = await page.locator(".chart-legend").evaluate((el) => el.getBoundingClientRect().right)
+  expect(Math.abs(positions.at(-1) - legendRight)).toBeLessThan(1)
+
+  await visit(page, "resultado-b")
+  await expect(page.locator(".slide")).not.toContainText("Prueba final")
+  await expect(page.locator(".slide")).not.toContainText("Predecir cero")
+
+  await visit(page, "fallo")
+  await expect(page.locator(".failure-header .product-a")).toContainText(BUSINESS.A.shortName)
+  const headerBoxes = await page.locator(".failure-header > *").evaluateAll((items) => items.map((item) => item.getBoundingClientRect().left))
+  expect(headerBoxes[1]).toBeGreaterThan(headerBoxes[0])
+  await expect(page.locator(".failure-steps li")).toHaveCount(3)
+  const cardStyle = (el) => {
+    const style = getComputedStyle(el)
+    const text = getComputedStyle(el.querySelector("p"))
+    return { border: style.borderTop, background: style.backgroundColor, shadow: style.boxShadow, padding: style.paddingTop, font: text.fontSize, margin: text.marginTop }
+  }
+  const failureStyle = await page.locator(".failure-steps li").first().evaluate(cardStyle)
+
+  await visit(page, "planificacion")
+  await expect(page.locator(".planning-inputs > div").first()).toContainText("período de revisión y reposición")
+  expect(failureStyle).toEqual(await page.locator(".planning-inputs > div").first().evaluate(cardStyle))
+})
+
+test("los gráficos finales mantienen su popover y nombre accesible sin tooltip nativo", async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: "reduce" })
+  await page.goto(`/${hashFor("errores")}`)
+  for (const [id, p] of Object.entries(products)) {
+    const chart = page.locator(`[data-product="${id}"] .recharts-surface`)
+    const start = await browserMonth(page, p.selection.holdout_start)
+    const end = await browserMonth(page, p.selection.holdout_end)
+    await expect(chart).toHaveAttribute("aria-label", new RegExp(`producto ${id}.*${start} a ${end}`))
+    await expect(chart.locator("title")).toBeEmpty()
+    await expect(chart).not.toHaveAttribute("title")
+  }
+  const chart = page.locator('[data-product="B"] .recharts-surface')
+  const box = await chart.boundingBox()
+  await page.mouse.move(box.x + box.width * .5, box.y + box.height * .5)
+  const tooltip = page.locator('[data-product="B"] .chart-tooltip')
+  await expect(tooltip).toBeVisible()
+  await expect(tooltip).toContainText("Venta real registrada")
+  await expect(tooltip).toContainText("Último mes")
+})
+
+test("el escenario y la simulación conservan sus cantidades y fechas históricas", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce" })
   await page.goto(`/${hashFor("escenario-b")}`)
-  for (const step of [0, 1]) {
-    await visit(page, "escenario-b", step)
-    for (const [id, p] of Object.entries(products)) {
-      const zero = productionVariant(p, 0), one = productionVariant(p, 1)
-      const row = page.locator(`.portfolio-scenarios tr[data-product="${id}"]`)
-      await expect(row.locator("td")).toHaveText([number(one.recorded_on_hand_units), `${number(zero.suggested_production_units)}${zero.constraints_prevent_target ? "*" : ""}`, `${number(one.suggested_production_units)}${one.constraints_prevent_target ? "*" : ""}`])
-      await expect(row.locator("td.is-current")).toHaveAttribute("aria-current", "step")
-      await expect(row.locator("th")).toContainText(month(one.balance_cutoff))
-    }
-    await expect(page.locator(".small-explanation")).toContainText("439")
+  for (const [id, p] of Object.entries(products)) {
+    const scenario = productionVariant(p)
+    const row = page.locator(`.portfolio-scenarios tr[data-product="${id}"]`)
+    await expect(row.locator("td")).toHaveText([number(scenario.expected_monthly_outgoing_units, 2), number(scenario.recorded_on_hand_units), `${number(scenario.suggested_production_units)}${scenario.constraints_prevent_target ? "*" : ""}`])
+    await expect(row.locator("th")).toContainText(await browserMonth(page, scenario.balance_cutoff))
   }
-  await expect(page.getByTestId("scenario-units-B")).toHaveText("192")
-  await expect(page.getByTestId("scenario-units-C")).toHaveText("300")
+  await expect(page.locator(".small-explanation")).toContainText("escenario hipotético")
+  await expect(page.getByTestId("scenario-units-B")).toHaveText("95")
+  await expect(page.getByTestId("scenario-units-C")).toHaveText("229")
   await visit(page, "escenario-a", 1)
-  for (const [id, p] of Object.entries(products)) await expect(page.locator(`.replay-table tr[data-product="${id}"] td`)).toHaveText([number(replayTotal(p, 0)), number(replayTotal(p, 1))])
-  await expect(page.locator(".small-explanation")).toContainText("no representan pérdidas ni ahorros reales comprobados")
+  for (const [id, p] of Object.entries(products)) await expect(page.locator(`.replay-table tr[data-product="${id}"] td`)).toHaveText([number(replayTotal(p))])
+  await expect(page.locator(".small-explanation")).toContainText("no pérdidas ni ahorros reales comprobados")
 })
 
 test("las curvas conservan los puntos originales, las escalas propias y los cinco productos", async ({ page }) => {
@@ -246,6 +335,21 @@ test("las entradas son finitas, se repiten y respetan movimiento reducido", asyn
   await expect(page.locator(".recharts-line-curve").first()).toHaveCSS("clip-path", "none")
 })
 
+test("la entrada de revisión es finita, repetible y respeta movimiento reducido", async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: "no-preference" })
+  await page.goto(`/${hashFor("fallo")}`)
+  const animations = () => page.locator(".failure-steps").evaluate((root) => root.getAnimations({ subtree: true }).map((animation) => ({ name: animation.animationName, state: animation.playState, iterations: animation.effect.getTiming().iterations })))
+  await expect.poll(async () => (await animations()).filter((animation) => animation.name === "failure-card-in").length).toBe(3)
+  expect((await animations()).every((animation) => animation.iterations === 1)).toBe(true)
+  await expect.poll(async () => (await animations()).every((animation) => animation.state === "finished")).toBe(true)
+  await page.keyboard.press("r")
+  await expect.poll(async () => (await animations()).some((animation) => animation.name === "failure-card-in" && animation.state === "running")).toBe(true)
+  await at(page, "fallo")
+  await page.emulateMedia({ reducedMotion: "reduce" })
+  await expect.poll(async () => (await animations()).length).toBe(0)
+  for (const item of await page.locator(".failure-steps li").all()) await expect(item).toHaveCSS("opacity", "1")
+})
+
 test("los controles ocultos reaparecen al recibir foco", async ({ page }) => {
   await page.goto("/")
   await expect(page.locator(".nav")).toHaveClass(/idle/, { timeout: 6000 })
@@ -258,7 +362,7 @@ function layoutIssues(root) {
   const stage = document.querySelector(".stage").getBoundingClientRect()
   const rail = document.querySelector(".cue-rail").getBoundingClientRect()
   const nav = document.querySelector(".nav").getBoundingClientRect()
-  for (const el of root.querySelectorAll(".slide-head, .content, .cover > *, .cover-copy > *, .cover-products li, .content > *, .split > *, .flow li, .rows li, .product-label, .portfolio-table th, .portfolio-table td, .chart-panel, .chart-wrap, .forecast-chart, .lesson-body, .lesson-readout, .lesson-footer, .feature-history > *")) {
+  for (const el of root.querySelectorAll(".slide-head, .content, .cover > *, .cover-copy > *, .cover-products li, .content > *, .split > *, .flow li, .rows li, .product-label, .portfolio-table th, .portfolio-table td, .chart-panel, .chart-wrap, .forecast-chart, .lesson-body, .lesson-readout, .lesson-footer, .feature-history > *, .validation-segment, .failure-steps li")) {
     if (!el.getClientRects().length) continue
     const box = el.getBoundingClientRect()
     if (box.bottom > Math.min(rail.top - 3, nav.top - 3)) issues.push(`${el.className}: invade controles`)

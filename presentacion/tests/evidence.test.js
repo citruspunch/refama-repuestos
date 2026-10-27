@@ -41,6 +41,31 @@ test("las métricas mostradas se recalculan con los mismos seis errores de prueb
   }
 })
 
+test("las razones de selección respetan el MAE de validación y el margen del 5 %", () => {
+  for (const id of ["A", "B"]) {
+    const selection = evidence.products[id].selection
+    assert.ok(selection.selected_validation_mae > selection.best_validation_mae)
+    assert.ok(selection.selected_validation_mae <= selection.best_validation_mae * 1.05)
+  }
+  for (const id of ["C", "D", "E"]) {
+    const selection = evidence.products[id].selection
+    close(selection.selected_validation_mae, selection.best_validation_mae)
+    assert.equal(selection.model, selection.best_raw_mae_model)
+  }
+})
+
+test("los cortes de A y E distinguen la prueba de las previsiones retrospectivas", () => {
+  const { A, E } = evidence.products
+  assert.equal(A.selection.holdout_end, "2026-08-01")
+  assert.equal(E.selection.holdout_end, "2026-07-01")
+  assert.equal(A.monthly.at(-1).month, "2026-09-01")
+  assert.equal(E.monthly.at(-1).month, "2026-08-01")
+  assert.ok([A, E].every((p) => !p.monthly.at(-1).complete_for_modeling))
+  assert.equal(A.forecast.target_month, "2026-09-01")
+  assert.equal(E.forecast.target_month, "2026-08-01")
+  assert.ok([A, E].every((p) => !p.forecast.live_forecast_available))
+})
+
 test("el fallo de A y el respaldo no se ocultan ni se usan como pronóstico en vivo", () => {
   const p = evidence.products.A
   assert.ok(p.forecast.raw_forecast_units < 0)

@@ -115,7 +115,7 @@ export const ForecastChart = React.memo(function ForecastChart({ id, finalOnly =
   const ticks = finalOnly ? [data[0].month, data[2].month, data.at(-1).month] : data.filter((_, i) => i % 6 === 0).map((row) => row.month)
   const max = Math.max(1, ...data.flatMap((row) => [row.actual, row.selected, row.naive ?? 0]))
   return <div className="forecast-chart"><ResponsiveContainer width="100%" height="100%">
-    <LineChart data={data} margin={{ top: 10, right: 20, bottom: 4, left: 0 }} accessibilityLayer title={`Ventas y pronósticos mensuales del producto ${id}. ${finalOnly ? `Seis meses de prueba final, ${month(p.selection.holdout_start)} a ${month(p.selection.holdout_end)}. Escala de 0 a ${number(max, 1)} unidades.` : "La zona sombreada marca la prueba final."}`}>
+    <LineChart data={data} margin={{ top: 10, right: 20, bottom: 4, left: 0 }} accessibilityLayer aria-label={`Ventas y pronósticos mensuales del producto ${id}. ${finalOnly ? `Seis meses de prueba final, ${month(p.selection.holdout_start)} a ${month(p.selection.holdout_end)}. Escala de 0 a ${number(max, 1)} unidades.` : "La zona sombreada marca la prueba final."}`}>
       <CartesianGrid stroke={grid} vertical={false} />
       <XAxis dataKey="month" ticks={ticks} tickFormatter={(value) => month(value)} tick={tick} axisLine={false} tickLine={false} height={34} dy={6} />
       <YAxis domain={finalOnly ? [0, max] : [0, "auto"]} tickCount={3} tickFormatter={(value) => number(value, finalOnly && max < 20 ? 1 : 0)} tick={tick} axisLine={false} tickLine={false} width={55} />

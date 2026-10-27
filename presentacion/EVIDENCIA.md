@@ -18,6 +18,8 @@ Se conservan `business.py`, `financial.py`, el JSON antiguo y los reportes hist�
 
 ## Correspondencia por diapositiva
 
+La tabla siguiente documenta una versión anterior de 33 diapositivas. El escenario de la presentación actual se detalla en «Escenarios de inventario y producción ejecutados».
+
 | Diapositivas | Evidencia principal | Qué respalda y qué no |
 | --- | --- | --- |
 | 01 a 05 | `README.md`, `product_catalog.csv`, confirmación del encargo | Cinco SKU, montos clasificados y ritmos reportados. No acredita ahorros ni capacidad máxima. |
@@ -60,6 +62,8 @@ Los saldos alineados de 5,892 y 24 son cortes históricos previos a los objetivo
 
 El experimento nuevo ejecutó quince series con catorce a dieciséis candidatos según su ventana inicial. La selección antecede a los seis orígenes finales. Los rangos de prueba difieren entre productos. Los mismos candidatos originales de A/B reproducen sus métricas archivadas, pero reejecutar esos meses no crea una nueva prueba independiente.
 
+La distribución de la diapositiva 15 usa los 50 meses completos provisionales de A: la primera predicción de validación parte de 24 meses de entrenamiento, seguida por 20 objetivos de validación y 6 de prueba. `backtest_predictions.csv` y `selected_models.csv` documentan esas cantidades. El entrenamiento se amplía con cada mes observado.
+
 Las bandas de incertidumbre son heurísticas, dependientes de selección y de una muestra con cambio de nivel. No son garantías de 80% o 95% de servicio. El proyecto no demostró ventaja robusta general de aprendizaje automático.
 
 ### Introducción visual de modelos
@@ -78,15 +82,15 @@ La regla de respaldo se incorporó después de observar el experimento. Se repit
 
 Se preservan seis ejemplos antiguos de reposición por compras con plazos supuestos en meses. No se presentan como planes de fabricación de RUJAF. La versión anterior de la presentación usaba ocho alternativas de producción con supuestos en días.
 
-Las ocho filas originales permanecen en sus rutas. La presentación ampliada usa las 48 alternativas nuevas, con factores de previsión 1 y 1.5, y ambos extremos del ritmo de E. Los casos base A/B mantienen las cantidades anteriores.
+Las filas originales permanecen en sus rutas. La presentación muestra un solo escenario histórico por producto; `productionVariant` en `presentacion/src/analysis.js` identifica las filas usadas de `production_scenarios.csv`.
 
-En B sin seguridad, 96.3333/30 × 37 = 118.8111 unidades objetivo. Restar 24 y redondear hacia arriba da 95. Agregar 96.3333 de seguridad al objetivo da 215.1444 y una sugerencia de 192. Dividir por el ritmo supuesto 210 produce 0.4524 y 0.9143 días productivos teóricos.
+En B, 96.3333/30 × 37 = 118.8111 unidades objetivo. Restar 24 y redondear hacia arriba da una sugerencia de 95 unidades. Dividir por el ritmo supuesto de 210 produce 0.4524 días productivos teóricos.
 
-En A con seguridad cero, 205/30 × 37 = 252.8333. El saldo 5,892 lo supera y la sugerencia es cero. Esa diferencia es un sobrante respecto a un objetivo supuesto, no una clasificación de desperdicio ni una valoración económica.
+En A, 205/30 × 37 = 252.8333. El saldo 5,892 lo supera y la sugerencia es cero. Esa diferencia es un sobrante respecto a un objetivo supuesto, no una clasificación de desperdicio ni una valoración económica.
 
-El replay nuevo usa decisiones mensuales y recepciones a siete días con retiros diarios VENTA. No incorpora como suministro los ingresos reales, ajustes o traslados: simula otra política. Con un día mensual y ritmo inferior, seguridad de cero frente a un mes produce retiros no servidos de 115 frente a 2 en C, 129 frente a 0 en D y 1 frente a 1 en E. Son resultados de simulación, no faltantes reales. No hay restricciones reales completas, comparación contra decisiones actuales ni medición de ahorro. `actual_savings` permanece sin valor calculado.
+El replay usa decisiones mensuales y recepciones a siete días con retiros diarios VENTA. No incorpora como suministro los ingresos reales, ajustes o traslados: simula otra política. En el escenario mostrado se obtienen retiros no servidos de 115 en C, 129 en D y 1 en E; A y B tienen cero. Son resultados de simulación, no faltantes reales. No hay restricciones reales completas, comparación contra decisiones actuales ni medición de ahorro. `actual_savings` permanece sin valor calculado.
 
-La comparación incluye también A y B, ambos con cero retiros registrados no servidos bajo las dos variantes. En el escenario puntual, C requiere 439 unidades con seguridad, pero el día asignado a 300 u./día limita el lote a 300. Cinco días permiten la variante de 439. La selección de filas fija factor de previsión 1 y el extremo inferior del ritmo; no mezcla alternativas de estrés ni suma ambos extremos de E.
+En el escenario puntual mostrado, C tiene una sugerencia de 229 unidades y el día asignado permite 300. La selección de filas fija factor de previsión 1 y el extremo inferior del ritmo; no mezcla alternativas de estrés ni suma ambos extremos de E.
 
 ## Visualizaciones seleccionadas
 
@@ -100,7 +104,7 @@ La paleta indicada para A a E es `#ffd22b`, `#feb204`, `#ff8503`, `#d53600` y `#
 
 ## Datos todavía necesarios
 
-Confirmación de cobertura, stock físico actual, pedidos no atendidos, stock reservado y restringido, órdenes abiertas y fechas vinculadas de inicio y recepción. También calendario de trabajo, capacidad sostenible y compartida, materiales, rendimientos, preparación, lotes y límites reales.
+Confirmación de cobertura, stock físico actual y disponible, pedidos no atendidos, órdenes abiertas y fechas vinculadas de inicio y recepción. También calendario de trabajo, capacidad sostenible y compartida, materiales, rendimientos, preparación, lotes y límites reales.
 
 Para evaluar economía se necesitan costos fechados, componentes evitables, costo de mantener y preparar, criterio de faltantes y base terminal del inventario, junto con la política o las decisiones actuales. Los despachos deben conciliarse con documentos únicos, sin duplicación y con revisión contable competente cuando corresponda. Esta presentación no supone ningún tratamiento fiscal correcto de documentos no verificados.
 

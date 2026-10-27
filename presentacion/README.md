@@ -10,7 +10,7 @@ Presentación completa en español sobre el proyecto universitario de pronóstic
 - [Fuentes y límites de la evidencia](EVIDENCIA.md).
 - [Comprobaciones y limitaciones de entrega](VALIDACION.md).
 
-Son 26 diapositivas y 32 pasos. La duración orientativa suma 57:30 y puede acortarse hacia 45 minutos al abreviar los ejemplos. No es un tiempo medido en ensayo.
+Son 26 diapositivas y 30 pasos. La duración orientativa suma 57:30 y puede acortarse hacia 45 minutos al abreviar los ejemplos. No es un tiempo medido en ensayo.
 
 La narrativa sigue el problema de la empresa, la preparación de los datos, los modelos, sus resultados y la simulación de inventarios. Conserva las comparaciones de los cinco productos y utiliza A y B para explicar las variables y los métodos con ejemplos concretos.
 
@@ -31,9 +31,11 @@ No hay avance automático. La posición queda en `#diapositiva/paso`, con índic
 
 Las diapositivas 13 y 14 explican repetir el último mes, promediar tres meses, regresión lineal y Ridge. Las referencias usan ventas reales de B. La recta es un ejemplo didáctico identificado como tal. Después se explican entrenamiento, validación temporal y MAE antes de mostrar la selección y la prueba final.
 
-La diapositiva 23 compara producir con cero o un mes de reserva. Se mantienen los saldos históricos y la restricción de producción de C. El cero de producción de A usa una previsión positiva, distinta del fallo de Ridge explicado antes.
+La diapositiva 15 ilustra los 50 meses de A: 24 de entrenamiento inicial, 20 de validación y 6 de prueba. La ventana de entrenamiento se amplía mes a mes.
 
-Los resultados presentan el MAE frente a repetir el último mes, las curvas de prueba final y el caso de E, donde predecir cero deja sin anticipar ventas. La simulación compara unidades que el inventario supuesto no pudo atender. No se presentan como ventas perdidas ni ahorros reales.
+La diapositiva 23 muestra la producción sugerida en un escenario histórico para cada producto. El cero de producción de A usa una previsión positiva, distinta del fallo de Ridge explicado antes.
+
+Los resultados presentan el MAE frente a repetir el último mes, las curvas de prueba final y el caso de E, donde predecir cero deja sin anticipar ventas. La simulación muestra unidades que el inventario supuesto no pudo atender. No se presentan como ventas perdidas ni ahorros reales.
 
 Las notas están separadas del HTML de audiencia. Tener `GUION.md` y `MODELOS.md` en otro dispositivo o una copia impresa si se necesitan durante la exposición. No se añadió un control remoto ni un servidor de notas.
 

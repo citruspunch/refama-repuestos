@@ -1,7 +1,7 @@
 import test from "node:test"
 import assert from "node:assert/strict"
 import { loadEvidence } from "../evidence-loader.js"
-import { comparablePeriod, forecastSeries, interiorMonths, productionVariant, replayTotal, salesSeries } from "../src/analysis.js"
+import { comparablePeriod, evaluationSplit, forecastSeries, interiorMonths, productionVariant, replayTotal, salesSeries } from "../src/analysis.js"
 import { monthRange } from "../src/business.js"
 
 const { products } = loadEvidence()
@@ -38,19 +38,33 @@ test("las cinco curvas finales comparan los mismos seis objetivos dentro de cada
   }
 })
 
-test("el selector compara cinco variantes sin mezclar estrés, días o extremos de E", () => {
-  for (const p of Object.values(products)) for (const safety of [0, 1]) for (const days of [1, 5]) {
-    const row = productionVariant(p, safety, days)
+test("la distribución temporal usa la ventana inicial y los períodos archivados", () => {
+  for (const p of Object.values(products)) {
+    const split = evaluationSplit(p)
+    const validation = p.predictions.filter((row) => row.model === p.selection.model && row.phase === "validation")
+    const test = p.predictions.filter((row) => row.model === p.selection.model && row.phase === "holdout")
+    assert.equal(split.training, 24)
+    assert.equal(split.training, validation[0].training_months)
+    assert.equal(split.validation, validation.length)
+    assert.equal(split.test, test.length)
+    assert.equal(split.training + split.validation + split.test, split.total)
+  }
+  assert.deepEqual(evaluationSplit(products.A), { training: 24, validation: 20, test: 6, total: 50 })
+  assert.throws(() => evaluationSplit({ ...products.A, summary: { ...products.A.summary, complete_months: 49 } }), /no coincide/)
+})
+
+test("el selector conserva el escenario histórico de cada producto", () => {
+  for (const p of Object.values(products)) {
+    const row = productionVariant(p)
     assert.equal(row.demand_factor, 1)
-    assert.equal(row.assumed_safety_stock_months, safety)
-    assert.equal(row.assumed_available_production_days, days)
+    assert.equal(row.assumed_safety_stock_months, 0)
+    assert.equal(row.assumed_available_production_days, 1)
     assert.equal(row.assumed_units_per_production_day, p.catalog.produccion_aproximada_diaria_min)
     assert.equal(row.recorded_on_hand_units, p.inventory.aligned_closing_balance)
   }
-  assert.equal(productionVariant(products.C, 1, 1).suggested_production_units, 300)
-  assert.equal(productionVariant(products.C, 1, 5).suggested_production_units, 439)
+  assert.deepEqual(Object.values(products).map((p) => productionVariant(p).suggested_production_units), [0, 95, 229, 18, 3])
 })
 
-test("el replay muestra A y B además de C, D y E, sin sumar políticas alternativas", () => {
-  assert.deepEqual(Object.values(products).map((p) => [replayTotal(p, 0), replayTotal(p, 1)]), [[0, 0], [0, 0], [115, 2], [129, 0], [1, 1]])
+test("el replay muestra el mismo escenario histórico para los cinco productos", () => {
+  assert.deepEqual(Object.values(products).map(replayTotal), [0, 0, 115, 129, 1])
 })

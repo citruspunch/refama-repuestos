@@ -16,10 +16,7 @@ export const STORY = [
   { id: "demanda", title: "Lo que las ventas permiten conocer", seconds: 90, cues: [cue("Distinguir ventas registradas de pedidos no atendidos")] },
   { id: "variables", title: "Qué información entra al modelo", seconds: 150, cues: [cue("Construir un ejemplo con los meses anteriores de A")] },
   ...LESSON_STORY,
-  { id: "validacion", title: "Cómo entrenamos y probamos los modelos", seconds: 180, cues: [
-    cue("Avanzar mes a mes sin usar datos futuros", { prueba: false }),
-    cue("Separar la elección del método de la prueba final", { prueba: true }),
-  ] },
+  { id: "validacion", title: "Cómo entrenamos y probamos los modelos", seconds: 180, cues: [cue("Explicar entrenamiento, validación y prueba temporal")] },
   { id: "precision", title: "Cómo medimos el error", seconds: 150, cues: [cue("Interpretar el MAE con un ejemplo de ventas reales")] },
   { id: "seleccion", title: "Qué método elegimos para cada producto", seconds: 120, cues: [cue("Explicar la selección a partir de la validación")] },
   { id: "resultado-a", title: "Cuánto se equivocaron los modelos", seconds: 180, cues: [cue("Comparar el MAE con repetir el último mes")] },
@@ -27,13 +24,10 @@ export const STORY = [
   { id: "resultado-b", title: "Un error bajo puede ocultar ventas", seconds: 120, cues: [cue("Explicar qué ocurre al predecir cero en E")] },
   { id: "fallo", title: "Revisión de las predicciones", seconds: 120, cues: [cue("Mostrar el problema de A y el promedio usado para la simulación")] },
   { id: "planificacion", title: "De la predicción al inventario", seconds: 120, cues: [cue("Combinar ventas previstas, saldo y tiempo de reposición")] },
-  { id: "escenario-b", title: "Cómo cambia la producción con una reserva", seconds: 180, cues: [
-    cue("Leer las cantidades sin reserva", { seguridad: 0, dias: 1 }),
-    cue("Comparar con un mes de reserva", { seguridad: 1, dias: 1 }),
-  ] },
+  { id: "escenario-b", title: "Producción estimada para cada producto", seconds: 180, cues: [cue("Leer las cantidades del escenario histórico")] },
   { id: "escenario-a", title: "Qué mostró la simulación de inventarios", seconds: 180, cues: [
-    cue("Explicar cómo se actualiza el inventario simulado", { comparar: false }),
-    cue("Comparar las ventas que el inventario simulado no pudo atender", { comparar: true }),
+    cue("Explicar cómo se actualiza el inventario simulado", { resultado: false }),
+    cue("Mostrar las ventas que el inventario simulado no pudo atender", { resultado: true }),
   ] },
   { id: "estado", title: "Qué aporta el proyecto y qué falta conocer", seconds: 90, cues: [cue("Resumir la utilidad y los límites que afectan las conclusiones")] },
   { id: "conclusiones", title: "Resultados y conclusiones", seconds: 90, cues: [cue("Cerrar con los aprendizajes del proyecto")] },

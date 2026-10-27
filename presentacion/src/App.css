@@ -5,7 +5,7 @@
  * verde = controles/estabilidad, rojo = fallo. No implican rendimiento comercial.
  * chart-colors.js define tonos más profundos solo para trazos sin contorno.
  * BUSINESS.color en business.js conserva la identidad de rellenos y distintivos.
- * Montserrat se reserva para rótulos: siempre Thin (100) y MAYÚSCULAS.
+ * Montserrat se usa solo en rótulos: siempre Thin (100) y MAYÚSCULAS.
  * Fichas abiertas y reglas de Kardex; el color identifica productos y advertencias.
  */
 :root {
@@ -120,6 +120,7 @@ strong, b { font-variant-numeric: tabular-nums; }
 .product-label { display: flex; gap: 14px; align-items: center; font-size: 23px; color: var(--text-2); margin-bottom: 20px; }
 .product-label b { width: 36px; height: 36px; display: grid; place-items: center; color: var(--product-label-ink, #fff); background: var(--product, var(--a)); font-size: 21px; font-weight: 600; border-radius: 2px; flex: none; }
 .product-label span { min-width: 0; font-variant-numeric: tabular-nums; }
+.inline-product { display: inline-grid; place-items: center; width: 1.15em; height: 1.15em; vertical-align: -.14em; border-radius: 2px; background: var(--product); color: var(--product-label-ink, #fff); font-size: .72em; line-height: 1; }
 .metric { display: flex; flex-direction: column; gap: 10px; }
 .metric strong { font-size: 100px; font-weight: 750; letter-spacing: -.05em; line-height: 1; }
 .metric > span { font-size: 28px; max-width: 500px; }
@@ -140,6 +141,15 @@ strong, b { font-variant-numeric: tabular-nums; }
 .flow-num { display: block; font: 100 29px var(--label); text-transform: uppercase; letter-spacing: .08em; color: var(--ink); margin-bottom: 25px; }
 .flow h3 { font-size: 29px; margin-bottom: 15px; }
 .flow p { font-size: 25px; color: var(--text-2); line-height: 1.4; }
+.validation-slide .flow-num { font-family: var(--sans); font-weight: 700; }
+.validation-distribution figcaption { margin-bottom: 20px; font-size: 28px; font-weight: 600; }
+.validation-bar { display: flex; gap: 6px; width: 100%; }
+.validation-segment { flex: var(--months) 1 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; min-width: 0; min-height: 92px; border-radius: 8px; font-variant-numeric: tabular-nums; }
+.validation-segment span { font-size: 18px; font-weight: 550; }
+.validation-segment strong { font-size: 27px; font-weight: 600; }
+.validation-segment.phase-training { background: #afc5db; color: var(--ink); }
+.validation-segment.phase-validation { background: #eab96e; color: var(--ink); }
+.validation-segment.phase-test { background: #456f9c; color: #fff; }
 .cover { gap: 28px; padding: 48px 92px 120px; }
 .cover-kicker { display: flex; justify-content: space-between; align-items: center; gap: 30px; padding-bottom: 16px; border-bottom: 1px solid var(--line); font: 100 17px/1.4 var(--label); text-transform: uppercase; letter-spacing: .13em; color: var(--text-2); }
 .cover-kicker > :first-child { color: var(--ink); font-size: 22px; letter-spacing: .12em; }
@@ -348,9 +358,12 @@ strong, b { font-variant-numeric: tabular-nums; }
 .portfolio-table tbody th > small { display: block; margin-top: 8px; font-size: 18px; font-weight: 400; }
 .portfolio-table.channels-table td { font-size: 28px; }
 .portfolio-table.channels-table th, .portfolio-table.channels-table td { padding-top: 8px; padding-bottom: 8px; }
-.portfolio-table.selection-table th:first-child { width: 48%; }
-.portfolio-table.selection-table th:nth-child(2) { width: 52%; }
+.portfolio-table.selection-table th:first-child { width: 36%; }
+.portfolio-table.selection-table th:nth-child(2) { width: 25%; }
+.portfolio-table.selection-table th:nth-child(3) { width: 39%; }
+.portfolio-table.selection-table thead th { font-family: var(--sans); font-weight: 700; }
 .portfolio-table.selection-table tbody th, .portfolio-table.selection-table td { padding-top: 14px; padding-bottom: 14px; }
+.portfolio-table.selection-table td:last-child { font-size: 22px; line-height: 1.3; }
 .product-inputs th:first-child, .product-inputs td:first-child { width: 16%; padding-left: 0; }
 .product-inputs th:nth-child(2) { width: 84%; }
 .product-inputs th, .product-inputs td { padding-top: 10px; padding-bottom: 10px; vertical-align: middle; }
@@ -366,6 +379,7 @@ strong, b { font-variant-numeric: tabular-nums; }
 .result-table td, .result-table thead th:not(:first-child) { text-align: right; }
 .result-table tbody tr { height: 68px; }
 .mae-example caption { font-size: 23px; color: var(--text-2); text-align: left; margin-bottom: 18px; }
+.mae-example caption .product-label { margin: 0; }
 .zero-example th:first-child { width: 28%; }
 .zero-example td { text-align: center; }
 .zero-example thead th:not(:first-child) { text-align: center; }
@@ -381,6 +395,7 @@ strong, b { font-variant-numeric: tabular-nums; }
 .model-bars { height: 330px; }
 .chart-legend { display: flex; gap: 30px; font-size: 20px; color: var(--text-2); }
 .chart-legend > span { display: flex; align-items: center; gap: 10px; }
+.chart-legend .chart-legend-unit { margin-left: auto; }
 .chart-legend i { width: 28px; height: 0; border-top: 2.5px solid var(--ink); }
 .chart-legend .selected-key { border-top: 2.75px dashed var(--text-2); }
 .chart-legend .naive-key { border-top: 2px dotted var(--muted); }
@@ -399,6 +414,16 @@ strong, b { font-variant-numeric: tabular-nums; }
 .error-caption span { font-size: 23px; }
 .error-slide .content { gap: 18px; }
 .forecast-grid > .chart-panel { grid-template-rows: 36px minmax(0, 1fr); }
+.failure-header { display: flex; align-items: center; justify-content: space-between; gap: 30px; color: var(--text-2); font-size: 23px; }
+.failure-header .product-label { margin: 0; }
+.failure-header > span { text-align: right; }
+.failure-slide .content { gap: 40px; }
+.failure-slide .failure-steps { animation: none; }
+.failure-steps { display: grid; grid-template-columns: .8fr 1fr 1fr; gap: 40px; list-style: none; margin: 0; padding: 0; }
+.failure-steps li { position: relative; border-top: 2px solid var(--purple-light); padding-top: 23px; animation: failure-card-in .65s var(--ease) calc(.1s + var(--i) * .14s) both; }
+.failure-steps p { font-size: 27px; margin-top: 18px; color: var(--text-2); }
+.failure-steps strong { color: var(--ink); }
+@keyframes failure-card-in { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: none; } }
 .failure-chain { display: grid; grid-template-columns: 1fr 90px 1fr; gap: 25px; align-items: center; margin: 15px 0; }
 .failure-chain > div { border-top: 2px solid var(--red); padding: 25px 28px; background: var(--red-bg); }
 .failure-chain > div > span { font-size: 26px; }
@@ -454,9 +479,8 @@ strong, b { font-variant-numeric: tabular-nums; }
 .portfolio-scenarios td strong { font-size: 31px; font-weight: 600; }
 .portfolio-scenarios sup { font-size: 18px; }
 .scenario-value { display: inline-block; animation: row-in .3s ease both; }
-.replay-table th:first-child { width: 31%; }
-.replay-table th:last-child { width: 26%; }
-.replay-table td:last-child { font-size: 21px; }
+.replay-table th:first-child { width: 68%; }
+.replay-table td:last-child, .replay-table thead th:last-child { text-align: right; }
 .replay-products { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 24px; border-top: 1px solid var(--line); padding-top: 24px; }
 .replay-products .product-label { font-size: 21px; align-items: flex-start; margin-bottom: 0; }
 .scenario-slide .caveat { font-size: 19px; }

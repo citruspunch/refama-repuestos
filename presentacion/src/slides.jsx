@@ -2,8 +2,8 @@ import React from "react"
 import { BUSINESS, MODEL_NAMES, month, number } from "./business.js"
 import { useCueState, usePresentation } from "./PresentationContext.jsx"
 import { ForecastChart, PortfolioSales, portfolio, product, productIds, score } from "./Charts.jsx"
-import { forecastSeries, interiorMonths, productionVariant, replayTotal } from "./analysis.js"
-import { Flow, ProductLabel, Rows, Slide } from "./ui.jsx"
+import { evaluationSplit, forecastSeries, interiorMonths, productionVariant, replayTotal } from "./analysis.js"
+import { Flow, InlineProduct, ProductLabel, Rows, Slide } from "./ui.jsx"
 import { BaselineLesson, RegressionLesson } from "./ModelLessons.jsx"
 import imgA from "../assets/UAH-90385-18025.jpeg"
 import imgB from "../assets/48815-14050.jpeg"
@@ -203,14 +203,24 @@ function Features() {
 }
 
 function Validation() {
-  const [test] = useCueState("prueba", false)
-  return <Slide>
+  const split = evaluationSplit(product("A"))
+  const phases = [
+    { id: "phase-training", label: "Entrenamiento inicial", months: split.training },
+    { id: "phase-validation", label: "Validación", months: split.validation },
+    { id: "phase-test", label: "Prueba final", months: split.test },
+  ]
+  return <Slide className="validation-slide">
+    <figure className="validation-distribution">
+      <figcaption>Distribución de los {split.total} meses del producto <InlineProduct id="A" /></figcaption>
+      <div className="validation-bar" role="list" aria-label="Distribución temporal de los meses">
+        {phases.map((phase) => <div className={`validation-segment ${phase.id}`} role="listitem" aria-label={`${phase.label}: ${phase.months} meses`} key={phase.id} style={{ "--months": phase.months }}><span>{phase.label}</span><strong>{phase.months} meses</strong></div>)}
+      </div>
+    </figure>
     <Flow items={[
       { title: "Entrenar", text: "Comenzar con los primeros 24 meses de cada producto." },
       { title: "Validar", text: "Predecir el mes siguiente, medir el error y ampliar el historial." },
       { title: "Probar", text: "Evaluar el método elegido en los seis meses finales." },
     ]} />
-    <p className="large-caption" key={String(test)}>{test ? "El método se elige antes de mirar la prueba final." : "Siempre usamos el pasado para predecir un mes posterior."}</p>
   </Slide>
 }
 
@@ -218,18 +228,25 @@ function Accuracy() {
   const example = forecastSeries(product("B"), true).slice(0, 3)
   const averageError = example.reduce((sum, row) => sum + Math.abs(row.selected - row.actual), 0) / example.length
   return <Slide>
-    <p className="chart-intro">MAE = error absoluto medio. Indica cuántas unidades se desvía la predicción, en promedio.</p>
-    <table className="comparison-table portfolio-table mae-example"><caption>Ejemplo con tres meses de prueba de B</caption><thead><tr><th>Mes</th><th>Venta real, u.</th><th>Predicción, u.</th><th>Error absoluto, u.</th></tr></thead><tbody>{example.map((row) => <tr key={row.month}><th>{month(row.month)}</th><td>{number(row.actual)}</td><td>{number(row.selected, 2)}</td><td>{number(Math.abs(row.selected - row.actual), 2)}</td></tr>)}</tbody></table>
-    <p className="large-caption">En estos tres meses, el error medio fue de {number(averageError, 2)} unidades. Menor MAE significa menor error.</p>
+    <p className="chart-intro"><strong>MAE</strong> = error absoluto medio. Indica cuántas unidades se desvía la predicción, en promedio.</p>
+    <table className="comparison-table portfolio-table mae-example"><caption><ProductLabel id="B">Ejemplo con tres meses de prueba · {BUSINESS.B.shortName}</ProductLabel></caption><thead><tr><th>Mes</th><th>Venta real, u.</th><th>Predicción, u.</th><th>Error absoluto, u.</th></tr></thead><tbody>{example.map((row) => <tr key={row.month}><th>{month(row.month)}</th><td>{number(row.actual)}</td><td>{number(row.selected, 2)}</td><td>{number(Math.abs(row.selected - row.actual), 2)}</td></tr>)}</tbody></table>
+    <p className="large-caption">En estos tres meses, el error medio fue de {number(averageError, 2)} unidades. Menor <strong>MAE</strong> significa menor error.</p>
   </Slide>
 }
 
 function Selection() {
+  const reasons = {
+    A: "Error cercano al mínimo: se prefirió regularizar.",
+    B: "Error cercano al mínimo: se prefirió una regla sencilla.",
+    C: "Menor error en validación.",
+    D: "Menor error en validación.",
+    E: "Menor error en validación con ventas poco frecuentes.",
+  }
   return <Slide>
-    <p className="chart-intro">Elegimos con el MAE de validación. Cuando los errores eran cercanos, preferimos métodos sencillos o regularizados.</p>
-    <table className="comparison-table portfolio-table selection-table"><thead><tr><th>Producto</th><th>Método elegido</th></tr></thead><tbody>{productIds.map((id) => {
+    <p className="chart-intro">Comparamos el MAE de validación. Entre métodos a un máximo de 5 % del menor error, preferimos uno más sencillo o regularizado.</p>
+    <table className="comparison-table portfolio-table selection-table"><thead><tr><th>Producto</th><th>Método elegido</th><th>Por qué se eligió</th></tr></thead><tbody>{productIds.map((id) => {
       const selection = product(id).selection
-      return <tr key={id}><th><ProductLabel id={id}>{BUSINESS[id].shortName}</ProductLabel></th><td>{MODEL_NAMES[selection.model]}</td></tr>
+      return <tr key={id}><th><ProductLabel id={id}>{BUSINESS[id].shortName}</ProductLabel></th><td>{MODEL_NAMES[selection.model]}</td><td>{reasons[id]}</td></tr>
     })}</tbody></table>
   </Slide>
 }
@@ -237,23 +254,22 @@ function Selection() {
 function Results() {
   return <Slide>
     <table className="comparison-table portfolio-table result-table"><caption>MAE en los seis meses finales, unidades por mes</caption><thead><tr><th>Producto</th><th>Método elegido</th><th>Repetir el último mes</th></tr></thead><tbody>{productIds.map((id) => <tr key={id}><th><ProductLabel id={id}>{BUSINESS[id].shortName}</ProductLabel></th><td>{number(score(id, product(id).selection.model).mae, 2)}</td><td>{number(score(id, "naive").mae, 2)}</td></tr>)}</tbody></table>
-    <p className="large-caption">El método elegido tuvo menor error en A, C y E. Repetir el último mes funcionó mejor en B y D.</p>
+    <p className="large-caption">El método elegido tuvo menor error en <InlineProduct id="A" />, <InlineProduct id="C" /> y <InlineProduct id="E" />. Repetir el último mes funcionó mejor en <InlineProduct id="B" /> y <InlineProduct id="D" />.</p>
   </Slide>
 }
 
 function Intermittency() {
   const data = forecastSeries(product("E"), true)
   return <Slide>
-    <ProductLabel id="E">Manguera de aire · Prueba final</ProductLabel>
+    <ProductLabel id="E">Manguera de aire</ProductLabel>
     <table className="comparison-table portfolio-table zero-example"><thead><tr><th>Unidades</th>{data.map((row) => <th key={row.month}>{month(row.month)}</th>)}</tr></thead><tbody><tr><th>Ventas registradas</th>{data.map((row) => <td key={row.month}>{number(row.actual)}</td>)}</tr><tr><th>Predicción elegida</th>{data.map((row) => <td key={row.month}>{number(row.selected)}</td>)}</tr></tbody></table>
-    <p className="large-caption">Predecir cero tuvo el menor MAE, pero dejó sin anticipar {number(data.reduce((sum, row) => sum + row.actual, 0))} unidades vendidas.</p>
-    <p className="small-explanation">Un error bajo no basta para decidir cuánto inventario mantener.</p>
+    <p className="large-caption">Un error bajo no basta para decidir cuánto inventario mantener.</p>
   </Slide>
 }
 
 function Errors() {
   return <Slide className="error-slide">
-    <div className="chart-legend"><span><i className="actual-key" />Venta registrada</span><span><i className="selected-key" />Método elegido</span><span><i className="naive-key" />Último mes</span><span>Unidades por mes · Escala propia</span></div>
+    <div className="chart-legend"><span><i className="actual-key" />Venta registrada</span><span><i className="selected-key" />Método elegido</span><span><i className="naive-key" />Último mes</span><span className="chart-legend-unit">Unidades por mes</span></div>
     <div className="product-chart-grid forecast-grid">{productIds.map((id) => {
       return <figure className="chart-panel" key={id} data-product={id}><ProductLabel id={id}>{BUSINESS[id].shortName}</ProductLabel><ForecastChart id={id} finalOnly />
       </figure>
@@ -263,52 +279,48 @@ function Errors() {
 
 function Failure() {
   const forecast = product("A").forecast
-  return <Slide>
-    <ProductLabel id="A">Predicción para {month(forecast.target_month, false)}</ProductLabel>
-    <Rows items={[
-      ["Qué ocurrió", `Ridge estimó ${number(forecast.raw_forecast_units, 2)} unidades. Las ventas no pueden ser negativas.`],
-      ["Cómo lo tratamos", `Para estudiar el inventario usamos el promedio reciente de ${number(product("A").guard.effective_forecast_units)} unidades al mes.`],
-      ["Qué aprendimos", "Revisar las predicciones antes de convertirlas en cantidades de producción."],
-    ]} />
+  return <Slide className="failure-slide">
+    <div className="failure-header"><ProductLabel id="A">{BUSINESS.A.shortName}</ProductLabel><span>Predicción para {month(forecast.target_month, false)}</span></div>
+    <ol className="failure-steps">
+      <li style={{ "--i": 0 }}><h3>Qué ocurrió</h3><p>Ridge estimó <strong>{number(forecast.raw_forecast_units, 2)} unidades</strong>. Las ventas no pueden ser negativas.</p></li>
+      <li style={{ "--i": 1 }}><h3>Cómo lo tratamos</h3><p>Para estudiar el inventario usamos el promedio reciente: <strong>{number(product("A").guard.effective_forecast_units)} unidades al mes</strong>.</p></li>
+      <li style={{ "--i": 2 }}><h3>Qué aprendimos</h3><p>Revisar las predicciones antes de convertirlas en cantidades de producción.</p></li>
+    </ol>
   </Slide>
 }
 
 function Planning() {
   return <Slide>
-    <div className="planning-inputs"><div><h3>Ventas previstas</h3><p>Cuántas unidades podrían venderse durante la reposición.</p></div><div><h3>Inventario</h3><p>Cuántas unidades hay para atender esas ventas.</p></div><div><h3>Producción</h3><p>Cuánto tarda la reposición y cuánto se puede fabricar.</p></div></div>
+    <div className="planning-inputs"><div><h3>Ventas previstas</h3><p>Cuántas unidades se espera vender durante el período de revisión y reposición.</p></div><div><h3>Inventario</h3><p>Cuántas unidades hay para atender esas ventas.</p></div><div><h3>Producción</h3><p>Cuánto tarda la reposición y cuánto se puede fabricar.</p></div></div>
   </Slide>
 }
 
 function Scenarios() {
-  const [safety] = useCueState("seguridad", 0)
-  const [days] = useCueState("dias", 1)
-  const c = productionVariant(product("C"), 1, days)
+  const rows = productIds.map((id) => ({ id, scenario: productionVariant(product(id)) }))
   return <Slide className="scenario-slide">
-    <p className="scenario-context">30 días de ventas y 7 de reposición. Se supone un día productivo por producto.</p>
-    <table className="comparison-table portfolio-table portfolio-scenarios"><caption className="sr-only">Producción en unidades con cero o un mes de seguridad. La columna resaltada corresponde al paso seleccionado.</caption>
-      <thead><tr><th>Producto y fecha</th><th>Saldo, u.</th><th className={safety === 0 ? "is-current" : ""}>Sin reserva, u.</th><th className={safety === 1 ? "is-current" : ""}>Con un mes de reserva, u.</th></tr></thead>
-      <tbody>{productIds.map((id) => {
-        const variants = [0, 1].map((stock) => productionVariant(product(id), stock, days))
-        const selected = variants[safety]
+    <p className="scenario-context">Escenario histórico: 30 días de revisión, 7 de reposición y un día productivo por producto.</p>
+    <table className="comparison-table portfolio-table portfolio-scenarios"><caption className="sr-only">Ventas previstas, saldo registrado y producción sugerida por producto.</caption>
+      <thead><tr><th>Producto y fecha</th><th>Ventas previstas, u./mes</th><th>Saldo, u.</th><th>Producción sugerida, u.</th></tr></thead>
+      <tbody>{rows.map(({ id, scenario }) => {
         return <tr key={id} data-product={id}>
-          <th><ProductLabel id={id}>{month(selected.balance_cutoff)}</ProductLabel></th>
-          <td>{number(selected.recorded_on_hand_units)}</td>{variants.map((row, index) => <td key={index} className={index === safety ? "is-current" : ""} aria-current={index === safety ? "step" : undefined}><strong data-testid={index === safety ? `scenario-units-${id}` : undefined}>{number(row.suggested_production_units)}</strong>{row.constraints_prevent_target && <sup>*</sup>}</td>)}
+          <th><ProductLabel id={id}>{month(scenario.balance_cutoff)}</ProductLabel></th>
+          <td>{number(scenario.expected_monthly_outgoing_units, 2)}</td><td>{number(scenario.recorded_on_hand_units)}</td><td><strong data-testid={`scenario-units-${id}`}>{number(scenario.suggested_production_units)}</strong>{scenario.constraints_prevent_target && <sup>*</sup>}</td>
         </tr>
       })}</tbody>
     </table>
-    <p className="small-explanation">*Con reserva, C necesitaría {number(c.unconstrained_production_units)} unidades, pero el día productivo supuesto permite {number(c.scenario_capacity_units)}.</p>
+    <p className="small-explanation">{rows.some(({ scenario }) => scenario.constraints_prevent_target) && "*La cantidad respeta el límite del día productivo supuesto. "}Es un escenario hipotético con saldos de fechas históricas distintas.</p>
   </Slide>
 }
 
 function ProductionReplay() {
-  const [compare] = useCueState("comparar", false)
-  if (compare) return <Slide>
+  const [showResult] = useCueState("resultado", false)
+  if (showResult) return <Slide>
     <p className="chart-intro">Unidades de venta que el inventario simulado no pudo atender en los seis meses de prueba.</p>
-    <table className="comparison-table portfolio-table replay-table"><thead><tr><th>Producto</th><th>Sin reserva, u.</th><th>Con un mes de reserva, u.</th></tr></thead><tbody>{productIds.map((id) => {
+    <table className="comparison-table portfolio-table replay-table"><thead><tr><th>Producto</th><th>Unidades no atendidas</th></tr></thead><tbody>{productIds.map((id) => {
       const p = product(id)
-      return <tr key={id} data-product={id}><th><ProductLabel id={id}>{BUSINESS[id].shortName}</ProductLabel></th><td>{number(replayTotal(p, 0))}</td><td>{number(replayTotal(p, 1))}</td></tr>
+      return <tr key={id} data-product={id}><th><ProductLabel id={id}>{BUSINESS[id].shortName}</ProductLabel></th><td>{number(replayTotal(p))}</td></tr>
     })}</tbody></table>
-    <p className="small-explanation">La reserva reduce los faltantes simulados en C y D. Estos resultados no representan pérdidas ni ahorros reales comprobados.</p>
+    <p className="small-explanation">Son faltantes simulados, no pérdidas ni ahorros reales comprobados.</p>
   </Slide>
   return <Slide>
     <Flow items={[
@@ -316,7 +328,7 @@ function ProductionReplay() {
       { title: "Reponer", text: "Recibir lo producido después de siete días." },
       { title: "Comparar con las ventas", text: "Usar las ventas posteriores para observar faltantes y saldo restante." },
     ]} />
-    <p className="large-caption">El inventario restante pasa al mes siguiente. Comparamos la misma regla con y sin reserva.</p>
+    <p className="large-caption">El inventario restante pasa al mes siguiente.</p>
   </Slide>
 }
 
@@ -328,7 +340,7 @@ function Status() {
         <ul>
           <li>Ventas históricas organizadas por mes.</li>
           <li>Predicciones evaluadas con datos posteriores.</li>
-          <li>Simulación para comparar alternativas de reposición.</li>
+          <li>Simulación para estudiar la reposición.</li>
         </ul>
       </div>
       <div>
@@ -348,7 +360,7 @@ function Conclusions() {
     <Rows items={[
       ["Cada producto necesita su propia evaluación", "Las ventas regulares, variables y poco frecuentes producen resultados distintos."],
       ["Más complejidad no asegura menor error", "Los promedios y el último mes fueron referencias útiles frente a las regresiones."],
-      ["La predicción ayuda a estudiar el inventario", "Las simulaciones muestran el efecto de mantener una reserva y de esperar la reposición."],
+      ["La predicción ayuda a estudiar el inventario", "La simulación relaciona ventas previstas, disponibilidad y tiempo de reposición."],
     ]} />
   </Slide>
 }

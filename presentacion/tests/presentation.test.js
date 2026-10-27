@@ -4,7 +4,7 @@ import { readFileSync } from "node:fs"
 import { STORY, assembleSlides, lastMainSlide, movePosition, normalizePosition, positionFromLocation, positionHash, presentationProgress, validateStory } from "../src/presentation.js"
 
 const end = lastMainSlide()
-const scenario = STORY.findIndex((scene) => scene.id === "escenario-b")
+const scenario = STORY.findIndex((scene) => scene.id === "escenario-a")
 const route = STORY.slice(0, end + 1).flatMap((scene, slide) => scene.cues.map((_, step) => ({ slide, step })))
 const definitions = () => STORY.map((scene) => ({ id: scene.id, C: () => null, ch: "Capítulo de prueba" }))
 
@@ -18,17 +18,18 @@ test("el registro tiene 26 diapositivas, explicación de ML y cierre de resultad
   assert.equal(STORY[end].id, "conclusiones")
   assert.ok(!STORY.some((scene) => ["piloto", "cierre"].includes(scene.id)))
   assert.equal(STORY.reduce((sum, scene) => sum + scene.seconds, 0), 3450)
-  assert.equal(route.length, 32)
+  assert.equal(route.length, 30)
+  assert.equal(STORY.find((scene) => scene.id === "validacion").cues.length, 1)
   for (const id of ["variables", "regresion", "validacion", "precision", "resultado-a", "escenario-a"]) assert.ok(STORY.some((scene) => scene.id === id))
   assert.ok(!STORY.some((scene) => ["origen", "calidad", "canales", "estacionalidad", "modelos-arboles", "controles", "respaldo-modelos", "respaldo-supuestos"].includes(scene.id)))
 })
 
 test("el esquema rechaza identificadores repetidos, valores no finitos y entradas incompletas", () => {
   let story = structuredClone(STORY)
-  story[scenario].cues[1].values = { seguridad: 1 }
+  story[scenario].cues[1].values = { otra: true }
   assert.throws(() => validateStory(story), /todos los campos/)
   story = structuredClone(STORY)
-  story[scenario].cues[1].values.dias = Infinity
+  story[scenario].cues[1].values.resultado = Infinity
   assert.throws(() => validateStory(story), /finitos/)
   story = structuredClone(STORY)
   story[1].id = story[0].id
@@ -87,4 +88,5 @@ test("las notas coinciden con todos los títulos y tiempos de la presentación",
   assert.equal((text.match(/^### Notas del presentador$/gm) || []).length, STORY.length)
   assert.doesNotMatch(text, /SHA-256|FDR|q armónico|48 escenarios|16 métodos|pruebas automatizadas|80 árboles|\.py\b/)
   assert.doesNotMatch(text, /piloto|próximos pasos|siguientes pasos|solicitamos/i)
+  assert.doesNotMatch(text, /\breserva\b|\bseguridad\b|colch[oó]n/i)
 })

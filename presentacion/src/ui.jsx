@@ -47,3 +47,7 @@ export function Note({ children, warning = false }) {
 export function ProductLabel({ id, children }) {
   return <div className={`product-label product-${id.toLowerCase()}`}><b>{id}</b><span>{children}</span></div>
 }
+
+export function InlineProduct({ id }) {
+  return <b className={`inline-product product-${id.toLowerCase()}`} aria-label={`Producto ${id}`}>{id}</b>
+}

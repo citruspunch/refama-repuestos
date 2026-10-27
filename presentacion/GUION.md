@@ -1,6 +1,6 @@
 # Guion de la presentación de RUJAF
 
-26 diapositivas y 32 pasos. Duración orientativa de 57:30, sin ensayo cronometrado. Las notas son apoyos para explicar y señalar los gráficos, no un texto para leer. Con explicaciones más breves de los ejemplos, el recorrido puede acercarse a 45 minutos.
+26 diapositivas y 30 pasos. Duración orientativa de 57:30, sin ensayo cronometrado. Las notas son apoyos para explicar y señalar los gráficos, no un texto para leer. Con explicaciones más breves de los ejemplos, el recorrido puede acercarse a 45 minutos.
 
 La secuencia sigue el problema, los datos, el desarrollo de los modelos, sus resultados y la aplicación al inventario. Las flechas avanzan los pasos. R repite la entrada visual. Las notas no aparecen en el HTML del público.
 
@@ -163,9 +163,10 @@ Tiempo: 3:00. Acumulado principal: 32:00.
 
 ### Notas del presentador
 
-- Primer paso. Comenzar con 24 meses y construir ejemplos de entradas conocidas y venta del mes siguiente. El modelo aprende esas relaciones con el historial disponible.
+- Comenzar con 24 meses y construir ejemplos de entradas conocidas y venta del mes siguiente. El modelo aprende esas relaciones con el historial disponible.
+- En A, el gráfico distribuye los 50 meses: 24 para el entrenamiento inicial, 20 de validación y seis de prueba. El entrenamiento se amplía con cada mes observado antes del siguiente pronóstico.
 - Explicar la validación temporal con una secuencia verbal. Predecir un mes posterior, compararlo con la venta observada y luego incorporarlo al historial para volver a entrenar. Nunca mezclar al azar pasado y futuro.
-- Segundo paso. Los seis meses finales se reservan para evaluar el método elegido. La selección queda fijada antes de consultar esos resultados.
+- Los seis meses finales se destinan a evaluar el método elegido. La selección queda fijada antes de consultar esos resultados.
 - En la prueba se sigue avanzando de a un mes y se actualiza el entrenamiento con las ventas ya observadas. No son seis meses pronosticados de una sola vez.
 - Distinguir los papeles de validación y prueba. Una elige el método. La otra muestra cómo funcionó después de esa elección.
 
@@ -189,6 +190,7 @@ Tiempo: 2:00. Acumulado principal: 36:30.
 
 - Señalar las elecciones. Ridge para A y D, promedio de tres meses para B y C y referencia cero para E.
 - La elección usa el MAE de validación y una preferencia predefinida por alternativas sencillas o regularizadas cuando quedan cerca del menor error. El margen utilizado fue de 5%, sin necesidad de desarrollar la regla en pantalla.
+- En A y B los métodos elegidos quedaron dentro de ese margen del menor error. En C, D y E los métodos elegidos obtuvieron el menor MAE de validación.
 - El resultado no exige el mismo algoritmo para todos. Las diferencias del historial llevan a elecciones distintas.
 - La referencia cero de E es una regla de comparación, no un modelo que aprenda una relación. Su selección bajo MAE requiere interpretar las ventas poco frecuentes. Ese caso se mostrará después de los resultados generales.
 
@@ -215,6 +217,7 @@ Tiempo: 3:00. Acumulado principal: 42:30.
 - Comparar B y C. El promedio suaviza cambios, pero puede reaccionar tarde a un aumento. En C resulta útil en el conjunto de los seis meses, sin acertar cada punto.
 - D conserva diferencias grandes entre meses. E muestra por qué una línea en cero puede parecer cercana durante varios meses y aun así omitir las ventas que sí ocurren.
 - Las escalas y fechas pertenecen a cada producto. Usar los gráficos para interpretar el error, no para repetir todas las cifras de la tabla anterior.
+- La prueba termina en agosto para A y en julio para E porque sus últimos meses registrados —septiembre y agosto, respectivamente— no tienen cobertura confirmada y se excluyen de la evaluación. Para A sí existe una previsión retrospectiva de septiembre, explicada en la diapositiva 21; para E se calculó el mes de frontera de agosto, no septiembre.
 
 ## 20. Un error bajo puede ocultar ventas
 
@@ -225,7 +228,7 @@ Tiempo: 2:00. Acumulado principal: 44:30.
 - Centrar la atención en E. Solo dos de los seis meses finales tuvieron ventas positivas, que sumaron 13 unidades.
 - La regla de predecir cero acierta en los meses vacíos. Al promediar el error de todos los meses obtiene un MAE bajo, pero no anticipa ninguna de las unidades vendidas.
 - Esto no significa que no exista demanda. Muestra que la métrica de pronóstico no responde por sí sola la pregunta de cuánto inventario mantener.
-- Para productos con ventas poco frecuentes, el costo de quedarse sin una pieza y el tiempo de reposición también importan. El proyecto no dispone de esos costos completos para determinar una reserva óptima.
+- Para productos con ventas poco frecuentes, el costo de quedarse sin una pieza y el tiempo de reposición también importan. El proyecto no dispone de costos completos para cuantificar ese impacto.
 
 ## 21. Revisión de las predicciones
 
@@ -246,20 +249,18 @@ Tiempo: 2:00. Acumulado principal: 48:30.
 
 - Explicar las tres entradas de la planificación. Ventas previstas durante la espera, inventario disponible y ritmo de producción con tiempo de reposición.
 - Recorrer verbalmente la lógica. Estimar cuánto se necesitará durante el período, restar lo que hay en bodega y observar si la producción disponible alcanza.
-- Definir la reserva como inventario adicional para responder a diferencias entre lo previsto y lo vendido. En las comparaciones se usa cero o un mes de ventas estimadas.
-- La simulación utiliza los ritmos de producción reportados por la empresa y supuestos de reposición. No se calculó una reserva óptima a partir de costos.
+- La simulación utiliza los ritmos de producción reportados por la empresa y supuestos de reposición. No determina una política óptima a partir de costos.
 
-## 23. Cómo cambia la producción con una reserva
+## 23. Producción estimada para cada producto
 
 Tiempo: 3:00. Acumulado principal: 51:30.
 
 ### Notas del presentador
 
 - Explicar el escenario antes de leer la tabla. Una revisión cada 30 días y siete días de reposición requieren cubrir 37 días. Se supone un día productivo por producto y se usan los ritmos inferiores reportados.
-- Primer paso. Tomar B como ejemplo. El saldo es 24 unidades y la venta prevista es de unas 96.33 al mes. Sin reserva adicional, el escenario sugiere producir 95 unidades.
-- Segundo paso. Al añadir un mes de reserva, B pasa a 192 unidades. La diferencia corresponde al colchón de inventario, no a un ahorro ni a una mejora ya comprobada.
+- Tomar B como ejemplo. El saldo es 24 unidades y la venta prevista es de unas 96.33 al mes. El escenario sugiere producir 95 unidades.
 - A no necesita producción adicional bajo estos supuestos porque el saldo supera lo requerido. Esto no significa que su pronóstico de ventas sea cero.
-- En C, con reserva se necesitarían 439 unidades, pero el día productivo supuesto permite 300. Señalar el asterisco. La restricción puede impedir alcanzar el inventario buscado.
+- En C, con una venta prevista de 210.33 unidades al mes y un saldo de 31, el escenario sugiere producir 229 unidades. El día productivo supuesto permite 300.
 - Cada fila corresponde a su fecha histórica. Es una comparación por producto, no un calendario conjunto de fabricación.
 
 ## 24. Qué mostró la simulación de inventarios
@@ -269,11 +270,11 @@ Tiempo: 3:00. Acumulado principal: 54:30.
 ### Notas del presentador
 
 - Primer paso. Cada mes se decide con la predicción disponible y el saldo simulado. La reposición llega siete días después. Las ventas registradas posteriores sirven para comprobar qué se habría podido atender.
-- El saldo restante se conserva de un día al siguiente y pasa al mes siguiente. Se compara la misma regla con cero o un mes de reserva, manteniendo un día de producción mensual por producto.
+- El saldo restante se conserva de un día al siguiente y pasa al mes siguiente. Se mantiene un día de producción mensual por producto.
 - Segundo paso. Las cifras son unidades de ventas registradas que el inventario simulado no pudo atender durante la prueba. No son pedidos perdidos observados en la empresa.
-- En C pasan de 115 a 2 y en D de 129 a 0. En E queda una unidad sin atender en ambas variantes. Una reserva adicional no tiene el mismo efecto en todos los productos.
+- En este escenario quedan 115 unidades sin atender en C, 129 en D y una en E. En A y B no quedan unidades sin atender en la simulación.
 - Las predicciones utilizadas aquí incluyen la revisión práctica descrita antes. Esta simulación posterior no es una nueva prueba independiente de precisión del modelo.
-- El resultado permite estudiar la relación entre previsión, espera y reserva. No demuestra ahorros económicos ni una mejora real de servicio.
+- El resultado permite estudiar la relación entre previsión, inventario y tiempo de reposición. No demuestra ahorros económicos ni una mejora real de servicio.
 
 ## 25. Qué aporta el proyecto y qué falta conocer
 
@@ -284,7 +285,7 @@ Tiempo: 1:30. Acumulado principal: 56:00.
 - Resumir lo que quedó desarrollado. Un historial mensual, una comparación temporal de predicciones y una simulación de reposición para los cinco productos.
 - Concentrar aquí los límites generales. Hay pocos años de historia y las ventas cambian. Los saldos son contables y la capacidad reportada necesita confirmación.
 - Sin costos completos de producción, almacenamiento y faltantes no corresponde convertir las diferencias de unidades en ahorros ni asegurar un óptimo económico.
-- La utilidad demostrada es analítica: permite identificar diferencias entre productos y comparar alternativas bajo supuestos explícitos.
+- La utilidad demostrada es analítica: permite identificar diferencias entre productos y estudiar la reposición bajo supuestos explícitos.
 
 ## 26. Resultados y conclusiones
 
@@ -294,5 +295,5 @@ Tiempo: 1:30. Acumulado principal: 57:30.
 
 - Volver a la pregunta inicial. Los datos históricos permitieron construir predicciones y relacionarlas con el inventario, pero los resultados varían por producto.
 - Las regresiones no superaron siempre a las reglas simples. Por eso fue necesario comparar con el último mes y con promedios antes de atribuir valor a la complejidad del modelo.
-- El caso de E muestra que el error de predicción y la disponibilidad no son lo mismo. La simulación de C y D muestra cómo la reserva cambia los faltantes bajo los supuestos usados.
+- El caso de E muestra que el error de predicción y la disponibilidad no son lo mismo. La simulación identifica unidades que el inventario supuesto no habría atendido en C, D y E.
 - Cerrar con el aporte concreto del proyecto: una base para estudiar la planificación de inventarios a partir de ventas, con resultados medidos y límites identificados.
