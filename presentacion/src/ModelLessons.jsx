@@ -83,7 +83,6 @@ export function RegressionLesson() {
       </Diagram>
       <Readout title={ridge ? "Ridge" : "Regresión lineal"}>
         {ridge ? "Penaliza los pesos muy grandes para reducir el sobreajuste al historial." : "Aprende cómo combinar las variables para estimar las ventas del mes siguiente."}
-        <span className="lesson-weight"><span>Influencia de la señal</span><i><b style={{ width: `${100 * fitted.weight / ordinary.weight}%` }} /></i></span>
       </Readout>
     </div>
   </Frame>
