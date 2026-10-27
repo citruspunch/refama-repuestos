@@ -116,7 +116,7 @@ Tiempo: 2:30. Acumulado principal: 20:00.
 ### Notas del presentador
 
 - Tomar el ejemplo de A. Para estimar septiembre se conocen junio, julio y agosto, con 360, 71 y 184 unidades. Su promedio es 205 unidades.
-- Explicar qué aporta cada entrada. Las ventas previas muestran el comportamiento reciente y su promedio reduce el efecto de un mes aislado. El paso del tiempo representa cambios de largo plazo y el calendario permite explorar si el mes del año aporta información.
+- Explicar qué aporta cada entrada. Las ventas previas muestran el comportamiento reciente y su promedio reduce el efecto de un mes aislado. El índice temporal representa cambios de largo plazo y el calendario permite explorar si el mes del año aporta información.
 - En el modelo se usan tres ventas previas, su promedio, una variable de tiempo y dos de calendario. No hace falta desarrollar la representación matemática del calendario.
 - Aclarar que 205 es aquí una variable de entrada, no la salida de Ridge. Construimos el mismo tipo de información para cada mes de entrenamiento y para cada producto, usando solo datos anteriores al mes que se quiere predecir.
 

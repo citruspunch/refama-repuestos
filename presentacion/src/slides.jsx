@@ -169,6 +169,7 @@ function Features() {
     <ul className="feature-points">
       <li>Ventas de los tres meses previos</li>
       <li>Su promedio</li>
+      <li>Índice temporal</li>
       <li>Mes del año</li>
     </ul>
   </Slide>
